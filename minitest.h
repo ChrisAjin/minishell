@@ -6,7 +6,7 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 15:31:13 by inbennou          #+#    #+#             */
-/*   Updated: 2024/05/25 22:40:05 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/05/26 16:23:11 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 int	exec_builtin(char *line, char **envp);
 void	exit_shell(int write_ex);
 void	echo(char **tab);
+void	env_cmd(char **tab, char **env);
 int	cd(char **tab, char **envp);
 void	pwd(void);
 char	*get_pwd();
@@ -34,5 +35,6 @@ void	add_old_pwd(char *old_pwd, char **envp);
 
 // utils
 void	print_args(char **tab, int index);
+void	printf_tab(char **tab);
 
 #endif

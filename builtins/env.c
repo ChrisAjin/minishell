@@ -1,46 +1,45 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo.c                                             :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/25 19:16:00 by inbennou          #+#    #+#             */
-/*   Updated: 2024/05/25 22:28:39 by inbennou         ###   ########.fr       */
+/*   Created: 2024/05/26 16:22:27 by inbennou          #+#    #+#             */
+/*   Updated: 2024/05/26 16:26:43 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitest.h"
+#include "../minitest.h"
 
-// !! prompt doit revenir a la ligne mm s'il y a l'option -n
-// implementer le cas "echo $var"
-// implementer le cas option non reconnue ?
-void	echo(char **tab)
+// tester dans le bash pour confirmer les cas d'erreurs
+void	env_cmd(char **tab, char **env)
 {
-	int	n;
-
-	n = 0;
 	if (tab[1] == NULL)
 	{
-		printf("\n");
+		printf_tab(env);
 		return ;
 	}
-	if (ft_strncmp(tab[1], "-n", 3) == 0)
-		n = 1;
-	print_args(tab, 1 + n);
-	if (n != 1)
-		printf("\n");
+	if (tab[1][0] == '-')
+	{
+		ft_putstr_fd("illegal option: ", 2);
+		ft_putendl_fd(tab[1], 2);
+	}
+	else
+	{
+		ft_putstr_fd("No such file or directory: ", 2);
+		ft_putendl_fd(tab[1], 2);
+	}
 }
 
-void	print_args(char **tab, int index)
+void	printf_tab(char **tab)
 {
 	int	y;
 
-	y = index;
-	while (tab[y + 1])
+	y = 0;
+	while (tab[y])
 	{
-		printf("%s ", tab[y]);
+		printf("%s\n", tab[y]);
 		y++;
 	}
-	printf("%s", tab[y]);
 }

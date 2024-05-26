@@ -6,11 +6,11 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 15:31:03 by inbennou          #+#    #+#             */
-/*   Updated: 2024/05/25 22:36:09 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/05/26 16:31:59 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitest.h"
+#include "../minitest.h"
 
 // prends en param la struct pour pouvoir tout free
 int	exec_builtin(char *line, char **envp)
@@ -31,8 +31,8 @@ int	exec_builtin(char *line, char **envp)
 	// 	export(tab);
 	// if (ft_strncmp(tab[0], "unset", 6) == 0)
 	// 	unset(tab);
-	// if (ft_strncmp(tab[0], "env", 4) == 0)
-	// 	env(tab);
+	if (ft_strncmp(tab[0], "env", 4) == 0)
+		env_cmd(tab, envp);
 	if (ft_strncmp(tab[0], "exit", 5) == 0)
 		exit_shell(1);
 	return (0);

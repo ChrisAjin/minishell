@@ -6,11 +6,11 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 21:55:35 by inbennou          #+#    #+#             */
-/*   Updated: 2024/05/25 22:38:10 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/05/26 16:26:34 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitest.h"
+#include "../minitest.h"
 
 // mene vers le chemin tab[1]
 // si tab[1] == '~' || tab[1] == '\0' mene vers home

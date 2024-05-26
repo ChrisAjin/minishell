@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   main_test.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 16:35:57 by inbennou          #+#    #+#             */
-/*   Updated: 2024/05/25 22:36:22 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/05/26 16:18:37 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,32 +31,9 @@
 
 // comment gerer les free struct en fonction de qui exec la commande
 
-// prends la struct en param pour tout free
-void	exit_shell(int write_ex)
-{
-	if (write_ex)
-		if (write(1, "exit\n", 5) < 0)
-			perror("write error");
-	// tout free
-	// rl_clear_history
-	exit(1); // exit avec le bon exit_code
-}
-
-void	pwd(void)
-{
-	char	*pwd;
-
-	pwd = NULL;
-	pwd = getcwd(NULL, 0);
-	if (!pwd || pwd[0] == '\0')
-		perror("Could not get current working directory");
-	else
-		printf("%s\n", pwd);
-	free(pwd);
-}
-
 // exit_code doit etre une valeur de notre struct
-// creer un ac dans notre struct
+// creer un ac dans struct ou au debut de la fonction exec pour gerer les childs
+	// avoir une fonction qui compte le nbr de commandes
 int	main(int ac, char **av, char **envp)
 {
 	char	*line;
@@ -76,7 +53,7 @@ int	main(int ac, char **av, char **envp)
 			// init struct->ac
 		// exec
 		exec_builtin(line, envp);
-			// pipe
+			// pipe (plusieurs cmds)
 				// pipex
 			// no pipe
 				// only child

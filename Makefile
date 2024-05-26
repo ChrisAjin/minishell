@@ -4,7 +4,7 @@ INCLUDE = include/
 LIB = -L libft/ -lft
 NAME = minitest
 
-SRC = main.c builtins_utils.c echo.c cd.c
+SRC = main_test.c builtins/builtins_utils.c builtins/echo.c builtins/cd.c builtins/pwd.c builtins/exit.c builtins/env.c
 
 OBJS_BASE = $(SRC:.c=.o)
 OBJ_PATH = obj/
@@ -21,6 +21,7 @@ $(OBJ_PATH)%.o: %.c
 
 $(OBJ_PATH):
 	mkdir -p obj/
+	mkdir -p obj/builtins
 
 clean:
 	make fclean -C libft/
