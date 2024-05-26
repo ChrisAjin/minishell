@@ -1,43 +1,55 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2024/03/22 15:27:55 by cassassa          #+#    #+#              #
-#    Updated: 2024/03/22 15:27:56 by cassassa         ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
+SRCS	=	ft_atoi ft_bzero ft_calloc ft_isalnum ft_isalpha ft_isascii \
+			ft_isdigit ft_isprint ft_memchr ft_memcmp ft_memmove ft_memset \
+			ft_strchr ft_strlen ft_strnstr ft_strrchr ft_tolower ft_toupper \
+			ft_memcpy ft_strdup ft_strlcat ft_strlcpy ft_strncmp ft_substr \
+			ft_putnbr_fd ft_strjoin ft_strtrim ft_putchar_fd ft_putnbr_fd \
+			ft_putstr_fd ft_putendl_fd ft_itoa ft_split ft_striteri ft_strmapi get_next_line get_next_line_utils
 
+BONUS	=	ft_lstnew.c ft_lstsize.c ft_lstmap.c ft_lstlast.c ft_lstiter.c ft_lstdelone.c \
+			ft_lstclear.c ft_lstadd_front.c ft_lstadd_back.c $(SRCS)
 
+BONUS_OBJS	=	${BONUS:.c=.o}
 
-CC = cc
-CFLAGS = -Wall -Wextra -Werror -I../includes
-RM = rm -rf
 NAME = libft.a
 
-LIB_SRCS = ft_isalpha.c ft_isprint.c ft_strlen.c ft_memset.c ft_bzero.c ft_memcpy.c\
-		   ft_memmove.c ft_strlcpy.c ft_strlcat.c ft_strchr.c ft_strrchr.c ft_strncmp.c ft_memchr.c\
-	  	   ft_memcmp.c ft_strnstr.c ft_atoi.c ft_atol.c ft_calloc.c ft_strdup.c ft_substr.c ft_strjoin.c \
-		   ft_strtrim.c ft_split.c ft_itoa.c ft_strmapi.c ft_striteri.c ft_putnbr_fd.c\
-		   ft_lstnew.c ft_lstadd_front.c ft_lstsize.c ft_lstlast.c ft_lstadd_back.c \
-		   ft_lstdelone.c ft_lstclear.c ft_lstiter.c ft_lstmap.c\
-		   get_next_line.c is_onstr.c\
-		   ft_printf.c prt_str.c prt_ptr.c prt_int.c prt_unsigned.c prt_hexa.c\
-		   join_free.c join_freev2.c free_matrix.c streq.c ft_strcpy.c\
-		   only_spaces.c is_all_digits.c join_free_both.c trim_free.c\
+OBJ_DIR = obj/
+SRC_DIR = src/
 
-LIB_OBJS =  $(LIB_SRCS:.c=.o)
+INCLUDES = -I 
 
-all: $(NAME)
+SRC = $(addprefix $(SRC_DIR), $(addsuffix .c, $(SRCS)))
+OBJS = $(addprefix $(OBJ_DIR), $(addsuffix .o, $(SRCS)))
 
-$(NAME): $(LIB_OBJS)
-	ar rc $(NAME) $(LIB_OBJS)
+CC = gcc
+
+CFLAGS = -Wall -Wextra -Werror
+
+AR = ar rc
+
+RM = rm -f
+
+OBJF = .cache_exits
+
+$(OBJF) :
+	@mkdir -p $(OBJ_DIR)
+
+${NAME}:	${OBJS}
+			$(AR) ${NAME} ${OBJS}
+
+$(OBJ_DIR)%.o : $(SRC_DIR)%.c | $(OBJF)
+	$(CC) $(CFLAGS) -c $< -o $@
+
+all:		${NAME}
+
 clean:
-	$(RM) $(LIB_OBJS)
-fclean: clean
-	$(RM) $(NAME)
+			${RM} ${OBJS} $(BONUS_OBJS)
+
+fclean:		clean
+			${RM} ${NAME}
+
+bonus:		${BONUS_OBJS}
+			${AR} ${NAME} ${BONUS_OBJS}
+
 re: fclean all
 
-.SILENT:
+.PHONY:		all clean fclean re bonus
