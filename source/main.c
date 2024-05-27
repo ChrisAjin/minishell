@@ -6,7 +6,7 @@
 /*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 16:44:44 by cassassa          #+#    #+#             */
-/*   Updated: 2024/05/26 12:39:00 by cassassa         ###   ########.fr       */
+/*   Updated: 2024/05/27 14:25:04 by cassassa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ int	make_env(t_data *data, char **env)
 
 	i = -1;
 	list = NULL;
+	//cas ou il y a une list vide d'env
 	while (env[++i])
 	{
 		tmp = ft_strdup(env[i]);
@@ -62,6 +63,10 @@ bool	empty_line(char *line)
 	return (false);
 }
 
+bool parsline (t_data *data, char *line){
+	
+}
+
 int	main(int argc, char **argv, char **env)
 {
 	t_data	data;
@@ -79,7 +84,8 @@ int	main(int argc, char **argv, char **env)
 		if (empty_line(line))
 			continue ;
 		add_history(line);
-		
+		if (!parsline(&data, line))
+			continue ;
 		/* exec part*/
 		//free_cmd(&data.cmd);
 		//free_token(&data.token);
