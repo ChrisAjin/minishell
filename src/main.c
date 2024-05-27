@@ -6,7 +6,7 @@
 /*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 16:44:44 by cassassa          #+#    #+#             */
-/*   Updated: 2024/05/27 14:25:04 by cassassa         ###   ########.fr       */
+/*   Updated: 2024/05/27 16:05:52 by cassassa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,11 @@ bool	empty_line(char *line)
 }
 
 bool parsline (t_data *data, char *line){
-	
+	if(!create_list_token(&data->token, line))
+	{
+		free(line);
+		free_all(data,ERR_MALLOC, EXT_MALLOC);
+	}
 }
 
 int	main(int argc, char **argv, char **env)
