@@ -6,7 +6,7 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 15:31:13 by inbennou          #+#    #+#             */
-/*   Updated: 2024/05/26 16:23:11 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/05/27 14:14:33 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,41 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <dirent.h>
+
+typedef struct s_cmd
+{
+	bool			skip_cmd;
+	int				infile;
+	int				outfile;
+	char			**cmd_param;
+	struct s_cmd	*prev;
+	struct s_cmd	*next;
+}				t_cmd;
+
+typedef struct s_token
+{
+	char			*str;
+	int				type;
+	struct s_token	*prev;
+	struct s_token	*next;
+}				t_token;
+
+typedef struct s_list
+{
+	char			*str;
+	struct s_list	*prev;
+	struct s_list	*next;
+}					t_list;
+
+typedef struct s_data
+{
+	t_list	*env;
+	t_token	*token;
+	t_cmd	*cmd;
+	int		exit_code;
+	int		pip[2];
+	bool	sq;
+}				t_data;
 
 // builtins
 int	exec_builtin(char *line, char **envp);
