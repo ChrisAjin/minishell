@@ -6,7 +6,7 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 21:55:35 by inbennou          #+#    #+#             */
-/*   Updated: 2024/05/26 16:26:34 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/05/27 15:53:20 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 // implementer $HOME et $OLDPWD
 // gerer le cas cd $HOME/Documents
 // tester les cas - et . dans le bash
+	// - revient au precedent path et . ne fait rien
 // quand on donne un chemin relatif, bash fouille dans la var d'env $CDPATH
 // msg d'erreur si:
 // le chemin n'existe pas
