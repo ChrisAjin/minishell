@@ -6,14 +6,14 @@
 /*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 16:45:40 by cassassa          #+#    #+#             */
-/*   Updated: 2024/05/25 17:05:33 by cassassa         ###   ########.fr       */
+/*   Updated: 2024/05/26 12:57:41 by cassassa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include "../libft/libft.h"
+# include "../libft/src/libft.h"
 # include <fcntl.h>
 # include <limits.h>
 # include <readline/history.h>
@@ -33,6 +33,11 @@
 # define CMD 6     //"|"
 # define ARG 7     //"|"
 
+# define EXT_MALLOC 1
+# define ERR_MALLOC "error malloc\n"
+
+extern pid_t		g_signal_pid;
+
 typedef struct s_cmd
 {
 	bool			skip_cmd;
@@ -41,21 +46,39 @@ typedef struct s_cmd
 	char			**cmd_param;
 	struct s_cmd	*prev;
 	struct s_cmd	*next;
-}					t_cmd;
-typedef struct t_token
+}				t_cmd;
+
+typedef struct s_token
 {
 	char			*str;
 	int				type;
 	struct s_token	*prev;
 	struct s_token	*next;
-}					t_token;
+}				t_token;
+
+typedef struct s_list
+{
+	char			*str;
+	struct s_list	*prev;
+	struct s_list	*next;
+}					t_list;
+
 typedef struct s_data
 {
-	t_list			*env;
-	t_token			*token;
-	t_cmd			*cmd;
-	int				exit_code;
-	int				pip[2];
-	bool			sq;
-}					t_data;
+	t_list	*env;
+	t_token	*token;
+	t_cmd	*cmd;
+	int		exit_code;
+	int		pip[2];
+	bool	sq;
+}				t_data;
+
+int make_env(t_data *data, char **env);
+
+int free_list(t_list **list);
+int	add_to_list(t_list **list, char *elem);
+
+bool is_space(char c);
+
+void	free_all(t_data *data, char *err, int ext);
 #endif
