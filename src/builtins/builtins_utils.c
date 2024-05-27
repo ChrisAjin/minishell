@@ -6,13 +6,15 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 15:31:03 by inbennou          #+#    #+#             */
-/*   Updated: 2024/05/27 15:44:11 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/05/27 17:37:21 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minitest.h"
 
 // !!! tous les builtins doivent exit pour kill les childs !!!
+// lstadd back et lst delone pour export et unset
+// adapter env pour une liste chainee pas **tab
 
 // prends en param la struct pour pouvoir tout free
 int	exec_builtin(char *line, char **envp)

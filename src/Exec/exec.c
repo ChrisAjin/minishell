@@ -6,7 +6,7 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 14:01:42 by inbennou          #+#    #+#             */
-/*   Updated: 2024/05/27 17:09:11 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/05/27 20:46:20 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,10 @@
 
 // fonction qui compte le nbr de commande
 // open dans les childs pcq chacun peut avoir ses redir
+
+// avant la fonction exec il faut init inf et outf sur stdin et stdout ou sur -1
+
+// gerer le cas ou on a juste un pipe a la fin ? :(
 
 int	exec(t_data *minishell)
 {
@@ -28,11 +32,12 @@ int	exec(t_data *minishell)
 		return (one_cmd(minishell));
 	else if (ac > 1)
 	{
-		while (ac > 1)
+		// while (ac > 1)
 			// exec middle children
 	}
+	// exec last child
 	// close all
-	// wait and error ici ?
+	// wait and error(pid only child ou last child);
 }
 
 int	one_cmd(t_data *minishell)
