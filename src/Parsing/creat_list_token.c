@@ -6,7 +6,7 @@
 /*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 16:04:27 by cassassa          #+#    #+#             */
-/*   Updated: 2024/05/28 15:29:18 by cassassa         ###   ########.fr       */
+/*   Updated: 2024/05/28 19:08:22 by cassassa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static int	length_cmd(char *command, int *quotes)
 					++i;
 			else
 				while (command[i] && command[i] != '\'')
-					i++;
+					++i;
 			if (command[i])
 				++i;
 		}
@@ -36,7 +36,7 @@ static int	length_cmd(char *command, int *quotes)
 			&& !is_space(command[i]) && !is_special(command + i))
 			++i;
 	}
-	return (1);
+	return (i);
 }
 
 static void	copy_token(char *command, int length, char *str, int i)

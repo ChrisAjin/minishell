@@ -6,7 +6,7 @@
 /*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 16:44:44 by cassassa          #+#    #+#             */
-/*   Updated: 2024/05/28 15:36:23 by cassassa         ###   ########.fr       */
+/*   Updated: 2024/05/28 19:01:54 by cassassa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,8 @@ bool	empty_line(char *line)
 	return (false);
 }
 
-bool parsline (t_data *data, char *line){
+bool parsline (t_data *data, char *line)
+{
 	if(!create_list_token(&data->token, line))
 	{
 		free(line);
@@ -105,7 +106,7 @@ int	main(int argc, char **argv, char **env)
 			free_all(&data, "exit\n", data.exit_code);
 		if (empty_line(line))
 			continue ;
-		add_history(line);
+		//add_history(line);
 		if (!parsline(&data, line))
 			continue ;
 		/* exec part*/
@@ -113,7 +114,7 @@ int	main(int argc, char **argv, char **env)
 		free_token(&data.token);
 		g_signal_pid = 0;
 	}
-	rl_clear_history();
+	//rl_clear_history();
 	free_all(&data, NULL, -1);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 15:49:40 by cassassa          #+#    #+#             */
-/*   Updated: 2024/05/28 16:03:45 by cassassa         ###   ########.fr       */
+/*   Updated: 2024/05/28 19:10:48 by cassassa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,15 +31,17 @@ static bool fill_cmd(t_data *data, t_token *tmp)
         if (data->cmd->prev->infile >= 0)
             close (data->cmd->prev->infile);
         data->cmd->prev->skip_cmd = true;
-        data->cmd->prev->cmd_param = -1;
+        data->cmd->prev->infile = -1;
         return (true);
     }
     data->cmd->prev->cmd_param = get_param(data, tmp);
+    if (!data->cmd->prev->cmd_param)
+        free_all(data, ERR_MALLOC, EXT_MALLOC);
     return (true);
 }
 static bool norm(t_data *data, t_token *tmp)
 {
-    if (!append_cmd(&data->cmd, -2, -2, NULL))
+    if (!add_list_cmd(&data->cmd, -2, -2, NULL))
         free_all(data, ERR_MALLOC, EXT_MALLOC);
     if (!fill_cmd(data, tmp))
     {
@@ -63,6 +65,7 @@ bool create_list_cmd(t_data *data)
             if (!norm(data, tmp))
                 return (false);
         }
+        tmp = tmp->next;
     }
     return (true);
 }

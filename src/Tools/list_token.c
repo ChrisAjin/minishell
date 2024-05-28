@@ -6,11 +6,35 @@
 /*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 15:17:42 by cassassa          #+#    #+#             */
-/*   Updated: 2024/05/28 15:43:10 by cassassa         ###   ########.fr       */
+/*   Updated: 2024/05/28 18:47:38 by cassassa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+static int	token_new_elem(t_token **new, char *str, int type)
+{
+	if (!str)
+		return (0);
+	(*new) = malloc(sizeof(t_token));
+	if (*new == NULL)
+	{
+		free(str);
+		return (0);
+	}
+	(*new)->str = str;
+	(*new)->type = type;
+	(*new)->next = NULL;
+	(*new)->prev = NULL;
+	return (1);
+}
+
+static void	add_first(t_token **list, t_token *new)
+{
+	(*list) = new;
+	(*list)->prev = *list;
+	(*list)->next = *list;
+}
 
 int add_to_list_token(t_token **list, char *str, int type)
 {
