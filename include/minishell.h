@@ -6,7 +6,7 @@
 /*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 16:45:40 by cassassa          #+#    #+#             */
-/*   Updated: 2024/05/26 12:57:41 by cassassa         ###   ########.fr       */
+/*   Updated: 2024/05/28 15:49:29 by cassassa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,13 +72,23 @@ typedef struct s_data
 	int		pip[2];
 	bool	sq;
 }				t_data;
-
+// main.c
 int make_env(t_data *data, char **env);
-
+// Tools_list.c
 int free_list(t_list **list);
 int	add_to_list(t_list **list, char *elem);
-
+//utils.c
 bool is_space(char c);
-
+//free
 void	free_all(t_data *data, char *err, int ext);
+void	free_array(char **arr);
+//list_token.c
+int add_to_list_token(t_token **list, char *str, int type);
+void free_token(t_token **list);
+
+//creat_list_token.c
+bool	create_list_token(t_token **begin, char *command);
+
+//DEBUG.c
+void	print_token(t_token *token);
 #endif
