@@ -6,7 +6,7 @@
 /*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 12:40:07 by cassassa          #+#    #+#             */
-/*   Updated: 2024/05/26 13:00:57 by cassassa         ###   ########.fr       */
+/*   Updated: 2024/05/28 18:57:34 by cassassa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,25 +49,6 @@ void	free_cmd(t_cmd **list)
 		free(tmp);
 	}
 	free_all_cmd(current);
-	free(current);
-	*list = NULL;
-}
-void	free_token(t_token **list)
-{
-	t_token	*tmp;
-	t_token	*current;
-
-	if (!(*list))
-		return ;
-	current = *list;
-	while (current->next != *list)
-	{
-		tmp = current;
-		current = current->next;
-		free(tmp->str);
-		free(tmp);
-	}
-	free(current->str);
 	free(current);
 	*list = NULL;
 }

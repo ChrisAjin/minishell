@@ -6,7 +6,7 @@
 /*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 16:44:44 by cassassa          #+#    #+#             */
-/*   Updated: 2024/05/27 16:05:52 by cassassa         ###   ########.fr       */
+/*   Updated: 2024/05/28 19:01:54 by cassassa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ int	make_env(t_data *data, char **env)
 	i = -1;
 	list = NULL;
 	//cas ou il y a une list vide d'env
+	if (!(*env))
+		return (make_env2(data));
 	while (env[++i])
 	{
 		tmp = ft_strdup(env[i]);
@@ -63,12 +65,29 @@ bool	empty_line(char *line)
 	return (false);
 }
 
-bool parsline (t_data *data, char *line){
+bool parsline (t_data *data, char *line)
+{
 	if(!create_list_token(&data->token, line))
 	{
 		free(line);
 		free_all(data,ERR_MALLOC, EXT_MALLOC);
 	}
+	free(line);
+	print_token(data->token);
+	if (data->token && data->token->prev->type == PIPE)
+	{
+		write(2, "Error: Unclosed pipe\n",21);
+		data->exit_code = 2;
+		free_token(&data->token);
+		return (false);
+	}
+	if (!data->token || !create_list_cmd(data))
+	{
+		free_token(&data->token);
+		free_cmd(&data->cmd);
+		return(false);
+	}
+	return (check_pipe(data));
 }
 
 int	main(int argc, char **argv, char **env)
@@ -79,23 +98,23 @@ int	main(int argc, char **argv, char **env)
 	/*init data*/
 	init_data(&data, argc, argv);
 	if (!make_env(&data, env))
-		free_all(&data, ERR_MALLOC, 1);
+		free_all(&data, ERR_MALLOC, EXT_MALLOC);
 	while (1)
 	{
 		line = readline("minishell> ");
-		/*if (!line)
-			free_all(&data, "exit\n", data.exit_code);*/
+		if (!line)
+			free_all(&data, "exit\n", data.exit_code);
 		if (empty_line(line))
 			continue ;
-		add_history(line);
+		//add_history(line);
 		if (!parsline(&data, line))
 			continue ;
 		/* exec part*/
-		//free_cmd(&data.cmd);
-		//free_token(&data.token);
+		free_cmd(&data.cmd);
+		free_token(&data.token);
 		g_signal_pid = 0;
 	}
-	// clear hisotory
+	//rl_clear_history();
 	free_all(&data, NULL, -1);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 16:45:40 by cassassa          #+#    #+#             */
-/*   Updated: 2024/05/26 12:57:41 by cassassa         ###   ########.fr       */
+/*   Updated: 2024/05/28 18:50:41 by cassassa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,13 +72,44 @@ typedef struct s_data
 	int		pip[2];
 	bool	sq;
 }				t_data;
-
+// main.c
 int make_env(t_data *data, char **env);
-
+// Tools_list.c
 int free_list(t_list **list);
 int	add_to_list(t_list **list, char *elem);
-
+//utils.c
 bool is_space(char c);
+int	is_special(char *str);
+bool check_pipe(t_data *data);
+bool make_env2(t_data *data);
 
+//print_error.c
+bool	print_error_token(t_token *token, t_data *data);
+
+//free
 void	free_all(t_data *data, char *err, int ext);
+void	free_array(char **arr);
+void	free_cmd(t_cmd **list);
+//list_token.c
+int add_to_list_token(t_token **list, char *str, int type);
+void free_token(t_token **list);
+
+//creat_list_token.c
+bool	create_list_token(t_token **begin, char *command);
+
+//cmd_fd.C
+bool	get_outfile(t_token *token, t_cmd *cmd, t_data *data);
+bool	get_infile(t_data *data, t_token *token, t_cmd *cmd);
+
+//cmd_param.c
+char **get_param(t_data *data, t_token *token);
+
+//creat_cmd.c
+bool create_list_cmd(t_data *data);
+
+//list_cmd.c
+int	add_list_cmd(t_cmd **list, int infile, int outfile, char **cmd_param);
+
+//DEBUG.c
+void	print_token(t_token *token);
 #endif

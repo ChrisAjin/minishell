@@ -7,7 +7,7 @@ DIRLIB	=	./Libft/
 FILELIB	=	libft.a
 NAMELFT	=	$(addprefix $(DIRLIB), $(FILELIB))
 
-SRC_DIR	=	source/
+SRC_DIR	=	src/
 OBJ_DIR	=	obj/
 INCLUDE	=	-I ./include -I ./Libft
 HEADER 	=	include/minishell.h
@@ -25,7 +25,10 @@ CYAN		= \033[0;96m
 WHITE		= \033[0;97m
 
 # Source
-FILES	=	main tools_list free utils
+FILES	=	main tools_list  creat_list_token \
+			utils free list_token\
+			creat_cmd cmd_fd cmd_param \
+			debug print_error list_cmd
 
 SRCS	=	$(addprefix $(SRC_DIR), $(addsuffix .c, $(FILES)))
 OBJS	=	$(addprefix $(OBJ_DIR), $(addsuffix .o, $(FILES)))
@@ -36,7 +39,7 @@ $(OBJF) :
 	@mkdir -p $(OBJ_DIR)
 
 # Add the path to the builtin folder to vpath
-vpath %.c $(SRC_DIR) $(SRC_DIR)Tools 
+vpath %.c $(SRC_DIR) $(SRC_DIR)Tools $(SRC_DIR)Parsing
 
 all : $(NAME)
 
