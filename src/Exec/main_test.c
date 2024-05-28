@@ -6,7 +6,7 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 16:35:57 by inbennou          #+#    #+#             */
-/*   Updated: 2024/05/27 20:14:58 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/05/28 15:37:09 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 // creer un ac dans struct ou au debut de la fonction exec pour gerer les childs
 	// avoir une fonction qui compte le nbr de commandes
 
-// pouvoir lancer un programme??
+// pouvoir lancer un programme
 // si on met juste entree exit code revient a 0
 // donc init exit_code a 0 au debut de la boucle
 

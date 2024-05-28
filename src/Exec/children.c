@@ -6,7 +6,7 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 14:13:14 by inbennou          #+#    #+#             */
-/*   Updated: 2024/05/27 20:47:16 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/05/28 15:57:42 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	only_child(t_data *minishell)
 	// if <<
 		// exec_here_doc
 	// if redir
-		// open (qui fait la diff entre > et >>)
+		// open (outf soit > et >>)
 	if (minishell->cmd->infile != 0)
 		if (dup2(minishell->cmd->infile, STDIN_FILENO) < 0)
 			dup2_error(minishell);
@@ -32,23 +32,13 @@ int	only_child(t_data *minishell)
 	// if (!command || command[0] == '\0')
 	// {
 	// 	ft_putendl_fd("Command not found.", 2);
+	// 	close_fds();
 	// 	exit(127);
 	// }
 	// if (ft_strchr(command, '/') != 0)
 	// 	return (exec_path);
 	// is_builtin(minishell);
 	// return (exec);
-}
-
-// pour only child (pas pareil pour les pipes)
-void	exec_here_doc(t_data *minishell)
-{
-	// if il y a une cmd (peut etre avant ou )
-		// creer un pipe pour ecrire dedans
-		// gnl(0) jusqu'a LIM (fill here doc)
-		// exec cmd
-	// else
-		// gnl(0) jusqu'a LIM
 }
 
 int	first_child(t_data *minishell)

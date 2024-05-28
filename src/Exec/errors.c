@@ -6,7 +6,7 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 14:40:48 by inbennou          #+#    #+#             */
-/*   Updated: 2024/05/27 20:10:36 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/05/28 18:48:28 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,15 +36,12 @@ void	wait_and_error(t_data *minishell, int pid_lastchild)
 
 int	command_not_found(t_data *minishell, char **paths)
 {
-	char	*err_msg;
-
-	err_msg = ft_strjoin("Command not found: ", minishell->cmd->cmd_param[0]);
-	ft_putendl_fd(err_msg, 2);
+	ft_putstr_fd("Command not found: ", 2);
+	ft_putendl_fd(minishell->cmd->cmd_param[0], 2);
 	// close_all
 	// free tout
 	if (paths)
 		free_tab(paths);
-	free(err_msg);
 	exit(127);
 }
 
@@ -58,19 +55,16 @@ int	exec_fail(t_data *minishell, char **paths)
 	exit(1);
 }
 
-void	permission_denied(t_data *pipex)
+void	permission_denied(t_data *minishell)
 {
-	char	*err_msg;
-
-	// err_msg = ft_strjoin("Permission denied: ", cmd);
-	ft_putendl_fd(err_msg, 2);
+	ft_putstr_fd("Command not found: ", 2);
+	// ft_putendl_fd(cmd, 2);
 	// close_all
 	// free tout
-	free(err_msg);
 	exit(126);
 }
 
-void	no_such_file(t_data *pipex)
+void	no_such_file(t_data *minishell)
 {
 	char	*err_msg;
 
@@ -80,4 +74,14 @@ void	no_such_file(t_data *pipex)
 	// free tout
 	free(err_msg);
 	exit(127);
+}
+
+void	empty_cmd(char *cmd)
+{
+	if (!cmd || cmd[0] == '\0')
+	{
+		ft_putendl_fd("Command not found.", 2);
+		close_fds();
+		exit(127);
+	}
 }
