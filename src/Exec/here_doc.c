@@ -6,7 +6,7 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 15:57:20 by inbennou          #+#    #+#             */
-/*   Updated: 2024/05/29 14:37:14 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/05/29 18:10:52 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 // recuperer tout dans une str avec un join qui free la str au debut
 // mettre la str dans la struct token
 // putstr fd la str directement dans le pipe si strlen < 65000
-// (avec un putstr fd qui ecrit char par char?)
+// (avec un putstr fd qui ecrit char par char?) + write protege avec perror
+// --> mm comportement que bash, cree un fichier temp que si c'est trop grand
 
 // ajouter un define pour LIM?
 // pour only child (pas pareil pour les pipes)
@@ -24,7 +25,7 @@ void	exec_here_doc(t_data *minishell)
 	// if redir
 		// open (inf et outf trunc ou append)
 		// dup2 outf stdout
-	// if il y a une cmd (peut etre avant ou apres <<)
+	// if il y a une cmd (peut etre avant ou apres le <<)
 		// if (pipe(pip) < 0)
 			// pipe error
 		// fill here doc qui ecrit dans le pipe

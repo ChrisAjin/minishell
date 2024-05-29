@@ -6,15 +6,14 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 19:16:00 by inbennou          #+#    #+#             */
-/*   Updated: 2024/05/26 16:26:38 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/05/29 18:01:57 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minitest.h"
+#include "minitest.h"
 
-// !! prompt doit revenir a la ligne mm s'il y a l'option -n
 // gerer les quotes
-// implementer le cas "echo $var"
+// gerer les $
 // implementer le cas option non reconnue ?
 void	echo(char **tab)
 {

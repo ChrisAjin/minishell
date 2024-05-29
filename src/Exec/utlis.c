@@ -6,13 +6,13 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 19:58:42 by inbennou          #+#    #+#             */
-/*   Updated: 2024/05/29 14:21:43 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/05/29 18:34:04 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitest.h"
 
-// proteger appel de split paths
+// !!! proteger l'appel de split paths
 char	**split_paths(t_list *env)
 {
 	t_list	*tmp;
@@ -65,7 +65,12 @@ void	exec_middle_childs(t_data *minishell, int ac)
 	// while cmd != ac, next ?
 	renew_pipe(minishell);
 	pid = fork();
-	
+	// proteger fork
+	// if (pid == 0)
+		// middle child
+	// equivalent de i++
+	// if derniere cmd
+		// close temp fd
 }
 
 // ajouter temp fd a la struc avec pip
@@ -81,14 +86,14 @@ void	exec_middle_childs(t_data *minishell, int ac)
 
 int	close_all(t_data *minishell)
 {
-	while (minishell->cmd)
-	{
-		if (minishell->cmd->infile > 0)
-			close(minishell->cmd->infile);
-		if (minishell->cmd->outfile > 0)
-			close (minishell->cmd->outfile);
-		minishell->cmd->next;
-	}
+	if (minishell->cmd->infile > 0)
+		close(minishell->cmd->infile);
+	if (minishell->cmd->outfile > 0)
+		close(minishell->cmd->outfile);
+	close(minishell->pip[0]);
+	close(minishell->pip[1]);
+	// if (minishell->temp_fd > 0)
+	// 	close(minishell->temp_fd);
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 15:31:13 by inbennou          #+#    #+#             */
-/*   Updated: 2024/05/29 13:44:38 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/05/29 17:15:35 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int					cd(char **tab, char **envp);
 void				pwd(void);
 char				*get_pwd(void);
 char				*get_home(char **envp);
-int					ch_dir_home(char **envp);
+int					ch_dir_home(char **envp, char *old_pwd);
 void				add_pwd(char *cur_dir, char **envp);
 void				add_old_pwd(char *old_pwd, char **envp);
 

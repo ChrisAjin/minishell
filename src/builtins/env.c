@@ -6,11 +6,11 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 16:22:27 by inbennou          #+#    #+#             */
-/*   Updated: 2024/05/27 15:54:11 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/05/29 17:01:59 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minitest.h"
+#include "minitest.h"
 
 // tester dans le bash pour confirmer les cas d'erreurs
 void	env_cmd(char **tab, char **env)

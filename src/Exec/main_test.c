@@ -6,7 +6,7 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 16:35:57 by inbennou          #+#    #+#             */
-/*   Updated: 2024/05/28 15:37:09 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/05/29 18:08:38 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,11 @@ int	main(int ac, char **av, char **envp)
 		exit(1);
 	while (1)
 	{
-		line = readline("Minitest > ");
+		line = readline("minitest > ");
 		// rl_history
 		// if ctrl D
 		// 	break ;
 		// parsing
-			// init struct->ac
 		// exec
 		exec_builtin(line, envp);
 			// pipe (plusieurs cmds)

@@ -6,11 +6,11 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 16:16:04 by inbennou          #+#    #+#             */
-/*   Updated: 2024/05/26 16:26:47 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/05/29 18:02:13 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minitest.h"
+#include "minitest.h"
 
 // prends la struct en param pour tout free
 // exit prends 1 arg = exit_code
@@ -21,5 +21,5 @@ void	exit_shell(int write_ex)
 			perror("write error");
 	// tout free
 	// rl_clear_history
-	exit(1); // exit avec le bon exit_code
+	exit(0); // exit avec le bon exit_code
 }

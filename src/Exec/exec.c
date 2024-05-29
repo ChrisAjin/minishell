@@ -6,7 +6,7 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 14:01:42 by inbennou          #+#    #+#             */
-/*   Updated: 2024/05/29 15:55:04 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/05/29 18:35:03 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 // avant la fonction exec il faut init inf et outf sur stdin et stdout ou sur -1
 // gerer le cas ou on a juste un pipe a la fin ?
 // skip cmd ?
+// comment parcourir les cmds pour les assigner au bon child ?
 
 // compter here_doc comme une cmd s'il n'a pas de commande (ex: << LIM) ?
 int	cmd_count(t_data *minishell)
@@ -43,8 +44,6 @@ int	exec(t_data *minishell)
 	int	ac;
 
 	ac = cmd_count(minishell);
-	// fonction qui check s'il y a des redir et qui open les files
-		// si redir sur outfile choisir entre trunc et append et check les droits
 	if (ac == 0) // ou commande vide
 		return (0);
 	if (ac == 1)
