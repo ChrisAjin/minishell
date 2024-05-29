@@ -6,7 +6,7 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 15:31:13 by inbennou          #+#    #+#             */
-/*   Updated: 2024/05/27 15:24:34 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/05/29 13:44:38 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,15 @@ int					ch_dir_home(char **envp);
 void				add_pwd(char *cur_dir, char **envp);
 void				add_old_pwd(char *old_pwd, char **envp);
 
-// utils
+// builtins_utils
 void				print_args(char **tab, int index);
 void				printf_tab(char **tab);
+
+// errors
+int	command_not_found(t_data *minishell, char **paths);
+int	exec_fail(t_data *minishell, char **paths);
+void	permission_denied(t_data *minishell);
+void	no_such_file(t_data *minishell);
+void	empty_cmd(char *cmd);
 
 #endif

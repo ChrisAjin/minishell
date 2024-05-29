@@ -6,12 +6,13 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 19:58:42 by inbennou          #+#    #+#             */
-/*   Updated: 2024/05/27 20:02:42 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/05/29 14:21:43 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitest.h"
 
+// proteger appel de split paths
 char	**split_paths(t_list *env)
 {
 	t_list	*tmp;
@@ -35,3 +36,66 @@ char	**split_paths(t_list *env)
 	return (paths);
 }
 
+// waitpid renvoie -1 quand il n'y a plus d'enfant a attendre
+void	wait_and_error(t_data *minishell, int pid_lastchild)
+{
+	int	status;
+	int	error;
+	int	current_pid;
+
+	error = 0;
+	while (1)
+	{
+		current_pid = waitpid(-1, &status, 0);
+		if (pid_lastchild == current_pid)
+		{
+			if (WIFEXITED(status))
+				error = WEXITSTATUS(status);
+		}
+		if (current_pid < 0)
+			break ;
+	}
+	minishell->exit_code = error;
+}
+
+void	exec_middle_childs(t_data *minishell, int ac)
+{
+	int	pid;
+
+	// while cmd != ac, next ?
+	renew_pipe(minishell);
+	pid = fork();
+	
+}
+
+// ajouter temp fd a la struc avec pip
+// void	renew_pipe(t_data *minishell)
+// {
+// 	if (minishell->temp_fd != -1)
+// 		close(minishell->temp_fd);
+// 	minishell->temp_fd = minishell->pip[0];
+// 	close(minishell->pip[1]);
+// 	if (pipe(minishell->pip) < 0)
+// 		close_and_error(minishell, "Pipe error");
+// }
+
+int	close_all(t_data *minishell)
+{
+	while (minishell->cmd)
+	{
+		if (minishell->cmd->infile > 0)
+			close(minishell->cmd->infile);
+		if (minishell->cmd->outfile > 0)
+			close (minishell->cmd->outfile);
+		minishell->cmd->next;
+	}
+	return (0);
+}
+
+// que pour les childs, en cas d'erreur, apres le msg d'erreur
+int	close_fds()
+{
+	close(0);
+	close(1);
+	close(2);
+}

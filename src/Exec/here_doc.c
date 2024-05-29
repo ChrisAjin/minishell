@@ -6,11 +6,16 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 15:57:20 by inbennou          #+#    #+#             */
-/*   Updated: 2024/05/28 16:10:13 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/05/29 14:37:14 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitest.h"
+
+// recuperer tout dans une str avec un join qui free la str au debut
+// mettre la str dans la struct token
+// putstr fd la str directement dans le pipe si strlen < 65000
+// (avec un putstr fd qui ecrit char par char?)
 
 // ajouter un define pour LIM?
 // pour only child (pas pareil pour les pipes)
