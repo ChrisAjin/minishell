@@ -6,7 +6,7 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 21:55:35 by inbennou          #+#    #+#             */
-/*   Updated: 2024/05/27 17:58:13 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/05/29 16:16:56 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@
 // le chemin n'existe pas
 // permission denied
 // cd $var qui n'existe pas
+
+// faire cd dans un fichier supprime
 
 int	cd(char **tab, char **envp)
 {

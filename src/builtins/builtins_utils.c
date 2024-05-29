@@ -6,7 +6,7 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 15:31:03 by inbennou          #+#    #+#             */
-/*   Updated: 2024/05/27 17:37:21 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/05/29 15:44:22 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 // !!! tous les builtins doivent exit pour kill les childs !!!
 // lstadd back et lst delone pour export et unset
 // adapter env pour une liste chainee pas **tab
+
+// quand on affiche env ajouter 1 a SHLVL
 
 // prends en param la struct pour pouvoir tout free
 int	exec_builtin(char *line, char **envp)

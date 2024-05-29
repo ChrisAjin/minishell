@@ -6,19 +6,18 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 14:01:42 by inbennou          #+#    #+#             */
-/*   Updated: 2024/05/29 13:48:56 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/05/29 15:55:04 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 // open dans les childs pcq chacun peut avoir ses redir
-// !!! si on open dans le parent il faut tout close a la fin de la boucle
 // avant la fonction exec il faut init inf et outf sur stdin et stdout ou sur -1
 // gerer le cas ou on a juste un pipe a la fin ?
 // skip cmd ?
 
-// on compte here_doc comme une cmd s'il n'a pas de commande (ex: << LIM)
+// compter here_doc comme une cmd s'il n'a pas de commande (ex: << LIM) ?
 int	cmd_count(t_data *minishell)
 {
 	int	i;
@@ -26,14 +25,14 @@ int	cmd_count(t_data *minishell)
 	i = 0;
 	while (minishell->token)
 	{
-		if (minishell->token->type == 6)
+		if (minishell->token->type == CMD)
 			i++;
-		if (minishell->token->type == 2)
-		{
-			if (minishell->token->prev->type != 6
-				&& minishell->token->next->type != 6)
-				i++;
-		}
+		// if (minishell->token->type == HEREDOC)
+		// {
+		// 	if (minishell->token->prev->type != CMD
+		// 		&& minishell->token->next->type != CMD)
+		// 		i++;
+		// }
 		minishell->token->next;
 	}
 	return (i);
@@ -52,7 +51,7 @@ int	exec(t_data *minishell)
 		return (one_cmd(minishell));
 	else if (ac > 1)
 	{
-		while (ac > 1)
+		// while (ac > 1)
 			// exec middle children
 	}
 	// exec last child
