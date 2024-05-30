@@ -6,19 +6,11 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 16:35:57 by inbennou          #+#    #+#             */
-/*   Updated: 2024/05/26 16:18:37 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/05/29 18:08:38 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitest.h"
-
-// echo avc l'option -n /
-// cd /
-// pwd /
-// export
-// unset
-// env
-// exit /
 
 // idees redirections :
 // init infile à 0 et outfile à 1
@@ -34,6 +26,11 @@
 // exit_code doit etre une valeur de notre struct
 // creer un ac dans struct ou au debut de la fonction exec pour gerer les childs
 	// avoir une fonction qui compte le nbr de commandes
+
+// pouvoir lancer un programme
+// si on met juste entree exit code revient a 0
+// donc init exit_code a 0 au debut de la boucle
+
 int	main(int ac, char **av, char **envp)
 {
 	char	*line;
@@ -45,12 +42,11 @@ int	main(int ac, char **av, char **envp)
 		exit(1);
 	while (1)
 	{
-		line = readline("Minitest > ");
+		line = readline("minitest > ");
 		// rl_history
 		// if ctrl D
 		// 	break ;
 		// parsing
-			// init struct->ac
 		// exec
 		exec_builtin(line, envp);
 			// pipe (plusieurs cmds)
