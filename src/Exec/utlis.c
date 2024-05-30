@@ -6,7 +6,7 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 19:58:42 by inbennou          #+#    #+#             */
-/*   Updated: 2024/05/29 18:34:04 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/05/30 14:54:43 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,8 @@ void	exec_middle_childs(t_data *minishell, int ac)
 // 		close_and_error(minishell, "Pipe error");
 // }
 
-int	close_all(t_data *minishell)
+// avoir cmd_nbr pour savoir quels fds close ?
+int	close_all(t_data *minishell, int cmd_nbr)
 {
 	if (minishell->cmd->infile > 0)
 		close(minishell->cmd->infile);

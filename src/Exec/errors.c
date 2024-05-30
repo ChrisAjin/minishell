@@ -6,7 +6,7 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 14:40:48 by inbennou          #+#    #+#             */
-/*   Updated: 2024/05/29 13:44:08 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/05/30 15:02:07 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,4 +62,11 @@ void	empty_cmd(char *cmd)
 		close_fds();
 		exit(127);
 	}
+}
+
+void	dup2_error(t_data *minishell)
+{
+	// close all
+	// tout free ?
+	// exit(1);
 }
