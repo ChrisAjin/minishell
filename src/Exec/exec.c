@@ -6,12 +6,13 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 14:01:42 by inbennou          #+#    #+#             */
-/*   Updated: 2024/05/30 14:53:37 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/05/30 18:39:27 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+// faire une fonction qui recup env dans un **tab pour execve
 // open dans les childs pcq chacun peut avoir ses redir
 // avant la fonction exec il faut init inf et outf sur stdin et stdout ou sur -1
 // gerer le cas ou on a juste un pipe a la fin ?
