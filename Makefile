@@ -1,9 +1,9 @@
 NAME	=	minishell
 
 CC		=	cc
-FLAG	=	-Wall -Wextra -Werror -g3
+FLAG	=	-Wall -Wextra -Werror
 
-DIRLIB	=	./Libft/
+DIRLIB	=	./libft/
 FILELIB	=	libft.a
 NAMELFT	=	$(addprefix $(DIRLIB), $(FILELIB))
 

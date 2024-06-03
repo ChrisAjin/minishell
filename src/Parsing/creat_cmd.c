@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   creat_cmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 15:49:40 by cassassa          #+#    #+#             */
-/*   Updated: 2024/05/28 19:10:48 by cassassa         ###   ########.fr       */
+/*   Updated: 2024/06/03 16:13:25 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,7 @@ static bool norm(t_data *data, t_token *tmp)
 {
     if (!add_list_cmd(&data->cmd, -2, -2, NULL))
         free_all(data, ERR_MALLOC, EXT_MALLOC);
-    if (!fill_cmd(data, tmp))
-    {
-        data->exit_code = 2;
-        return (false);
-    }
+    (void)tmp;
     return (true);
 }
 bool create_list_cmd(t_data *data)

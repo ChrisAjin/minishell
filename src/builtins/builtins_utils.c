@@ -6,7 +6,7 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 15:31:03 by inbennou          #+#    #+#             */
-/*   Updated: 2024/05/30 18:51:00 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/05/29 17:58:00 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,10 @@
 
 // !!! tous les builtins doivent exit pour kill les childs !!!
 // lstadd back et lst delone pour export et unset
-// unset: si on unset PATH c'est pas que pour une boucle (utiiser un flag dans make env?)
-// export: regles a respecter dans les noms, voir cas s'il existe deja (ecrase l'ancien?)
 // adapter env pour une liste chainee pas **tab
 
 // quand on affiche env ajouter 1 a SHLVL
+// export: regles a respecter dans les noms, voir cas s'il existe deja (ecrase l'ancien?)
 
 // prends en param la struct pour pouvoir tout free
 int	exec_builtin(char *line, char **envp)

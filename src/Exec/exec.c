@@ -6,55 +6,61 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 14:01:42 by inbennou          #+#    #+#             */
-/*   Updated: 2024/06/03 15:12:15 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/03 18:11:10 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// faire une fonction qui recup env dans un **tab pour execve
 // open dans les childs pcq chacun peut avoir ses redir
 // avant la fonction exec il faut init inf et outf sur stdin et stdout ou sur -1
 // gerer le cas ou on a juste un pipe a la fin ?
-// skip cmd ?
 // comment parcourir les cmds pour les assigner au bon child ?
 
-// signaux:
-// ctrl C = SIGINT : display a new prompt on a new line
-// ctrl D = (EOF) : exits the shell
-// ctrl \ = SIGQUIT : rien
+// int	skip_prev(t_data *minishell, int cmd_nbr)
+// {
+	
+// }
 
-// compter here_doc comme une cmd s'il n'a pas de commande (ex: << LIM) ?
-int	cmd_count(t_data *minishell)
+int	type_count(t_data *minishell, int type, int cmd_nbr)
 {
 	int	i;
+	int	cmd;
 
 	i = 0;
+	cmd = 0;
+	// avancer jusqu'au debut du pipe de la cmd qui correspond
 	while (minishell->token)
 	{
 		if (minishell->token->type == CMD)
+			cmd += 1;
+		if (cmd == cmd_nbr)
+			break ;
+		minishell->token = minishell->token->next;
+	}
+	while (minishell->token)
+	{
+		if (minishell->token->type == PIPE)
+			break ;
+		minishell->token = minishell->token->next;
+	}
+	while (minishell->token && minishell->token->type != PIPE)
+	{
+		if (minishell->token->type == type)
 			i++;
-		// if (minishell->token->type == HEREDOC)
-		// {
-		// 	if (minishell->token->prev->type != CMD
-		// 		&& minishell->token->next->type != CMD)
-		// 		i++;
-		// }
-		minishell->token->next;
+		minishell->token = minishell->token->next;
 	}
 	return (i);
 }
 
 int	exec(t_data *minishell)
 {
-	int	ac;
-	// int	cmd_nbr;
+	int	cmd_nbr;
 
-	ac = cmd_count(minishell);
-	// cmd_nbr = 0;
-	if (ac == 0) // ou commande vide
-		return (0);
-	else if (ac == 1)
+	cmd_nbr = 0;
+	if (minishell->ac == 0)
+		return (0); // init exit code
+	else if (minishell->ac == 1)
 	{
 		if (one_cmd(minishell) < 0)
 		{

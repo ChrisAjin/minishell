@@ -6,19 +6,17 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 14:40:48 by inbennou          #+#    #+#             */
-/*   Updated: 2024/05/30 18:30:44 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/05/30 15:02:07 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitest.h"
 
-// perror au lieu de putstr fd ?
 int	command_not_found(t_data *minishell, char **paths)
 {
 	ft_putstr_fd("Command not found: ", 2);
 	ft_putendl_fd(minishell->cmd->cmd_param[0], 2);
 	// close_all
-	// close fds
 	// free tout
 	if (paths)
 		free_tab(paths);
@@ -28,7 +26,6 @@ int	command_not_found(t_data *minishell, char **paths)
 int	exec_fail(t_data *minishell, char **paths)
 {
 	// close_all
-	// close fds
 	// free tout
 	if (paths)
 		free_tab(paths);
@@ -41,7 +38,6 @@ void	permission_denied(t_data *minishell)
 	ft_putstr_fd("Command not found: ", 2);
 	// ft_putendl_fd(cmd, 2);
 	// close_all
-	// close fds
 	// free tout
 	exit(126);
 }
@@ -53,7 +49,6 @@ void	no_such_file(t_data *minishell)
 	// err_msg = ft_strjoin("No such file or directory: ", path/cmd);
 	ft_putendl_fd(err_msg, 2);
 	// close_all
-	// close fds
 	// free tout
 	free(err_msg);
 	exit(127);

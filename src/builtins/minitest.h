@@ -6,7 +6,7 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 15:31:13 by inbennou          #+#    #+#             */
-/*   Updated: 2024/05/29 17:15:35 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/03 18:04:12 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,6 @@
 # include <stdbool.h>
 # include <sys/stat.h>
 # include <sys/types.h>
-
-typedef struct s_cmd
-{
-	bool			skip_cmd;
-	int				infile;
-	int				outfile;
-	char			**cmd_param;
-	struct s_cmd	*prev;
-	struct s_cmd	*next;
-}					t_cmd;
 
 typedef struct s_token
 {
@@ -48,12 +38,11 @@ typedef struct s_list
 
 typedef struct s_data
 {
-	t_list			*env;
+	char			**env;
 	t_token			*token;
-	t_cmd			*cmd;
+	int				ac;
 	int				exit_code;
 	int				pip[2];
-	bool			sq;
 }					t_data;
 
 // builtins
