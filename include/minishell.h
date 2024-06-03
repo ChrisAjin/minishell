@@ -6,7 +6,7 @@
 /*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 16:45:40 by cassassa          #+#    #+#             */
-/*   Updated: 2024/05/28 18:50:41 by cassassa         ###   ########.fr       */
+/*   Updated: 2024/06/03 12:12:58 by cassassa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,9 @@ bool create_list_cmd(t_data *data);
 
 //list_cmd.c
 int	add_list_cmd(t_cmd **list, int infile, int outfile, char **cmd_param);
+
+//quotes.c
+int open_quote(t_data *data, char *line);
 
 //DEBUG.c
 void	print_token(t_token *token);

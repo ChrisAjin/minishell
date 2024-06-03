@@ -6,7 +6,7 @@
 /*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 16:44:44 by cassassa          #+#    #+#             */
-/*   Updated: 2024/05/28 19:01:54 by cassassa         ###   ########.fr       */
+/*   Updated: 2024/06/03 12:12:36 by cassassa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,11 @@ bool	empty_line(char *line)
 
 bool parsline (t_data *data, char *line)
 {
+	if (open_quote(data, line))
+	{
+		free(line);
+		return (false);
+	}
 	if(!create_list_token(&data->token, line))
 	{
 		free(line);
