@@ -6,7 +6,7 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 14:13:14 by inbennou          #+#    #+#             */
-/*   Updated: 2024/05/30 15:10:09 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/03 14:25:51 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int	middle_child(t_data *minishell, int cmd_nbr)
 		if (dup2(minishell->cmd->infile, STDIN_FILENO) < 0)
 			dup2_error(minishell, cmd_nbr);
 	else
-		if (dup2(minishell->pip[0], STDIN_FILENO) < 0)
+		if (dup2(minishell->pip[0], STDIN_FILENO) < 0) // temp_fd
 			dup2_error(minishell, cmd_nbr);
 	if (minishell->cmd->outfile > 0)
 		if (dup2(minishell->cmd->outfile, STDOUT_FILENO) < 0)

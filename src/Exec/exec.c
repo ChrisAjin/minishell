@@ -6,7 +6,7 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 14:01:42 by inbennou          #+#    #+#             */
-/*   Updated: 2024/05/30 18:39:27 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/03 15:12:15 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,11 @@
 // gerer le cas ou on a juste un pipe a la fin ?
 // skip cmd ?
 // comment parcourir les cmds pour les assigner au bon child ?
+
+// signaux:
+// ctrl C = SIGINT : display a new prompt on a new line
+// ctrl D = (EOF) : exits the shell
+// ctrl \ = SIGQUIT : rien
 
 // compter here_doc comme une cmd s'il n'a pas de commande (ex: << LIM) ?
 int	cmd_count(t_data *minishell)

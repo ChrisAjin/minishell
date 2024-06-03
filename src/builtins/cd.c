@@ -6,7 +6,7 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 21:55:35 by inbennou          #+#    #+#             */
-/*   Updated: 2024/05/29 18:01:31 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/05/31 12:31:25 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 // cd $var qui n'existe pas
 
 // tester cd dans un fichier supprime
+// chdir: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory
 
 int	cd(char **tab, char **envp)
 {
