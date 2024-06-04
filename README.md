@@ -4,7 +4,7 @@ Tâches à accomplir :
 
 ## Parsing
 
-- [ ] Ajouter la gestion des quotes
+- [x] Ajouter la gestion des quotes
 - [ ] Ajouter la gestion des dollars '$$'
 - [ ] Ajout de condition pour la gestion des tokens inattendus côté redirection
 - [ ] Gnl qui leak 
