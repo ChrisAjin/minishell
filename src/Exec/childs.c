@@ -6,11 +6,18 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 14:13:14 by inbennou          #+#    #+#             */
-/*   Updated: 2024/06/03 18:16:53 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/04 19:51:05 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitest.h"
+#include "minishell.h"
+
+// skip and fill
+// faire une fonction qui skip prev et recup cmd et args dans un tab
+// a utliser au debut de chaque child
+
+// j'ai retire empty cmd pcq gere dans le parsing normalement
+// peut etre remplace par un check de skip and fill si elle est a NULL
 
 int	only_child(t_data *minishell)
 {
@@ -20,39 +27,36 @@ int	only_child(t_data *minishell)
 		// exec_here_doc
 	// if redir
 		// open (outf soit > et >>)
-	if (infile != 0)
+	if (infile > 0)
 		if (dup2(infile, STDIN_FILENO) < 0)
-			dup2_error(minishell);
-	if (outfile != 1)
+			dup2_error(minishell, infile, outfile);
+	if (outfile > 0)
 		if (dup2(outfile, STDOUT_FILENO) < 0)
-			dup2_error(minishell);
-	// close_all(minishell);
-	empty_cmd(minishell->token->str);
+			dup2_error(minishell, infile, outfile);
+	close_all(minishell, infile, outfile);
 	// if (ft_strchr(command, '/') != 0)
 	// 	return (exec_path);
-	// if builtin
-		// return exec builtin
+	// exec builtin
 	// return (exec);
 }
 
-// init skip_cmd a true apres l'avoir exec? (dans le parent)
-int	first_child(t_data *minishell, int cmd_nbr)
+int	first_child(t_data *minishell, int child_nbr)
 {
 	int	infile;
 	int	outfile;
+	// skip prev
 	// if here_doc
 	// mettre inf et outf a -1 et open (inf et outf) si redir
 	if (infile > 0)
 		if (dup2(infile, STDIN_FILENO) < 0)
-			dup2_error(minishell, cmd_nbr);
+			dup2_error(minishell, infile, outfile);
 	if (outfile > 0)
 		if (dup2(outfile, STDOUT_FILENO) < 0)
-			dup2_error(minishell, cmd_nbr);
+			dup2_error(minishell, infile, outfile);
 	else
 		if (dup2(minishell->pip[1], STDOUT_FILENO) < 0)
-			dup2_error(minishell, cmd_nbr);
-	// close_all(minishell);
-	empty_cmd(minishell->token->str);
+			dup2_error(minishell, infile, outfile);
+	close_all(minishell, infile, outfile);
 	// if (ft_strchr(command, '/') != 0)
 	// 	return (exec_path);
 	// if builtin
@@ -60,27 +64,27 @@ int	first_child(t_data *minishell, int cmd_nbr)
 	// return (exec);
 }
 
-// middle child avec temp fd et cmd_nbr
-int	middle_child(t_data *minishell, int cmd_nbr)
+// middle child avec temp fd et child_nbr
+int	middle_child(t_data *minishell, int child_nbr)
 {
 	int	infile;
 	int	outfile;
-	// chercher la bonne cmd avec cmd_nbr
+	// chercher la bonne cmd avec child_nbr
 	// if here doc
 	// if redir open
 	if (infile > 0)
 		if (dup2(infile, STDIN_FILENO) < 0)
-			dup2_error(minishell, cmd_nbr);
+			dup2_error(minishell, infile, outfile);
 	else
 		if (dup2(minishell->pip[0], STDIN_FILENO) < 0)
-			dup2_error(minishell, cmd_nbr);
+			dup2_error(minishell, infile, outfile);
 	if (outfile > 0)
 		if (dup2(outfile, STDOUT_FILENO) < 0)
-			dup2_error(minishell, cmd_nbr);
+			dup2_error(minishell, infile, outfile);
 	else
 		if (dup2(minishell->pip[1], STDOUT_FILENO) < 0)
-			dup2_error(minishell, cmd_nbr);
-	// close_all(minishell)
+			dup2_error(minishell, infile, outfile);
+	close_all(minishell, infile, outfile);
 	// if builtin
 		// return exec builtin
 	// if (ft_strchr(cmd, '/') != 0)
@@ -88,7 +92,7 @@ int	middle_child(t_data *minishell, int cmd_nbr)
 	// return find and exec
 }
 
-int	last_child(t_data *minishell, int cmd_nbr)
+int	last_child(t_data *minishell, int child_nbr)
 {
 	int	infile;
 	int	outfile;
@@ -96,17 +100,17 @@ int	last_child(t_data *minishell, int cmd_nbr)
 	// if redir --> open (inf et outf)
 	if (infile > 0)
 		if (dup2(infile, STDIN_FILENO) < 0)
-			dup2_error(minishell, cmd_nbr);
+			dup2_error(minishell, infile, outfile);
 	else
 		if (dup2(minishell->pip[0], STDIN_FILENO) < 0)
-			dup2_error(minishell, cmd_nbr);
+			dup2_error(minishell, infile, outfile);
 	if (outfile != 1)
 		if (dup2(outfile, STDOUT_FILENO) < 0)
-			dup2_error(minishell, cmd_nbr);
+			dup2_error(minishell, infile, outfile);
 	else
 		if (dup2(minishell->pip[1], STDOUT_FILENO) < 0)
-			dup2_error(minishell, cmd_nbr);
-	// close_all(minishell);
+			dup2_error(minishell, infile, outfile);
+	close_all(minishell, infile, outfile);
 	empty_cmd(minishell->token->str);
 	//  if (ft_strchr(command, '/') != 0)
 	// 	return (exec_path);

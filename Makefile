@@ -58,7 +58,7 @@ clean :
 	@echo "$(MAGENTA)Minishell objects cleaned !$(DEF_COLOR)"
 
 fclean : clean
-	@ make clean -sC $(DIRLIB)
+	@ make fclean -sC $(DIRLIB)
 	@rm -rf $(NAME)
 	@rm -rf $(NAME_B)
 	@echo "$(YELLOW)Minishell cleaned !$(DEF_COLOR)"

@@ -6,33 +6,31 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 19:58:42 by inbennou          #+#    #+#             */
-/*   Updated: 2024/05/30 14:54:43 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/04 20:03:43 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitest.h"
+#include "minishell.h"
 
 // !!! proteger l'appel de split paths
-char	**split_paths(t_list *env)
+char	**split_path(char **env)
 {
-	t_list	*tmp;
 	int		i;
 	char	**paths;
 
-	tmp = env;
 	i = 0;
 	paths = NULL;
 	if (!env)
 		return (paths);
-	while (tmp)
+	while (env[i])
 	{
-		if (ft_strncmp(tmp->str, "PATH", 4) == 0)
+		if (ft_strncmp(env[i], "PATH", 4) == 0)
 			break ;
-		tmp = tmp->next;
+		i++;
 	}
-	if (tmp == NULL)
+	if (env[i] == NULL)
 		return (NULL);
-	paths = ft_split(tmp->str + 5, ':');
+	paths = ft_split(env[i] + 5, ':');
 	return (paths);
 }
 
@@ -58,43 +56,47 @@ void	wait_and_error(t_data *minishell, int pid_lastchild)
 	minishell->exit_code = error;
 }
 
-void	exec_middle_childs(t_data *minishell, int ac)
+int	exec_middle_childs(t_data *minishell, int child_nbr)
 {
 	int	pid;
 
-	// while cmd != ac, next ?
-	renew_pipe(minishell);
+	if (renew_pipe(minishell) < 0)
+		return (-1);
 	pid = fork();
-	// proteger fork
-	// if (pid == 0)
-		// middle child
-	// equivalent de i++
-	// if derniere cmd
-		// close temp fd
+	if (pid < 0)
+	{
+		perror("fork error");
+		return (-1);
+	}
+	if (pid == 0)
+		middle_child(minishell, child_nbr);
+	return (0);
 }
 
-// ajouter temp fd a la struc avec pip
-// void	renew_pipe(t_data *minishell)
-// {
-// 	if (minishell->temp_fd != -1)
-// 		close(minishell->temp_fd);
-// 	minishell->temp_fd = minishell->pip[0];
-// 	close(minishell->pip[1]);
-// 	if (pipe(minishell->pip) < 0)
-// 		close_and_error(minishell, "Pipe error");
-// }
-
-// avoir cmd_nbr pour savoir quels fds close ?
-int	close_all(t_data *minishell, int cmd_nbr)
+int	renew_pipe(t_data *minishell)
 {
-	if (minishell->cmd->infile > 0)
-		close(minishell->cmd->infile);
-	if (minishell->cmd->outfile > 0)
-		close(minishell->cmd->outfile);
+	if (minishell->temp_fd != -1)
+		close(minishell->temp_fd);
+	minishell->temp_fd = minishell->pip[0];
+	close(minishell->pip[1]);
+	if (pipe(minishell->pip) < 0)
+	{
+		perror("pipe error");
+		return (-1);
+	}
+	return (0);
+}
+
+int	close_all(t_data *minishell, int infile, int outfile)
+{
+	if (infile > 0)
+		close(infile);
+	if (outfile > 0)
+		close(outfile);
 	close(minishell->pip[0]);
 	close(minishell->pip[1]);
-	// if (minishell->temp_fd > 0)
-	// 	close(minishell->temp_fd);
+	if (minishell->temp_fd > 0)
+		close(minishell->temp_fd);
 	return (0);
 }
 
