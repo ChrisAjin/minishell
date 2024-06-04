@@ -6,11 +6,11 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 16:18:23 by inbennou          #+#    #+#             */
-/*   Updated: 2024/05/29 17:02:05 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/04 19:10:32 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitest.h"
+#include "minishell.h"
 
 void	pwd(void)
 {

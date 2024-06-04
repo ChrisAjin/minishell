@@ -6,70 +6,116 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 14:01:42 by inbennou          #+#    #+#             */
-/*   Updated: 2024/05/30 14:53:37 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/04 20:04:24 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+// typedef struct s_exec
+// {
+// 	int				infile;
+// 	int				outfile;
+// 	int				temp_fd;
+// 	char			**paths;
+// }				t_exec;
+
+// void	init_exec(t_exec *exec, t_data *minishell)
+// {
+// 	exec->infile = -1;
+// 	exec->outfile = -1;
+// 	exec->temp_fd = -1;
+// 	exec->paths = split_path(minishell->env);
+// 	// exec->cmd_param = fill_cmd();
+// }
+
 // open dans les childs pcq chacun peut avoir ses redir
 // avant la fonction exec il faut init inf et outf sur stdin et stdout ou sur -1
 // gerer le cas ou on a juste un pipe a la fin ?
-// skip cmd ?
 // comment parcourir les cmds pour les assigner au bon child ?
 
-// compter here_doc comme une cmd s'il n'a pas de commande (ex: << LIM) ?
-int	cmd_count(t_data *minishell)
-{
-	int	i;
+// skip (child nbr - 1) pipe
+// int	skip_prev(t_data *minishell, int child_nbr)
+// {
+	
+// }
 
-	i = 0;
-	while (minishell->token)
-	{
-		if (minishell->token->type == CMD)
-			i++;
-		// if (minishell->token->type == HEREDOC)
-		// {
-		// 	if (minishell->token->prev->type != CMD
-		// 		&& minishell->token->next->type != CMD)
-		// 		i++;
-		// }
-		minishell->token->next;
-	}
-	return (i);
-}
+// struct avec
+// infile // pour child
+// outfile // pour child
+// tab avec cmd et args (skip et fill) // pour parent
+// tab de paths (if env et if PATH) // pour parent
 
 int	exec(t_data *minishell)
 {
-	int	ac;
-	// int	cmd_nbr;
+	int	child_nbr;
 
-	ac = cmd_count(minishell);
-	// cmd_nbr = 0;
-	if (ac == 0) // ou commande vide
-		return (0);
-	else if (ac == 1)
+	child_nbr = 0;
+	if (type_count(minishell, PIPE, 0) == 0)
 	{
 		if (one_cmd(minishell) < 0)
-		{
-			// exit code = 1;
-			// return (1);
-		}
+			minishell->exit_code = 1;
+		return (0);
 	}
-	else if (ac > 1)
+	else if (type_count(minishell, PIPE, 0) >= 1)
 	{
-		// first child
-		// cmd_nbr += 1
-		// while (cmd_nbr < ac)
-			// exec middle childs
-			// cmd_nbr++;
-		// close temp_fd
+		if (exec_first_child(minishell, child_nbr) < 0)
+		{
+			minishell->exit_code = 1;
+			close_all(minishell, -1, -1);
+			return (0);
+		}
+		child_nbr += 1;
+		// -2 pcq pas la derniere cmd et il y a un pipe de moins qu'il y a de child
+		while (child_nbr < type_count(minishell, PIPE, 0) - 2)
+		{
+			if (exec_middle_childs(minishell, child_nbr) < 0)
+			{
+				minishell->exit_code = 1;
+				close_all(minishell, -1, -1);
+				return (0);
+			}
+			child_nbr += 1;
+		}
+		// close temp_fd if > 0
 	}
-	// exec last child
-	// close all
-	// free tout
-	// exit_code = wait and error(pid only child ou last child);
-	// return 0
+	if (exec_last_child(minishell, child_nbr) < 0)
+	{
+		minishell->exit_code = 1;
+		close_all(minishell, -1, -1);
+		return (0);
+	}
+	close_all(minishell, -1, -1);
+	return (0);
+}
+
+int	exec_last_child(t_data *minishell, int child_nbr)
+{
+	int	pid;
+
+	pid = fork();
+	if (pid < 0)
+	{
+		perror("fork error");
+		return (-1);
+	}
+	last_child(minishell, child_nbr);
+	wait_and_error(minishell, pid);
+	return (0);
+}
+
+int	exec_first_child(t_data *minishell, int child_nbr)
+{
+	int	pid;
+
+	pid = fork();
+	if (pid < 0)
+	{
+		perror("fork error");
+		return (-1);
+	}
+	first_child(minishell, child_nbr);
+	return (0);
 }
 
 int	one_cmd(t_data *minishell)
@@ -83,13 +129,13 @@ int	one_cmd(t_data *minishell)
 		return (-1);
 	}
 	if (pid == 0)
-		// only child
-	// init exit code
+		only_child(minishell);
+	wait_and_error(minishell, pid);
 	return (0);
 }
 
 // pour commande sans path
-// int	find_and_exec(t_data *minishell, int cmd_nbr)
+// int	find_and_exec(t_data *minishell, int child_nbr)
 // {
 	// split paths
 	// split args
@@ -108,7 +154,7 @@ int	one_cmd(t_data *minishell)
 // }
 
 // pour commande avec path
-// int	exec_path(t_data *minishell, int cmd_nbr)
+// int	exec_path(t_data *minishell, int child_nbr)
 // {
 	// split args
 	// proteger split
@@ -118,4 +164,35 @@ int	one_cmd(t_data *minishell)
 	// if (access(args[0], F_OK) < 0)
 		// no such file
 	// permision denied
+// }
+
+// int	type_count(t_data *minishell, int type, int child_nbr)
+// {
+// 	int	i;
+// 	int	cmd;
+
+// 	i = 0;
+// 	cmd = 0;
+// 	// avancer jusqu'au debut du pipe de la cmd qui correspond
+// 	while (minishell->token)
+// 	{
+// 		if (minishell->token->type == CMD)
+// 			cmd += 1;
+// 		if (cmd == child_nbr)
+// 			break ;
+// 		minishell->token = minishell->token->next;
+// 	}
+// 	while (minishell->token)
+// 	{
+// 		if (minishell->token->type == PIPE)
+// 			break ;
+// 		minishell->token = minishell->token->next;
+// 	}
+// 	while (minishell->token && minishell->token->type != PIPE)
+// 	{
+// 		if (minishell->token->type == type)
+// 			i++;
+// 		minishell->token = minishell->token->next;
+// 	}
+// 	return (i);
 // }

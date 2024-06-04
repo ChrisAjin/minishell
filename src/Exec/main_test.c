@@ -6,11 +6,11 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 16:35:57 by inbennou          #+#    #+#             */
-/*   Updated: 2024/05/29 18:08:38 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/04 19:10:45 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitest.h"
+#include "minishell.h"
 
 // idees redirections :
 // init infile à 0 et outfile à 1

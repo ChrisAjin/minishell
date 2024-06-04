@@ -1,9 +1,9 @@
 NAME	=	minishell
 
 CC		=	cc
-FLAG	=	-Wall -Wextra -Werror -g3
+FLAG	=	-Wall -Wextra -Werror
 
-DIRLIB	=	./Libft/
+DIRLIB	=	./libft/
 FILELIB	=	libft.a
 NAMELFT	=	$(addprefix $(DIRLIB), $(FILELIB))
 
@@ -58,7 +58,7 @@ clean :
 	@echo "$(MAGENTA)Minishell objects cleaned !$(DEF_COLOR)"
 
 fclean : clean
-	@ make clean -sC $(DIRLIB)
+	@ make fclean -sC $(DIRLIB)
 	@rm -rf $(NAME)
 	@rm -rf $(NAME_B)
 	@echo "$(YELLOW)Minishell cleaned !$(DEF_COLOR)"

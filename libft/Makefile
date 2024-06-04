@@ -20,13 +20,13 @@ INCLUDES = -I
 SRC = $(addprefix $(SRC_DIR), $(addsuffix .c, $(SRCS)))
 OBJS = $(addprefix $(OBJ_DIR), $(addsuffix .o, $(SRCS)))
 
-CC = gcc
+CC = cc
 
 CFLAGS = -Wall -Wextra -Werror
 
 AR = ar rc
 
-RM = rm -f
+RM = rm -rf
 
 OBJF = .cache_exits
 
@@ -43,6 +43,7 @@ all:		${NAME}
 
 clean:
 			${RM} ${OBJS} $(BONUS_OBJS)
+			${RM} ${OBJ_DIR}
 
 fclean:		clean
 			${RM} ${NAME}

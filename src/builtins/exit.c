@@ -6,11 +6,11 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 16:16:04 by inbennou          #+#    #+#             */
-/*   Updated: 2024/05/29 18:02:13 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/04 19:10:21 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitest.h"
+#include "minishell.h"
 
 // prends la struct en param pour tout free
 // exit prends 1 arg = exit_code

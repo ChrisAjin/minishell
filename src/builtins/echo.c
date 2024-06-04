@@ -6,14 +6,15 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 19:16:00 by inbennou          #+#    #+#             */
-/*   Updated: 2024/05/29 18:01:57 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/04 19:10:14 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitest.h"
+#include "minishell.h"
 
 // gerer les quotes
 // gerer les $
+// gerer echo $?
 // implementer le cas option non reconnue ?
 void	echo(char **tab)
 {
