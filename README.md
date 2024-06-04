@@ -1,20 +1,14 @@
-# Mon Projet
+# minishell
 
-Bienvenue dans mon projet ! Voici quelques tâches à accomplir :
+Tâches à accomplir :
 
-## Tâches
+## Parsing
 
-- [x] Initialiser le dépôt Git
-- [x] Créer un fichier README
-- [ ] Développer la fonctionnalité principale
-- [ ] Écrire des tests unitaires
-- [ ] Mettre en place l'intégration continue
-- [ ] Documenter l'utilisation du projet
+- [ ] Ajouter la gestion des quotes
+- [ ] Ajouter la gestion des dollars '$$'
+- [ ] Ajoute de condition pour la gestions des unexpected token coté redirection
+- [ ] Gnl qui leak
+- [ ]
+- [ ] 
 
-## Installation
-
-Instructions pour installer le projet.
-
-```bash
-git clone https://github.com/votre-utilisateur/votre-projet.git
-cd votre-projet
+## Exec
