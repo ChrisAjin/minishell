@@ -6,7 +6,7 @@ Tâches à accomplir :
 
 - [ ] Ajouter la gestion des quotes
 - [ ] Ajouter la gestion des dollars '$$'
-- [ ] Ajoute de condition pour la gestions des unexpected token coté redirection
+- [ ] Ajout de condition pour la gestion des tokens inattendus côté redirection
 - [ ] Gnl qui leak 
 
 ## Exec
