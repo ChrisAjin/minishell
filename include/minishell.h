@@ -6,7 +6,7 @@
 /*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 16:45:40 by cassassa          #+#    #+#             */
-/*   Updated: 2024/06/05 00:27:57 by cassassa         ###   ########.fr       */
+/*   Updated: 2024/06/05 00:54:54 by cassassa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,8 @@ typedef struct s_data
 	int				exit_code;
 	int				pip[2];
 	int				temp_fd;
-	bool			sq;
+	bool			simpleq;
+	bool			doubleq;
 }					t_data;
 // main.c
 int					make_env(t_data *data, char **env);

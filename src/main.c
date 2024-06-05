@@ -6,7 +6,7 @@
 /*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 16:44:44 by cassassa          #+#    #+#             */
-/*   Updated: 2024/06/03 12:12:36 by cassassa         ###   ########.fr       */
+/*   Updated: 2024/06/05 00:55:41 by cassassa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ void	init_data(t_data *data, int argc, char **argv)
 	data->exit_code = 0;
 	data->pip[0] = -1;
 	data->pip[1] = -1;
+	data->temp_fd = 0;
 	/*init signal a add*/
 	g_signal_pid = 0;
 	//signals();
@@ -72,7 +73,7 @@ bool parsline (t_data *data, char *line)
 		free(line);
 		return (false);
 	}
-	if(!create_list_token(&data->token, line))
+	if(!create_list_token(&data->token, line) || !replace_dollar(&line, data))
 	{
 		free(line);
 		free_all(data,ERR_MALLOC, EXT_MALLOC);
