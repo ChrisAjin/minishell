@@ -28,7 +28,8 @@ WHITE		= \033[0;97m
 FILES	=	main tools_list  creat_list_token \
 			utils free list_token\
 			creat_cmd cmd_fd cmd_param \
-			debug print_error list_cmd
+			debug print_error list_cmd \
+			dollar_env dollar_replace quotes
 
 SRCS	=	$(addprefix $(SRC_DIR), $(addsuffix .c, $(FILES)))
 OBJS	=	$(addprefix $(OBJ_DIR), $(addsuffix .o, $(FILES)))

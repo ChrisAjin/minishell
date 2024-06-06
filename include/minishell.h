@@ -6,7 +6,7 @@
 /*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 16:45:40 by cassassa          #+#    #+#             */
-/*   Updated: 2024/06/05 00:54:54 by cassassa         ###   ########.fr       */
+/*   Updated: 2024/06/06 14:52:35 by cassassa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,11 +80,14 @@ int					make_env(t_data *data, char **env);
 // Tools_list.c
 int					free_list(t_list **list);
 int					add_to_list(t_list **list, char *elem);
+size_t	len_list(t_list *list);
+
 // utils.c
 bool				is_space(char c);
 int					is_special(char *str);
 bool				check_pipe(t_data *data);
 bool				make_env2(t_data *data);
+char	**list_to_arr(t_list *env);
 
 // print_error.c
 bool				print_error_token(t_token *token, t_data *data);
@@ -93,6 +96,7 @@ bool				print_error_token(t_token *token, t_data *data);
 void				free_all(t_data *data, char *err, int ext);
 void				free_array(char **arr);
 void				free_cmd(t_cmd **list);
+bool	print_error(char *str);
 // list_token.c
 int					add_to_list_token(t_token **list, char *str, int type);
 void				free_token(t_token **list);
@@ -116,12 +120,20 @@ int					add_list_cmd(t_cmd **list, int infile, int outfile,
 
 //quotes.c
 int open_quote(t_data *data, char *line);
+void quoting_choice(bool *doubleq, bool *simpleq, int *index, char c);
+
+/* dollar_env */
+int		exist_in_env(char *line, int *i, t_data *data);
+char	*get_elem_env(t_list *env, char *key);
+char	*get_dollar_word(char *line, int size);
+
+/* dollar_replace */
+int		add_dollar(char *line, int *index, char **str, t_data *data);
+int		add_char(char *c, char **str, t_data *data, int *index);
+int		replace_dollar(char **line, t_data *data);
 
 //DEBUG.c
 void	print_token(t_token *token);
-
-// DEBUG.c
-void				print_token(t_token *token);
 
 // exec.c
 int					skip_prev(t_data *minishell, int child_nbr);

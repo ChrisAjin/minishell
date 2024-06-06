@@ -6,11 +6,18 @@
 /*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 12:40:07 by cassassa          #+#    #+#             */
-/*   Updated: 2024/05/28 18:57:34 by cassassa         ###   ########.fr       */
+/*   Updated: 2024/06/06 14:51:25 by cassassa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+bool	print_error(char *str)
+{
+	if (str)
+		write(2, str, ft_strlen(str));
+	return (true);
+}
 
 void	free_array(char **arr)
 {

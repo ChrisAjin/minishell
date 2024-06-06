@@ -6,11 +6,36 @@
 /*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 12:32:17 by cassassa          #+#    #+#             */
-/*   Updated: 2024/05/28 18:45:57 by cassassa         ###   ########.fr       */
+/*   Updated: 2024/06/06 14:52:17 by cassassa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+char	**list_to_arr(t_list *env)
+{
+	t_list	*lst;
+	char	**dest;
+	int		i;
+
+	dest = NULL;
+	i = 0;
+	lst = env;
+	dest = (char **)malloc(sizeof(char *) * (len_list(lst) + 1));
+	if (!dest)
+		return (NULL);
+	dest[i] = (lst->str);
+	lst = lst->next;
+	i++;
+	while (lst != env)
+	{
+		dest[i] = (lst->str);
+		lst = lst->next;
+		i++;
+	}
+	dest[i] = NULL;
+	return (dest);
+}
 
 bool	is_space(char c)
 {
