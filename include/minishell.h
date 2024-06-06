@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 16:45:40 by cassassa          #+#    #+#             */
-/*   Updated: 2024/06/06 14:52:35 by cassassa         ###   ########.fr       */
+/*   Updated: 2024/06/06 15:39:51 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,10 @@
 # include <sys/stat.h>
 # include <sys/types.h>
 # include <sys/wait.h>
+# include <errno.h>
+// # include <stdarg.h>
+// # include <stddef.h>
+// # include <string.h>
 
 # define INPUT 1   //"<"
 # define HEREDOC 2 //"<<"

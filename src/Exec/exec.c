@@ -6,7 +6,7 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 14:01:42 by inbennou          #+#    #+#             */
-/*   Updated: 2024/06/04 20:04:24 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/06 12:52:58 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,31 @@
 // gerer le cas ou on a juste un pipe a la fin ?
 // comment parcourir les cmds pour les assigner au bon child ?
 
+// <
+// infile
+// ls
+// |
+// echo
+// a
+// |
+// unset
+// PATH
+
 // skip (child nbr - 1) pipe
-// int	skip_prev(t_data *minishell, int child_nbr)
-// {
-	
-// }
+char	**skip_and_fill(t_data *minishell, int child_nbr)
+{
+	char	**cmd;
+
+	cmd = NULL;
+	while (minishell->token && minishell->token->type != PIPE)
+		minishell->token = minishell->token->next;
+	if (minishell->token)
+		minishell->token = minishell->token->next;
+	while (minishell->token && minishell->token->type != PIPE)
+	{
+		cmd[0] = ft_strdup(minishell->token->str);
+	}
+}
 
 // struct avec
 // infile // pour child
@@ -51,6 +71,7 @@ int	exec(t_data *minishell)
 	int	child_nbr;
 
 	child_nbr = 0;
+	// fonction qui recup env dans un char **
 	if (type_count(minishell, PIPE, 0) == 0)
 	{
 		if (one_cmd(minishell) < 0)
