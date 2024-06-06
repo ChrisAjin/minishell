@@ -6,37 +6,35 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 14:13:14 by inbennou          #+#    #+#             */
-/*   Updated: 2024/06/06 12:39:31 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/06 18:36:24 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-// skip and fill
-// faire une fonction qui skip prev et recup cmd et args dans un tab
-// a utliser au debut de chaque child
 
 // j'ai retire empty cmd pcq gere dans le parsing normalement
 // peut etre remplace par un check de skip and fill si elle est a NULL
 
 int	only_child(t_data *minishell)
 {
-	int	infile;
-	int	outfile;
 	// if (minishell->token->type == 2)
 		// exec_here_doc
-	// if redir
-		// open (outf soit > et >>)
-	if (infile > 0)
-		if (dup2(infile, STDIN_FILENO) < 0)
-			dup2_error(minishell, infile, outfile);
-	if (outfile > 0)
-		if (dup2(outfile, STDOUT_FILENO) < 0)
-			dup2_error(minishell, infile, outfile);
-	close_all(minishell, infile, outfile);
-	// if (ft_strchr(command, '/') != 0)
+	open_infile(minishell, 1, infile_count(minishell, 1));
+	if (infile_count(minishell, 1) != 0 && minishell->cmd->infile < 0)
+		minishell->cmd->outfile = -1;
+	else
+		open_outfile(minishell, 1, outfile_count(minishell, 1));
+	if (minishell->cmd->infile > 0)
+		if (dup2(minishell->cmd->infile, STDIN_FILENO) < 0)
+			dup2_error(minishell, minishell->cmd->infile, minishell->cmd->outfile);
+	if (minishell->cmd->outfile > 0)
+		if (dup2(minishell->cmd->outfile, STDOUT_FILENO) < 0)
+			dup2_error(minishell, minishell->cmd->infile, minishell->cmd->outfile);
+	close_all(minishell, minishell->cmd->infile, minishell->cmd->outfile);
+	// if (ft_strchr(command[0], '/') != 0)
 	// 	return (exec_path);
 	// exec builtin
+	// 	exit 0
 	// return (exec);
 }
 

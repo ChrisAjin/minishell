@@ -6,13 +6,15 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 15:31:03 by inbennou          #+#    #+#             */
-/*   Updated: 2024/06/04 19:09:59 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/06 18:04:35 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// !!! tous les builtins doivent exit pour kill les childs !!!
+// cd export unset et exit faut pas fork quand c'est une seule commande
+
+// !!! tous les builtins doivent exit pour kill les childs !!! sinon exit apres exec builtin
 // adapter env pour une liste chainee pas **tab
 
 // export: regles a respecter dans les noms, voir cas s'il existe deja (ecrase l'ancien?)

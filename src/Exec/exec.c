@@ -6,66 +6,69 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 14:01:42 by inbennou          #+#    #+#             */
-/*   Updated: 2024/06/06 12:52:58 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/06 18:13:43 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-// typedef struct s_exec
-// {
-// 	int				infile;
-// 	int				outfile;
-// 	int				temp_fd;
-// 	char			**paths;
-// }				t_exec;
-
-// void	init_exec(t_exec *exec, t_data *minishell)
-// {
-// 	exec->infile = -1;
-// 	exec->outfile = -1;
-// 	exec->temp_fd = -1;
-// 	exec->paths = split_path(minishell->env);
-// 	// exec->cmd_param = fill_cmd();
-// }
 
 // open dans les childs pcq chacun peut avoir ses redir
 // avant la fonction exec il faut init inf et outf sur stdin et stdout ou sur -1
 // gerer le cas ou on a juste un pipe a la fin ?
 // comment parcourir les cmds pour les assigner au bon child ?
 
-// <
-// infile
-// ls
-// |
-// echo
-// a
-// |
-// unset
-// PATH
+// void	skip_prev(t_token **tmp, int child_nbr)
+// {
+// 	int	pipe;
+
+// 	pipe = 0;
+// 	while (*tmp && pipe != child_nbr - 1)
+// 	{
+// 		if ((*tmp)->type == PIPE)
+// 			pipe++;
+// 		tmp = (*tmp)->next;
+// 	}
+// 	if ((*tmp)->type == PIPE)
+// 		*tmp = (*tmp)->next;
+// }
 
 // skip (child nbr - 1) pipe
-char	**skip_and_fill(t_data *minishell, int child_nbr)
-{
-	char	**cmd;
-
-	cmd = NULL;
-	while (minishell->token && minishell->token->type != PIPE)
-		minishell->token = minishell->token->next;
-	if (minishell->token)
-		minishell->token = minishell->token->next;
-	while (minishell->token && minishell->token->type != PIPE)
-	{
-		cmd[0] = ft_strdup(minishell->token->str);
-	}
-}
+// il faut malloc cmd avant de faire des dups dessus
+// char	**skip_and_fill(t_data *minishell, int child_nbr)
+// {
+// 	t_token	*tmp;
+// 	char	**cmd;
+// 	int	i;
+// 	int	len;
+//
+// 	tmp = minishell->token;
+// 	cmd = NULL;
+// 	i = 0;
+// 	len = 0;
+// 	skip_prev(&tmp, child_nbr);
+// 	while (tmp && tmp->type != PIPE)
+// 	{
+// 		len++;
+// 		tmp = tmp->next;
+// 	}
+// 	cmd = malloc((len + 1) * sizeof(char *));
+// 	if (!cmd)
+// 		return (NULL);
+// 	while (tmp && tmp->type != PIPE)
+// 	{
+// 		cmd[i] = ft_strdup(tmp->str);
+// 		tmp = tmp->next;
+// 		i++;
+// 	}
+// 	return (cmd);
+// }
 
 // struct avec
 // infile // pour child
 // outfile // pour child
 // tab avec cmd et args (skip et fill) // pour parent
 // tab de paths (if env et if PATH) // pour parent
-
+ 
 int	exec(t_data *minishell)
 {
 	int	child_nbr;
@@ -80,15 +83,14 @@ int	exec(t_data *minishell)
 	}
 	else if (type_count(minishell, PIPE, 0) >= 1)
 	{
-		if (exec_first_child(minishell, child_nbr) < 0)
+		if (exec_first_child(minishell, child_nbr) < 0) // child nbr = 1 pas 0
 		{
 			minishell->exit_code = 1;
 			close_all(minishell, -1, -1);
 			return (0);
 		}
-		child_nbr += 1;
-		// -2 pcq pas la derniere cmd et il y a un pipe de moins qu'il y a de child
-		while (child_nbr < type_count(minishell, PIPE, 0) - 2)
+		child_nbr += 1; // remplacer par un skip cmd qui avance jusqu'au prochain pipe
+		while (child_nbr < type_count(minishell, PIPE, 0) - 2) // -2 pcq pas la derniere cmd et il y a un pipe de moins qu'il y a de child
 		{
 			if (exec_middle_childs(minishell, child_nbr) < 0)
 			{
@@ -143,16 +145,19 @@ int	one_cmd(t_data *minishell)
 {
 	int	pid;
 
-	pid = fork();
-	if (pid < 0)
-	{
-		perror("fork error");
-		return (-1);
-	}
-	if (pid == 0)
-		only_child(minishell);
-	wait_and_error(minishell, pid);
-	return (0);
+	// if builtin sans fork
+		// exec
+	// else
+		pid = fork();
+		if (pid < 0)
+		{
+			perror("fork error");
+			return (-1);
+		}
+		if (pid == 0)
+			only_child(minishell);
+		wait_and_error(minishell, pid);
+		return (0);
 }
 
 // pour commande sans path

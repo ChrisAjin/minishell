@@ -6,7 +6,7 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 16:45:40 by cassassa          #+#    #+#             */
-/*   Updated: 2024/06/06 15:39:51 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/06 17:43:31 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,7 @@ int		replace_dollar(char **line, t_data *data);
 void	print_token(t_token *token);
 
 // exec.c
-int					skip_prev(t_data *minishell, int child_nbr);
+void					skip_prev(t_token **tmp, int child_nbr);
 int					exec(t_data *minishell);
 int					one_cmd(t_data *minishell);
 int					find_and_exec(t_data *minishell, int child_nbr);
@@ -168,6 +168,12 @@ int					exec_middle_childs(t_data *minishell, int child_nbr);
 int					renew_pipe(t_data *minishell);
 int					close_all(t_data *minishell, int infile, int outfile);
 int					close_fds(void);
+
+// open
+int					infile_count(t_data *minishell, int child_nbr);
+int					outfile_count(t_data *minishell, int child_nbr);
+void					open_infile(t_data *minishell, int child_nbr, int inf_count);
+void					open_outfile(t_data *minishell, int child_nbr, int inf_count);
 
 // builtins
 int					exec_builtin(char *line, char **envp);
