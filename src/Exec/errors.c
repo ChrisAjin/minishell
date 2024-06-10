@@ -6,17 +6,17 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 14:40:48 by inbennou          #+#    #+#             */
-/*   Updated: 2024/06/04 20:06:38 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/10 14:34:15 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	command_not_found(t_data *minishell, char **paths, int infile, int outfile)
+int	command_not_found(t_data *minishell, char **paths)
 {
 	ft_putstr_fd("Command not found: ", 2);
 	// ft_putendl_fd(cmd, 2);
-	close_all(minishell, infile, outfile);
+	close_all(minishell);
 	close_fds();
 	// free tout
 	if (paths)
@@ -24,9 +24,9 @@ int	command_not_found(t_data *minishell, char **paths, int infile, int outfile)
 	exit(127);
 }
 
-int	exec_fail(t_data *minishell, char **paths, int infile, int outfile)
+int	exec_fail(t_data *minishell, char **paths)
 {
-	close_all(minishell, infile, outfile);
+	close_all(minishell);
 	close_fds();
 	// free tout
 	if (paths)
@@ -35,29 +35,29 @@ int	exec_fail(t_data *minishell, char **paths, int infile, int outfile)
 	exit(1);
 }
 
-void	permission_denied(t_data *minishell, int infile, int outfile)
+void	permission_denied(t_data *minishell)
 {
 	ft_putstr_fd("Command not found: ", 2);
 	// ft_putendl_fd(cmd, 2);
-	close_all(minishell, infile, outfile);
+	close_all(minishell);
 	close_fds();
 	// free tout
 	exit(126);
 }
 
-void	no_such_file(t_data *minishell, int infile, int outfile)
+void	no_such_file(t_data *minishell)
 {
 	ft_putstr_fd("No such file or directory: ", 2);
 	// ft_putendl_fd(path/cmd, 2);
-	close_all(minishell, infile, outfile);
+	close_all(minishell);
 	close_fds();
 	// free tout
 	exit(127);
 }
 
-// void	empty_cmd(char *cmd)
+// void	empty_cmd(void)
 // {
-// 	if (!cmd || cmd[0] == '\0')
+// 	if (!minishell->cmd->cmd_param || minishell->cmd->cmd_param[0] == '\0')
 // 	{
 // 		ft_putendl_fd("Command not found.", 2);
 // 		close_fds();
@@ -65,10 +65,10 @@ void	no_such_file(t_data *minishell, int infile, int outfile)
 // 	}
 // }
 
-void	dup2_error(t_data *minishell, int infile, int outfile)
+void	dup2_error(t_data *minishell)
 {
 	// perror("dup2 error"); a voir si on met un msg ou pas
-	close_all(minishell, infile, outfile);
+	close_all(minishell);
 	close_fds();
 	// tout free
 	exit(1);

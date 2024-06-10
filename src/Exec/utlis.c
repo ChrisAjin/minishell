@@ -6,7 +6,7 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 19:58:42 by inbennou          #+#    #+#             */
-/*   Updated: 2024/06/04 20:03:43 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/10 14:37:31 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	wait_and_error(t_data *minishell, int pid_lastchild)
 	minishell->exit_code = error;
 }
 
-int	exec_middle_childs(t_data *minishell, int child_nbr)
+int	exec_middle_childs(t_data *minishell)
 {
 	int	pid;
 
@@ -69,7 +69,7 @@ int	exec_middle_childs(t_data *minishell, int child_nbr)
 		return (-1);
 	}
 	if (pid == 0)
-		middle_child(minishell, child_nbr);
+		middle_child(minishell);
 	return (0);
 }
 
@@ -87,12 +87,12 @@ int	renew_pipe(t_data *minishell)
 	return (0);
 }
 
-int	close_all(t_data *minishell, int infile, int outfile)
+int	close_all(t_data *minishell)
 {
-	if (infile > 0)
-		close(infile);
-	if (outfile > 0)
-		close(outfile);
+	if (minishell->cmd->infile > 0)
+		close(minishell->cmd->infile);
+	if (minishell->cmd->outfile > 0)
+		close(minishell->cmd->outfile);
 	close(minishell->pip[0]);
 	close(minishell->pip[1]);
 	if (minishell->temp_fd > 0)

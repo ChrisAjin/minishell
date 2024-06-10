@@ -6,7 +6,7 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 16:45:40 by cassassa          #+#    #+#             */
-/*   Updated: 2024/06/06 17:43:31 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/10 14:38:10 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,40 +140,39 @@ int		replace_dollar(char **line, t_data *data);
 void	print_token(t_token *token);
 
 // exec.c
-void					skip_prev(t_token **tmp, int child_nbr);
 int					exec(t_data *minishell);
-int					one_cmd(t_data *minishell);
-int					find_and_exec(t_data *minishell, int child_nbr);
-int					exec_path(t_data *minishell, int child_nbr);
-int					exec_first_child(t_data *minishell, int child_nbr);
-int					exec_last_child(t_data *minishell, int child_nbr);
+int					one_cmd(t_data *minishell, char **env);
+int					find_and_exec(t_data *minishell);
+int					exec_path(t_data *minishell);
+int					exec_first_child(t_data *minishell);
+int					exec_last_child(t_data *minishell);
 
 // childs.c
 int					only_child(t_data *minishell);
-int					first_child(t_data *minishell, int child_nbr);
-int					middle_child(t_data *minishell, int child_nbr);
-int					last_child(t_data *minishell, int child_nbr);
+int					first_child(t_data *minishell);
+int					middle_child(t_data *minishell);
+int					last_child(t_data *minishell);
 
 // errors.c
 int					command_not_found(t_data *minishell, char **paths);
 int					exec_fail(t_data *minishell, char **paths);
 void				permission_denied(t_data *minishell);
 void				no_such_file(t_data *minishell);
-void				dup2_error(t_data *minishell, int infile, int outfile);
+void				dup2_error(t_data *minishell);
 
 // utils.c
 char				**split_path(char **envp);
 void				wait_and_error(t_data *minishell, int pid_lastchild);
-int					exec_middle_childs(t_data *minishell, int child_nbr);
+int					exec_middle_childs(t_data *minishell);
 int					renew_pipe(t_data *minishell);
-int					close_all(t_data *minishell, int infile, int outfile);
+int					close_all(t_data *minishell);
 int					close_fds(void);
 
 // open
-int					infile_count(t_data *minishell, int child_nbr);
-int					outfile_count(t_data *minishell, int child_nbr);
-void					open_infile(t_data *minishell, int child_nbr, int inf_count);
-void					open_outfile(t_data *minishell, int child_nbr, int inf_count);
+int					infile_count(t_data *minishell);
+int					outfile_count(t_data *minishell);
+void					open_infile(t_data *minishell, int inf_count);
+void					open_outfile(t_data *minishell, int outf_count);
 
 // builtins
 int					exec_builtin(char *line, char **envp);
