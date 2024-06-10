@@ -6,7 +6,7 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 16:45:40 by cassassa          #+#    #+#             */
-/*   Updated: 2024/06/10 14:38:10 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/10 20:08:11 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include "../libft/src/libft.h"
+// # include "../libft/src/libft.h"
+# include "../libft-ines/libft.h"
 # include <fcntl.h>
 # include <limits.h>
 # include <readline/history.h>
@@ -45,11 +46,7 @@ extern pid_t		g_signal_pid;
 
 typedef struct s_cmd
 {
-	bool			skip_cmd;
-	int				infile;
-	int				outfile;
 	char			**cmd_param;
-	struct s_cmd	*prev;
 	struct s_cmd	*next;
 }					t_cmd;
 
@@ -74,6 +71,9 @@ typedef struct s_data
 	t_token			*token;
 	t_cmd			*cmd;
 	int				exit_code;
+	int				pipes;
+	int				infile;
+	int				outfile;
 	int				pip[2];
 	int				temp_fd;
 	bool			simpleq;
@@ -175,21 +175,21 @@ void					open_infile(t_data *minishell, int inf_count);
 void					open_outfile(t_data *minishell, int outf_count);
 
 // builtins
-int					exec_builtin(char *line, char **envp);
-void				exit_shell(int write_ex);
-void				echo(char **tab);
-void				env_cmd(char **tab, char **env);
-int					cd(char **tab, char **envp);
-void				pwd(void);
+int					exec_builtin(t_data *minishell);
+void				exit_shell(t_data *minishell);
+void				echo(t_data *minishell);
+void				env_cmd(t_data *minishell);
+int					cd(t_data *minishell);
+void				pwd(t_data *minishell);
 char				*get_pwd(void);
 char				*get_home(char **envp);
 int					ch_dir_home(char **envp, char *old_pwd);
-void				add_pwd(char *cur_dir, char **envp);
-void				add_old_pwd(char *old_pwd, char **envp);
+int				add_pwd(char *cur_dir, char **envp);
+int				add_old_pwd(char *old_pwd, char **envp);
 
 // builtins_utils
 void				print_args(char **tab, int index);
-void				printf_tab(char **tab);
+// void				printf_tab(char **tab);
 
 #endif
 

@@ -1,32 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   print_tab.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/26 16:18:23 by inbennou          #+#    #+#             */
-/*   Updated: 2024/06/10 18:31:10 by inbennou         ###   ########.fr       */
+/*   Created: 2024/05/06 15:40:12 by inbennou          #+#    #+#             */
+/*   Updated: 2024/05/07 16:02:26 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-void	pwd(t_data *minishell)
+void	print_tab(char **tab)
 {
-	char	*pwd;
+	int	y;
 
-	pwd = NULL;
-	pwd = getcwd(NULL, 0);
-	if (!pwd || pwd[0] == '\0')
+	y = 0;
+	while (tab[y])
 	{
-		perror("Could not get current working directory");
-		// free all
-		exit(1);
+		ft_printf("%s\n", tab[y]);
+		y++;
 	}
-	else
-		printf("%s\n", pwd);
-	free(pwd);
-	// free all
-	exit(0);
 }

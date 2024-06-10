@@ -6,38 +6,35 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 14:01:42 by inbennou          #+#    #+#             */
-/*   Updated: 2024/06/10 14:55:29 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/10 19:02:14 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// open dans les childs pcq chacun peut avoir ses redir
-// avant la fonction exec il faut init inf et outf sur stdin et stdout ou sur -1
-// gerer le cas ou on a juste un pipe a la fin ?
-// comment parcourir les cmds pour les assigner au bon child ?
+// skip juste apres le prochain pipe et skip cmd
+void	skip(t_data **minishell)
+{
+	while ((*minishell)->token->type != PIPE)
+		(*minishell)->token = (*minishell)->token->next;
+	(*minishell)->token->next;
+	(*minishell)->cmd = (*minishell)->cmd->next;
+}
 
-// struct avec
-// infile // pour child
-// outfile // pour child
-// tab avec cmd et args (skip et fill) // pour parent
-// tab de paths (if env et if PATH) // pour parent
-
-// !!! penser a free char **env partout
+// !!! penser a free char **env partout (ajouter a free all?)
 int	exec(t_data *minishell)
 {
-	int	pipes;
 	char	**env;
 
-	pipes = pipe_count(minishell);
+	minishell->pipes = pipe_count(minishell);
 	env = list_to_arr(minishell->env);
-	if (pipes == 0)
+	if (minishell->pipes == 0)
 	{
 		if (one_cmd(minishell, env) < 0)
 			minishell->exit_code = 1;
 		return (0);
 	}
-	else if (pipes >= 1)
+	else if (minishell->pipes >= 1)
 	{
 		if (exec_first_child(minishell) < 0)
 		{
@@ -45,8 +42,8 @@ int	exec(t_data *minishell)
 			close_all(minishell);
 			return (0);
 		}
-		// skip qui avance les token jusqu'au prochain pipe et la struct cmd de 1 pour la prochaine
-		while (minishell->cmd->next != NULL) // !!!!!!!! while pas sur la derniere cmd
+		skip(&minishell);
+		while (minishell->cmd->next != NULL) // ou while pipes != 0 (while pas sur la derniere cmd)
 		{
 			if (exec_middle_childs(minishell) < 0)
 			{
@@ -54,9 +51,10 @@ int	exec(t_data *minishell)
 				close_all(minishell);
 				return (0);
 			}
-			// skip vers prochaine cmd
+			skip(&minishell);
 		}
-		// close temp_fd if > 0
+		if (minishell->temp_fd > 0)
+			close(minishell->temp_fd);
 	}
 	if (exec_last_child(minishell) < 0)
 	{

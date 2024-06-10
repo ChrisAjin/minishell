@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 16:44:44 by cassassa          #+#    #+#             */
-/*   Updated: 2024/06/06 10:55:31 by cassassa         ###   ########.fr       */
+/*   Updated: 2024/06/10 19:00:43 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,12 @@ void	init_data(t_data *data, int argc, char **argv)
 	data->token = NULL;
 	data->cmd = NULL;
 	data->exit_code = 0;
+	data->pipes = 0;
+	data->infile = -1;
+	data->outfile = -1;
 	data->pip[0] = -1;
 	data->pip[1] = -1;
-	data->temp_fd = 0;
+	data->temp_fd = -1;
 	/*init signal a add*/
 	g_signal_pid = 0;
 	//signals();

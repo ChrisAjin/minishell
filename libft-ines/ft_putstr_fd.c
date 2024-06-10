@@ -1,32 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/26 16:18:23 by inbennou          #+#    #+#             */
-/*   Updated: 2024/06/10 18:31:10 by inbennou         ###   ########.fr       */
+/*   Created: 2023/11/14 14:39:21 by inbennou          #+#    #+#             */
+/*   Updated: 2023/11/27 17:07:52 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-void	pwd(t_data *minishell)
+void	ft_putstr_fd(char *s, int fd)
 {
-	char	*pwd;
+	int	i;
 
-	pwd = NULL;
-	pwd = getcwd(NULL, 0);
-	if (!pwd || pwd[0] == '\0')
+	i = 0;
+	if (s)
 	{
-		perror("Could not get current working directory");
-		// free all
-		exit(1);
+		while (s[i])
+		{
+			write(fd, &s[i], 1);
+			i++;
+		}
 	}
-	else
-		printf("%s\n", pwd);
-	free(pwd);
-	// free all
-	exit(0);
 }

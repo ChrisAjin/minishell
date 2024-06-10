@@ -1,32 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   ft_isalpha.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/26 16:18:23 by inbennou          #+#    #+#             */
-/*   Updated: 2024/06/10 18:31:10 by inbennou         ###   ########.fr       */
+/*   Created: 2023/11/06 15:42:54 by inbennou          #+#    #+#             */
+/*   Updated: 2023/11/27 17:07:15 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-void	pwd(t_data *minishell)
+int	ft_isalpha(int c)
 {
-	char	*pwd;
-
-	pwd = NULL;
-	pwd = getcwd(NULL, 0);
-	if (!pwd || pwd[0] == '\0')
-	{
-		perror("Could not get current working directory");
-		// free all
-		exit(1);
-	}
-	else
-		printf("%s\n", pwd);
-	free(pwd);
-	// free all
-	exit(0);
+	if ((c > 64 && c < 91) || (c > 96 && c < 123))
+		return (1);
+	return (0);
 }
+
+/*
+#include <stdio.h>
+
+int	main(void)
+{
+	printf("%d", ft_isalpha(53));
+}
+*/

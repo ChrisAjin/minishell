@@ -1,32 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/26 16:18:23 by inbennou          #+#    #+#             */
-/*   Updated: 2024/06/10 18:31:10 by inbennou         ###   ########.fr       */
+/*   Created: 2023/11/08 12:12:27 by inbennou          #+#    #+#             */
+/*   Updated: 2023/11/27 16:43:54 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-void	pwd(t_data *minishell)
+void	*ft_memcpy(void *dest, const void *src, size_t n)
 {
-	char	*pwd;
+	size_t	i;
 
-	pwd = NULL;
-	pwd = getcwd(NULL, 0);
-	if (!pwd || pwd[0] == '\0')
+	i = 0;
+	if ((!dest && !src) || n == 0)
+		return (dest);
+	while (i < n)
 	{
-		perror("Could not get current working directory");
-		// free all
-		exit(1);
+		((unsigned char *)dest)[i] = ((unsigned char *)src)[i];
+		i++;
 	}
-	else
-		printf("%s\n", pwd);
-	free(pwd);
-	// free all
-	exit(0);
+	return (dest);
 }

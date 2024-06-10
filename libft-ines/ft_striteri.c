@@ -1,32 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   ft_striteri.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/26 16:18:23 by inbennou          #+#    #+#             */
-/*   Updated: 2024/06/10 18:31:10 by inbennou         ###   ########.fr       */
+/*   Created: 2023/11/16 16:08:29 by inbennou          #+#    #+#             */
+/*   Updated: 2023/11/27 17:09:14 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-
-void	pwd(t_data *minishell)
+void	ft_striteri(char *s, void (*f)(unsigned int, char *))
 {
-	char	*pwd;
+	unsigned int	i;
 
-	pwd = NULL;
-	pwd = getcwd(NULL, 0);
-	if (!pwd || pwd[0] == '\0')
+	i = 0;
+	if (s)
 	{
-		perror("Could not get current working directory");
-		// free all
-		exit(1);
+		while (s[i])
+		{
+			f(i, &s[i]);
+			i++;
+		}
 	}
-	else
-		printf("%s\n", pwd);
-	free(pwd);
-	// free all
-	exit(0);
 }
