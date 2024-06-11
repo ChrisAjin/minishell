@@ -1,32 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   ft_puts.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/26 16:18:23 by inbennou          #+#    #+#             */
-/*   Updated: 2024/06/10 18:31:10 by inbennou         ###   ########.fr       */
+/*   Created: 2023/12/08 18:27:36 by inbennou          #+#    #+#             */
+/*   Updated: 2024/02/13 17:45:14 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "ft_printf.h"
 
-void	pwd(t_data *minishell)
+int	ft_putlenchar(char c)
 {
-	char	*pwd;
+	write(1, &c, 1);
+	return (1);
+}
 
-	pwd = NULL;
-	pwd = getcwd(NULL, 0);
-	if (!pwd || pwd[0] == '\0')
+void	ft_putchar(char c)
+{
+	write(1, &c, 1);
+}
+
+int	ft_putlenstr(char *s)
+{
+	int	i;
+
+	i = 0;
+	if (!s)
+		return (write(1, "(null)", 6));
+	while (s[i])
 	{
-		perror("Could not get current working directory");
-		// free all
-		exit(1);
+		write(1, &s[i], 1);
+		i++;
 	}
-	else
-		printf("%s\n", pwd);
-	free(pwd);
-	// free all
-	exit(0);
+	return (i);
 }

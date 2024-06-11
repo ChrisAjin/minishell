@@ -1,32 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/26 16:18:23 by inbennou          #+#    #+#             */
-/*   Updated: 2024/06/10 18:31:10 by inbennou         ###   ########.fr       */
+/*   Created: 2023/11/14 14:37:08 by inbennou          #+#    #+#             */
+/*   Updated: 2023/11/27 17:07:48 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-void	pwd(t_data *minishell)
+void	ft_putnbr_fd(int n, int fd)
 {
-	char	*pwd;
+	long int	nbl;
+	char		result;
 
-	pwd = NULL;
-	pwd = getcwd(NULL, 0);
-	if (!pwd || pwd[0] == '\0')
+	nbl = n;
+	if (nbl < 0)
 	{
-		perror("Could not get current working directory");
-		// free all
-		exit(1);
+		write(fd, "-", 1);
+		nbl *= -1;
 	}
-	else
-		printf("%s\n", pwd);
-	free(pwd);
-	// free all
-	exit(0);
+	if (nbl >= 0 && nbl <= 9)
+	{
+		result = nbl + '0';
+		write(fd, &result, 1);
+	}
+	if (nbl >= 10)
+	{
+		ft_putnbr_fd((nbl / 10), fd);
+		ft_putnbr_fd((nbl % 10), fd);
+	}
 }
+/*
+int	main(void)
+{
+	ft_putnbr_fd(2147483647, 1);
+	return (0);
+} */

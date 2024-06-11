@@ -1,32 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/26 16:18:23 by inbennou          #+#    #+#             */
-/*   Updated: 2024/06/10 18:31:10 by inbennou         ###   ########.fr       */
+/*   Created: 2023/11/14 15:07:12 by inbennou          #+#    #+#             */
+/*   Updated: 2024/04/10 14:56:05 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-void	pwd(t_data *minishell)
+char	*ft_strdup(const char *src)
 {
-	char	*pwd;
+	char	*dup;
+	int		i;
 
-	pwd = NULL;
-	pwd = getcwd(NULL, 0);
-	if (!pwd || pwd[0] == '\0')
+	i = 0;
+	dup = malloc((ft_strlen(src) + 1) * sizeof(char));
+	if (!dup)
+		return (0);
+	while (src[i])
 	{
-		perror("Could not get current working directory");
-		// free all
-		exit(1);
+		dup[i] = src[i];
+		i++;
 	}
-	else
-		printf("%s\n", pwd);
-	free(pwd);
-	// free all
-	exit(0);
+	dup[i] = '\0';
+	return (dup);
 }
+
+/*
+#include <stdio.h>
+
+int	main(void)
+{
+	char test[] = "bonjour";
+
+	printf("%s", ft_strdup(test));
+	return (0);
+} */

@@ -6,32 +6,55 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 19:16:00 by inbennou          #+#    #+#             */
-/*   Updated: 2024/06/04 19:10:14 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/10 18:31:55 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// gerer les quotes
-// gerer les $
 // gerer echo $?
-// implementer le cas option non reconnue ?
-void	echo(char **tab)
+void	echo(t_data *minishell)
 {
 	int	n;
+	int	i;
 
 	n = 0;
-	if (tab[1] == NULL)
+	i = 2;
+	if (minishell->cmd->cmd_param[1] == NULL)
 	{
 		printf("\n");
-		return ;
+		// free all
+		exit(0);
 	}
-	if (ft_strncmp(tab[1], "-n", 3) == 0)
+	if (n_option(minishell->cmd->cmd_param[1]))
 		n = 1;
-	if (tab[1 + n] != NULL)
-		print_args(tab, 1 + n);
+	while (n_option(minishell->cmd->cmd_param[i]))
+		i++;
+	if (minishell->cmd->cmd_param[i] != NULL)
+		print_args(minishell->cmd->cmd_param, i);
 	if (n != 1)
 		printf("\n");
+	// free all
+	exit(0);
+}
+
+int	n_option(char *str)
+{
+	int	i;
+
+	i = 0;
+	if (!str || str[0] == '\0' || ft_strlen(str) < 2)
+		return (0);
+	if (str[i] == '-')
+	{
+		i++;
+		while (str && str[i] == 'n')
+			i++;
+	}
+	if (str[i] == '\0')
+		return (1);
+	else
+		return (0);
 }
 
 void	print_args(char **tab, int index)
@@ -41,8 +64,18 @@ void	print_args(char **tab, int index)
 	y = index;
 	while (tab[y + 1])
 	{
-		printf("%s ", tab[y]);
+		if (printf("%s ", tab[y]) < 0)
+		{
+			perror("printf");
+			// free all
+			exit(1);
+		}
 		y++;
 	}
-	printf("%s", tab[y]);
+	if (printf("%s", tab[y]) < 0)
+	{
+		perror("printf");
+		// free all
+		exit(1);
+	}
 }

@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 16:45:40 by cassassa          #+#    #+#             */
-/*   Updated: 2024/06/11 17:00:20 by cassassa         ###   ########.fr       */
+/*   Updated: 2024/06/11 17:44:53 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
 # include "../libft/src/libft.h"
+// # include "../libft-ines/libft.h"
 # include <fcntl.h>
 # include <limits.h>
 # include <readline/history.h>
@@ -25,6 +25,10 @@
 # include <sys/stat.h>
 # include <sys/types.h>
 # include <sys/wait.h>
+# include <errno.h>
+// # include <stdarg.h>
+// # include <stddef.h>
+// # include <string.h>
 
 # define INPUT 1   //"<"
 # define HEREDOC 2 //"<<"
@@ -43,7 +47,6 @@ typedef struct s_cmd
 {
 	bool			skip_cmd;
 	char			**cmd_param;
-	struct s_cmd	*prev;
 	struct s_cmd	*next;
 }					t_cmd;
 
@@ -68,6 +71,9 @@ typedef struct s_data
 	t_token			*token;
 	t_cmd			*cmd;
 	int				exit_code;
+	int				pipes;
+	int				infile;
+	int				outfile;
 	int				pip[2];
 	int				temp_fd;
 	bool			simpleq;
@@ -130,51 +136,56 @@ int		replace_dollar(char **line, t_data *data);
 void	print_token(t_token *token);
 
 // exec.c
-int					skip_prev(t_data *minishell, int child_nbr);
 int					exec(t_data *minishell);
-int					one_cmd(t_data *minishell);
-int					find_and_exec(t_data *minishell, int child_nbr);
-int					exec_path(t_data *minishell, int child_nbr);
-int					exec_first_child(t_data *minishell, int child_nbr);
-int					exec_last_child(t_data *minishell, int child_nbr);
+int					one_cmd(t_data *minishell, char **env);
+int					find_and_exec(t_data *minishell, char **env);
+int					exec_path(t_data *minishell, char **env);
+int					exec_first_child(t_data *minishell, char **env);
+int					exec_last_child(t_data *minishell, char **env);
 
 // childs.c
-int					only_child(t_data *minishell);
-int					first_child(t_data *minishell, int child_nbr);
-int					middle_child(t_data *minishell, int child_nbr);
-int					last_child(t_data *minishell, int child_nbr);
+int					only_child(t_data *minishell, char **env);
+int					first_child(t_data *minishell, char **env);
+int					middle_child(t_data *minishell, char **env);
+int					last_child(t_data *minishell, char **env);
 
 // errors.c
-int					command_not_found(t_data *minishell, char **paths);
-int					exec_fail(t_data *minishell, char **paths);
-void				permission_denied(t_data *minishell);
-void				no_such_file(t_data *minishell);
-void				dup2_error(t_data *minishell, int infile, int outfile);
+void					command_not_found(t_data *minishell, char **paths, char **env);
+void					exec_fail(t_data *minishell, char **paths, char **env);
+void				permission_denied(t_data *minishell, char**env);
+void				no_such_file(t_data *minishell, char **env);
+void				dup2_error(t_data *minishell, char **env);
 
 // utils.c
 char				**split_path(char **envp);
 void				wait_and_error(t_data *minishell, int pid_lastchild);
-int					exec_middle_childs(t_data *minishell, int child_nbr);
+int					exec_middle_childs(t_data *minishell, char **env);
 int					renew_pipe(t_data *minishell);
-int					close_all(t_data *minishell, int infile, int outfile);
+int					close_all(t_data *minishell);
 int					close_fds(void);
 
+// open
+int					infile_count(t_data *minishell);
+int					outfile_count(t_data *minishell);
+void					open_infile(t_data *minishell, int inf_count);
+void					open_outfile(t_data *minishell, int outf_count);
+
 // builtins
-int					exec_builtin(char *line, char **envp);
-void				exit_shell(int write_ex);
-void				echo(char **tab);
-void				env_cmd(char **tab, char **env);
-int					cd(char **tab, char **envp);
-void				pwd(void);
+int					exec_builtin(t_data *minishell, char **env);
+void				exit_shell(t_data *minishell);
+void				echo(t_data *minishell);
+void				env_cmd(t_data *minishell);
+int					cd(t_data *minishell);
+void				pwd(t_data *minishell);
 char				*get_pwd(void);
 char				*get_home(char **envp);
 int					ch_dir_home(char **envp, char *old_pwd);
-void				add_pwd(char *cur_dir, char **envp);
-void				add_old_pwd(char *old_pwd, char **envp);
+int				add_pwd(char *cur_dir, char **envp);
+int				add_old_pwd(char *old_pwd, char **envp);
 
 // builtins_utils
 void				print_args(char **tab, int index);
-void				printf_tab(char **tab);
+// void				printf_tab(char **tab);
 
 #endif
 

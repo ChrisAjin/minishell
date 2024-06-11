@@ -1,32 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   ft_strmapi.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/26 16:18:23 by inbennou          #+#    #+#             */
-/*   Updated: 2024/06/10 18:31:10 by inbennou         ###   ########.fr       */
+/*   Created: 2023/11/16 19:02:17 by inbennou          #+#    #+#             */
+/*   Updated: 2023/11/24 21:09:39 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-void	pwd(t_data *minishell)
+char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 {
-	char	*pwd;
+	int		i;
+	char	*tab;
 
-	pwd = NULL;
-	pwd = getcwd(NULL, 0);
-	if (!pwd || pwd[0] == '\0')
+	if (!s)
+		return (NULL);
+	i = 0;
+	tab = (char *)malloc((ft_strlen(s) + 1) * sizeof(char));
+	if (!tab)
+		return (0);
+	while (s[i])
 	{
-		perror("Could not get current working directory");
-		// free all
-		exit(1);
+		tab[i] = f(i, s[i]);
+		i++;
 	}
-	else
-		printf("%s\n", pwd);
-	free(pwd);
-	// free all
-	exit(0);
+	tab[i] = '\0';
+	return (tab);
 }

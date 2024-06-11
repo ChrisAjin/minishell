@@ -6,38 +6,100 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 16:44:38 by inbennou          #+#    #+#             */
-/*   Updated: 2024/06/04 19:10:50 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/11 14:44:28 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	open_infile(char *name)
+int	infile_count(t_data *minishell)
 {
+	t_token	*tmp;
+	int	redir;
 	int	fd_in;
 
-	fd_in = open(name, O_RDWR, 0777);
-	if (fd_in < 0)
-		perror(name);
-	return (fd_in);
+	tmp = minishell->token;
+	redir = 0;
+	while (tmp && tmp->type != PIPE)
+	{
+		if (tmp->type == INPUT)
+			redir++;
+		tmp = tmp->next;
+	}
+	return (redir);
 }
 
-int	open_outfile_append(char *name)
+int	outfile_count(t_data *minishell)
 {
-	int	fd_out;
+	t_token	*tmp;
+	int	redir;
+	int	fd_in;
 
-	fd_out = open(name, O_RDWR | O_APPEND | O_CREAT, 0777);
-	if (fd_out < 0)
-		perror(name);
-	return (fd_out);
+	tmp = minishell->token;
+	redir = 0;
+	while (tmp && tmp->type != PIPE)
+	{
+		if (tmp->type == TRUNC || tmp->type == APPEND)
+			redir++;
+		tmp = tmp->next;
+	}
+	return (redir);
 }
 
-int	open_outfile_trunc(char *name)
+void	open_infile(t_data *minishell, int inf_count)
 {
-	int	fd_out;
+	t_token *tmp;
+	int	fd;
+	int	inf_nbr;
 
-	fd_out = open(name, O_RDWR | O_TRUNC | O_CREAT, 0777);
-	if (fd_out < 0)
-		perror(name);
-	return (fd_out);
+	tmp = minishell->token;
+	fd = -1;
+	inf_nbr = 0;
+	while (tmp && tmp->type != PIPE)
+	{
+		if (tmp->type == INPUT)
+		{
+			tmp = tmp->next;
+			fd = open(tmp->str, O_RDONLY, 0644);
+			if (fd < 0)
+				perror(tmp->str);
+			inf_nbr++;
+			if (inf_nbr != inf_count)
+				close(fd);
+		}
+		if (tmp)
+			tmp = tmp->next;
+	}
+	minishell->infile = fd;
+}
+
+// !!! si on n'arrive pas a open l'infile on open pas l'outfile !!!
+void	open_outfile(t_data *minishell, int outf_count)
+{
+	t_token *tmp;
+	int	fd;
+	int	inf_nbr;
+
+	tmp = minishell->token;
+	fd = -1;
+	inf_nbr = 0;
+	while (tmp && tmp->type != PIPE)
+	{
+		if (tmp->type == TRUNC || tmp->type == APPEND)
+		{
+			tmp = tmp->next;
+			if (tmp->type == TRUNC)
+				fd = open(tmp->str, O_CREAT | O_WRONLY | O_TRUNC, 0644);
+			else
+				fd = open(tmp->str, O_CREAT | O_WRONLY | O_APPEND, 0644);
+			if (fd < 0)
+				perror(tmp->str);
+			inf_nbr++;
+			if (inf_nbr != outf_count)
+				close(fd);
+		}
+		if (tmp)
+			tmp = tmp->next;
+	}
+	minishell->outfile = fd;
 }

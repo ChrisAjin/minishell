@@ -1,32 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/26 16:18:23 by inbennou          #+#    #+#             */
-/*   Updated: 2024/06/10 18:31:10 by inbennou         ###   ########.fr       */
+/*   Created: 2024/05/17 12:54:49 by inbennou          #+#    #+#             */
+/*   Updated: 2024/05/17 12:55:45 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-void	pwd(t_data *minishell)
+int	ft_strcmp(const char *s1, const char *s2)
 {
-	char	*pwd;
+	int	i;
 
-	pwd = NULL;
-	pwd = getcwd(NULL, 0);
-	if (!pwd || pwd[0] == '\0')
+	i = 0;
+	if (ft_strlen(s1) != ft_strlen(s2))
+		return (1);
+	while ((s1[i] != '\0' || s2[i] != '\0'))
 	{
-		perror("Could not get current working directory");
-		// free all
-		exit(1);
+		if (s1[i] != s2[i])
+			return (1);
+		i++;
 	}
-	else
-		printf("%s\n", pwd);
-	free(pwd);
-	// free all
-	exit(0);
+	return (0);
 }

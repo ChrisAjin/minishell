@@ -1,32 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/26 16:18:23 by inbennou          #+#    #+#             */
-/*   Updated: 2024/06/10 18:31:10 by inbennou         ###   ########.fr       */
+/*   Created: 2023/11/14 16:38:50 by inbennou          #+#    #+#             */
+/*   Updated: 2023/11/27 17:08:31 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-void	pwd(t_data *minishell)
+char	*ft_strrchr(const char *str, int c)
 {
-	char	*pwd;
+	int				n;
+	unsigned char	ch;
 
-	pwd = NULL;
-	pwd = getcwd(NULL, 0);
-	if (!pwd || pwd[0] == '\0')
-	{
-		perror("Could not get current working directory");
-		// free all
-		exit(1);
-	}
+	n = 0;
+	while (str[n])
+		n++;
+	ch = c;
+	while ((str[n] != ch) && (n > 0))
+		n--;
+	if (str[n] == ch)
+		return ((char *)str + n);
 	else
-		printf("%s\n", pwd);
-	free(pwd);
-	// free all
-	exit(0);
+		return (0);
 }
+
+/*
+// tests perso ok
+int	main(void)
+{
+	printf("ma fonction : %s \n", ft_strrchr("", 105));
+	printf("la vraie fonction : %s", strrchr("", 105));
+}
+*/

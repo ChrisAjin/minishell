@@ -1,32 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/26 16:18:23 by inbennou          #+#    #+#             */
-/*   Updated: 2024/06/10 18:31:10 by inbennou         ###   ########.fr       */
+/*   Created: 2023/11/14 15:00:37 by inbennou          #+#    #+#             */
+/*   Updated: 2024/05/17 13:44:14 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-void	pwd(t_data *minishell)
+int	ft_strncmp(const char *s1, const char *s2, unsigned int n)
 {
-	char	*pwd;
+	unsigned int	i;
 
-	pwd = NULL;
-	pwd = getcwd(NULL, 0);
-	if (!pwd || pwd[0] == '\0')
+	i = 0;
+	while ((s1[i] != '\0' || s2[i] != '\0') && (i < n))
 	{
-		perror("Could not get current working directory");
-		// free all
-		exit(1);
+		if (s1[i] != s2[i])
+			return (s1[i] - s2[i]);
+		i++;
 	}
-	else
-		printf("%s\n", pwd);
-	free(pwd);
-	// free all
-	exit(0);
+	return (0);
 }
+
+/*
+#include <stdio.h>
+
+int	main(void)
+{
+	char c1[] = "allo";
+	char c2[] = "alli";
+
+	printf("%d \n", ft_strncmp(c1, c2, 3));
+	printf("%d", strncmp(c1, c2, 3);
+	return (0);
+} */
