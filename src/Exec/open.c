@@ -6,7 +6,7 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 16:44:38 by inbennou          #+#    #+#             */
-/*   Updated: 2024/06/11 14:44:28 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/11 19:48:53 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,10 @@ int	infile_count(t_data *minishell)
 {
 	t_token	*tmp;
 	int	redir;
-	int	fd_in;
 
 	tmp = minishell->token;
 	redir = 0;
-	while (tmp && tmp->type != PIPE)
+	while (tmp != minishell->token && tmp->type != PIPE)
 	{
 		if (tmp->type == INPUT)
 			redir++;
@@ -33,11 +32,10 @@ int	outfile_count(t_data *minishell)
 {
 	t_token	*tmp;
 	int	redir;
-	int	fd_in;
 
 	tmp = minishell->token;
 	redir = 0;
-	while (tmp && tmp->type != PIPE)
+	while (tmp != minishell->token && tmp->type != PIPE)
 	{
 		if (tmp->type == TRUNC || tmp->type == APPEND)
 			redir++;
@@ -55,7 +53,7 @@ void	open_infile(t_data *minishell, int inf_count)
 	tmp = minishell->token;
 	fd = -1;
 	inf_nbr = 0;
-	while (tmp && tmp->type != PIPE)
+	while (tmp != minishell->token && tmp->type != PIPE)
 	{
 		if (tmp->type == INPUT)
 		{
@@ -83,7 +81,7 @@ void	open_outfile(t_data *minishell, int outf_count)
 	tmp = minishell->token;
 	fd = -1;
 	inf_nbr = 0;
-	while (tmp && tmp->type != PIPE)
+	while (tmp != minishell->token && tmp->type != PIPE)
 	{
 		if (tmp->type == TRUNC || tmp->type == APPEND)
 		{

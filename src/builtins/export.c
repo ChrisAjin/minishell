@@ -6,7 +6,7 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 19:07:53 by inbennou          #+#    #+#             */
-/*   Updated: 2024/06/11 17:14:50 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/11 19:31:50 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 int	export(t_data *minishell)
 {
-	t_list	*export;
+	// t_list	*export;
 
-	if (minishell->cmd->cmd_param[1] == '\0')
+	if (minishell->cmd->cmd_param[1] == NULL)
 		minishell->exit_code = 2;
 	if (ft_strchr(minishell->cmd->cmd_param[1], '='))
 	{

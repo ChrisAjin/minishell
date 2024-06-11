@@ -6,7 +6,7 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 21:55:35 by inbennou          #+#    #+#             */
-/*   Updated: 2024/06/11 17:25:06 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/11 19:24:20 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	cd(t_data *minishell)
 	{
 		if (ch_dir_home(env, old_pwd) < 0)
 		{
-			// free all
+			free_all(minishell, NULL, -1);
 			return (1);
 		}
 	}
@@ -50,17 +50,17 @@ int	cd(t_data *minishell)
 			perror("cd");
 			if (old_pwd)
 				free(old_pwd);
-			// free all
+			free_all(minishell, NULL, -1);
 			return (1);
 		}
 	}
 	cur_dir = get_pwd();
 	if (add_pwd(cur_dir, env) || add_old_pwd(old_pwd, env) < 0)
 	{
-		// free_all
+		free_all(minishell, NULL, -1);
 		return (1);
 	}
-	// free all
+	free_all(minishell, NULL, -1);
 	return (0);
 }
 
@@ -104,14 +104,14 @@ int	add_pwd(char *cur_dir, char **env)
 
 	i = 0;
 	if (cur_dir == NULL)
-		return ;
+		return (1);
 	while (env[i])
 	{
 		if (ft_strncmp(env[i], "PWD=", 4) == 0)
 		{
 			free(env[i]);
 			env[i] = ft_strjoin("PWD=", cur_dir);
-			if (env[i] == '\0')
+			if (env[i] == NULL)
 			{
 				ft_putstr_fd(ERR_MALLOC, 2);
 				return (1);
@@ -131,14 +131,14 @@ int	add_old_pwd(char *old_pwd, char **env)
 
 	i = 0;
 	if (old_pwd == NULL)
-		return ;
+		return (1);
 	while (env[i])
 	{
 		if (ft_strncmp(env[i], "OLDPWD=", 7) == 0)
 		{
 			free(env[i]);
 			env[i] = ft_strjoin("OLDPWD=", old_pwd);
-			if (env[i] == '\0')
+			if (env[i] == NULL)
 			{
 				ft_putstr_fd(ERR_MALLOC, 2);
 				return (1);

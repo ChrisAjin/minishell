@@ -6,7 +6,7 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 14:40:48 by inbennou          #+#    #+#             */
-/*   Updated: 2024/06/11 17:04:10 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/11 19:17:01 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	command_not_found(t_data *minishell, char **paths, char **env)
 	// ft_putendl_fd(cmd, 2);
 	close_all(minishell);
 	close_fds();
-	// free tout
+	free_all(minishell, NULL, -1);
 	if (paths)
 		free_tab(paths);
 	if (env)
@@ -39,6 +39,7 @@ void	exec_fail(t_data *minishell, char **paths, char **env)
 	close_all(minishell);
 	close_fds();
 	// free tout
+	free_all(minishell, NULL, -1);
 	if (paths)
 		free_tab(paths);
 	if (env)
@@ -54,6 +55,7 @@ void	permission_denied(t_data *minishell, char **env)
 	close_all(minishell);
 	close_fds();
 	// free tout
+	free_all(minishell, NULL, -1);
 	if (env)
 		free(env);
 	exit(126);
@@ -66,6 +68,7 @@ void	no_such_file(t_data *minishell, char **env)
 	close_all(minishell);
 	close_fds();
 	// free tout
+	free_all(minishell, NULL, -1);
 	if (env)
 		free(env);
 	exit(127);
@@ -87,6 +90,7 @@ void	dup2_error(t_data *minishell, char **env)
 	close_all(minishell);
 	close_fds();
 	// tout free
+	free_all(minishell, NULL, -1);
 	if (env)
 		free(env);
 	exit(1);

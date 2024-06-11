@@ -6,7 +6,7 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 16:16:04 by inbennou          #+#    #+#             */
-/*   Updated: 2024/06/10 19:07:27 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/11 19:31:23 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	exit_shell(t_data *minishell)
 	// rl_clear_history
 	if (only_digit(minishell->cmd->cmd_param[1]))
 		minishell->exit_code = ft_atoi(minishell->cmd->cmd_param[1]);
-	else if (minishell->cmd->cmd_param[1] != '\0')
+	else if (minishell->cmd->cmd_param[1] != NULL)
 		minishell->exit_code = 2;
 	else
 		minishell->exit_code = 0;

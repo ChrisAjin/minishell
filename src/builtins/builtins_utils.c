@@ -6,7 +6,7 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 15:31:03 by inbennou          #+#    #+#             */
-/*   Updated: 2024/06/11 17:07:57 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/11 19:14:58 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,9 @@ int	exec_builtin(t_data *minishell, char **env)
 		env_cmd(minishell);
 	if (ft_strncmp(minishell->cmd->cmd_param[0], "cd", 3) == 0)
 		exit(cd(minishell));
-	if (ft_strncmp(minishell->cmd->cmd_param[0], "export", 7) == 0)
+	// if (ft_strncmp(minishell->cmd->cmd_param[0], "export", 7) == 0)
 		// exit(export());
-	if (ft_strncmp(minishell->cmd->cmd_param[0], "unset", 6) == 0)
+	// if (ft_strncmp(minishell->cmd->cmd_param[0], "unset", 6) == 0)
 		// exit(unset());
 	if (ft_strncmp(minishell->cmd->cmd_param[0], "exit", 5) == 0)
 		exit_shell(minishell);

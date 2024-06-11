@@ -6,12 +6,13 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 19:16:00 by inbennou          #+#    #+#             */
-/*   Updated: 2024/06/10 18:31:55 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/11 20:25:35 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+// mettre un exit ?
 // gerer echo $?
 void	echo(t_data *minishell)
 {
@@ -23,8 +24,8 @@ void	echo(t_data *minishell)
 	if (minishell->cmd->cmd_param[1] == NULL)
 	{
 		printf("\n");
-		// free all
-		exit(0);
+		free_all(minishell, NULL, -1);
+		minishell->exit_code = 0;
 	}
 	if (n_option(minishell->cmd->cmd_param[1]))
 		n = 1;
@@ -34,8 +35,8 @@ void	echo(t_data *minishell)
 		print_args(minishell->cmd->cmd_param, i);
 	if (n != 1)
 		printf("\n");
-	// free all
-	exit(0);
+	free_all(minishell, NULL, -1);
+	minishell->exit_code = 0;
 }
 
 int	n_option(char *str)

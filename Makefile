@@ -29,7 +29,10 @@ FILES	=	main tools_list  creat_list_token \
 			utils free list_token\
 			creat_cmd cmd_param \
 			debug print_error list_cmd \
-			dollar_env dollar_replace quotes
+			dollar_env dollar_replace quotes \
+			childs errors exec_child exec open exec_utils \
+			builtins_utils cd echo env exit export \
+			parent_builtin pwd
 
 SRCS	=	$(addprefix $(SRC_DIR), $(addsuffix .c, $(FILES)))
 OBJS	=	$(addprefix $(OBJ_DIR), $(addsuffix .o, $(FILES)))
@@ -40,7 +43,7 @@ $(OBJF) :
 	@mkdir -p $(OBJ_DIR)
 
 # Add the path to the builtin folder to vpath
-vpath %.c $(SRC_DIR) $(SRC_DIR)Tools $(SRC_DIR)Parsing
+vpath %.c $(SRC_DIR) $(SRC_DIR)Tools $(SRC_DIR)Parsing $(SRC_DIR)Exec $(SRC_DIR)builtins
 
 all : $(NAME)
 
