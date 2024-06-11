@@ -6,7 +6,7 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 16:44:38 by inbennou          #+#    #+#             */
-/*   Updated: 2024/06/10 14:25:46 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/11 14:44:28 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	open_infile(t_data *minishell, int inf_count)
 		if (tmp)
 			tmp = tmp->next;
 	}
-	minishell->cmd->infile = fd;
+	minishell->infile = fd;
 }
 
 // !!! si on n'arrive pas a open l'infile on open pas l'outfile !!!
@@ -101,5 +101,5 @@ void	open_outfile(t_data *minishell, int outf_count)
 		if (tmp)
 			tmp = tmp->next;
 	}
-	minishell->cmd->outfile = fd;
+	minishell->outfile = fd;
 }

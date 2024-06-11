@@ -6,7 +6,7 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 16:45:40 by cassassa          #+#    #+#             */
-/*   Updated: 2024/06/10 20:08:11 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/11 15:49:18 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-// # include "../libft/src/libft.h"
-# include "../libft-ines/libft.h"
+# include "../libft/src/libft.h"
+// # include "../libft-ines/libft.h"
 # include <fcntl.h>
 # include <limits.h>
 # include <readline/history.h>
@@ -142,28 +142,28 @@ void	print_token(t_token *token);
 // exec.c
 int					exec(t_data *minishell);
 int					one_cmd(t_data *minishell, char **env);
-int					find_and_exec(t_data *minishell);
+int					find_and_exec(t_data *minishell, char **env);
 int					exec_path(t_data *minishell);
-int					exec_first_child(t_data *minishell);
-int					exec_last_child(t_data *minishell);
+int					exec_first_child(t_data *minishell, char **env);
+int					exec_last_child(t_data *minishell, char **env);
 
 // childs.c
-int					only_child(t_data *minishell);
-int					first_child(t_data *minishell);
-int					middle_child(t_data *minishell);
-int					last_child(t_data *minishell);
+int					only_child(t_data *minishell, char **env);
+int					first_child(t_data *minishell, char **env);
+int					middle_child(t_data *minishell, char **env);
+int					last_child(t_data *minishell, char **env);
 
 // errors.c
-int					command_not_found(t_data *minishell, char **paths);
-int					exec_fail(t_data *minishell, char **paths);
-void				permission_denied(t_data *minishell);
-void				no_such_file(t_data *minishell);
+void					command_not_found(t_data *minishell, char **paths, char **env);
+void					exec_fail(t_data *minishell, char **paths, char **env);
+void				permission_denied(t_data *minishell, char**env);
+void				no_such_file(t_data *minishell, char **env);
 void				dup2_error(t_data *minishell);
 
 // utils.c
 char				**split_path(char **envp);
 void				wait_and_error(t_data *minishell, int pid_lastchild);
-int					exec_middle_childs(t_data *minishell);
+int					exec_middle_childs(t_data *minishell, char **env);
 int					renew_pipe(t_data *minishell);
 int					close_all(t_data *minishell);
 int					close_fds(void);

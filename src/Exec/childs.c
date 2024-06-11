@@ -6,7 +6,7 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 14:13:14 by inbennou          #+#    #+#             */
-/*   Updated: 2024/06/10 17:43:35 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/11 15:15:46 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 
 // dans le meme child, si l'infile n'existe pas, alors l'outfile n'est pas cree
 
-int	only_child(t_data *minishell)
+int	only_child(t_data *minishell, char **env)
 {
 	// if (minishell->token->type == 2)
 		// exec_here_doc
@@ -43,7 +43,7 @@ int	only_child(t_data *minishell)
 	// return (exec);
 }
 
-int	first_child(t_data *minishell)
+int	first_child(t_data *minishell, char **env)
 {
 	// if here_doc
 	open_infile(minishell, infile_count(minishell));
@@ -69,7 +69,7 @@ int	first_child(t_data *minishell)
 }
 
 // middle child avec temp fd et child_nbr
-int	middle_child(t_data *minishell)
+int	middle_child(t_data *minishell, char **env)
 {
 	// if here doc
 	open_infile(minishell, infile_count(minishell));
@@ -97,7 +97,7 @@ int	middle_child(t_data *minishell)
 	// return find and exec
 }
 
-int	last_child(t_data *minishell)
+int	last_child(t_data *minishell, char **env)
 {
 	// if here_doc
 	open_infile(minishell, infile_count(minishell));

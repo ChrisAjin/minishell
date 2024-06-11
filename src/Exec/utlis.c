@@ -6,7 +6,7 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 19:58:42 by inbennou          #+#    #+#             */
-/*   Updated: 2024/06/10 14:37:31 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/11 15:39:36 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,23 +56,6 @@ void	wait_and_error(t_data *minishell, int pid_lastchild)
 	minishell->exit_code = error;
 }
 
-int	exec_middle_childs(t_data *minishell)
-{
-	int	pid;
-
-	if (renew_pipe(minishell) < 0)
-		return (-1);
-	pid = fork();
-	if (pid < 0)
-	{
-		perror("fork error");
-		return (-1);
-	}
-	if (pid == 0)
-		middle_child(minishell);
-	return (0);
-}
-
 int	renew_pipe(t_data *minishell)
 {
 	if (minishell->temp_fd != -1)
@@ -89,12 +72,14 @@ int	renew_pipe(t_data *minishell)
 
 int	close_all(t_data *minishell)
 {
-	if (minishell->cmd->infile > 0)
-		close(minishell->cmd->infile);
-	if (minishell->cmd->outfile > 0)
-		close(minishell->cmd->outfile);
-	close(minishell->pip[0]);
-	close(minishell->pip[1]);
+	if (minishell->infile > 0)
+		close(minishell->infile);
+	if (minishell->outfile > 0)
+		close(minishell->outfile);
+	if (minishell->pip[0] > 0)
+		close(minishell->pip[0]);
+	if (minishell->pip[1] > 0)
+		close(minishell->pip[1]);
 	if (minishell->temp_fd > 0)
 		close(minishell->temp_fd);
 	return (0);
@@ -106,4 +91,14 @@ int	close_fds()
 	close(0);
 	close(1);
 	close(2);
+}
+
+// skip juste apres le prochain pipe et skip cmd
+void	skip(t_data **minishell)
+{
+	while ((*minishell)->token->type != PIPE)
+		(*minishell)->token = (*minishell)->token->next;
+	(*minishell)->token->next;
+	(*minishell)->cmd = (*minishell)->cmd->next;
+	(*minishell)->pipes -= 1;
 }
