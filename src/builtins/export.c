@@ -6,7 +6,7 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 19:07:53 by inbennou          #+#    #+#             */
-/*   Updated: 2024/06/10 20:07:04 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/11 17:14:50 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ int	export(t_data *minishell)
 			ft_putstr_fd(minishell->cmd->cmd_param[1], 2);
 			ft_putendl_fd(": not a valid identifier", 2);
 			minishell->exit_code = 1;
+			// free all
 		}
 		// else
 		// {
@@ -34,8 +35,10 @@ int	export(t_data *minishell)
 		// 		minishell->exit_code = 1;
 		// 	if (export != NULL)
 		// 		add_to_lst(minishell->env, export);
+		//	free all
 		// }
 	}
+	// free all
 	return (minishell->exit_code);
 }
 

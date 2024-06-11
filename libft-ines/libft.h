@@ -6,7 +6,7 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 14:38:10 by inbennou          #+#    #+#             */
-/*   Updated: 2024/06/11 15:48:57 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/11 15:57:46 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,11 @@
 # include <sys/types.h>
 # include <unistd.h>
 
-// typedef struct s_list
-// {
-// 	int				content;
-// 	struct s_list	*next;
-// }					t_list;
+typedef struct s_list
+{
+	int				content;
+	struct s_list	*next;
+}					t_list;
 
 int					ft_isalpha(int c);
 int					ft_isdigit(int c);

@@ -6,7 +6,7 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 16:22:27 by inbennou          #+#    #+#             */
-/*   Updated: 2024/06/10 18:46:26 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/11 17:10:28 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,17 @@ void	env_cmd(t_data *minishell)
 	{
 		ft_putstr_fd("invalid option -- ", 2);
 		ft_putendl_fd(minishell->cmd->cmd_param[1], 2);
+		// free all
 		exit(125);
 	}
 	else if (minishell->cmd->cmd_param[1][0] != '\0')
 	{
+		// free all
 		ft_putstr_fd("No such file or directory: ", 2);
 		ft_putendl_fd(minishell->cmd->cmd_param[1], 2);
 		exit(127);
 	}
+	// free all
 	print_lst(minishell->env);
 }
 

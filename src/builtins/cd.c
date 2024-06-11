@@ -6,7 +6,7 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 21:55:35 by inbennou          #+#    #+#             */
-/*   Updated: 2024/06/10 18:04:23 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/11 17:25:06 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,19 +36,24 @@ int	cd(t_data *minishell)
 	old_pwd = get_pwd();
 	if (minishell->cmd->cmd_param[1] == NULL
 		|| ft_strncmp(minishell->cmd->cmd_param[1], "~", 2) == 0)
+	{
 		if (ch_dir_home(env, old_pwd) < 0)
-			return (1);
-		else
 		{
-			if (chdir(minishell->cmd->cmd_param[1]) < 0)
-			{
-				perror("cd");
-				if (old_pwd)
-					free(old_pwd);
-				// free all
-				return (1);
-			}
+			// free all
+			return (1);
 		}
+	}
+	else
+	{
+		if (chdir(minishell->cmd->cmd_param[1]) < 0)
+		{
+			perror("cd");
+			if (old_pwd)
+				free(old_pwd);
+			// free all
+			return (1);
+		}
+	}
 	cur_dir = get_pwd();
 	if (add_pwd(cur_dir, env) || add_old_pwd(old_pwd, env) < 0)
 	{

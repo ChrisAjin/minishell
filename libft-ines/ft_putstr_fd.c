@@ -6,7 +6,7 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 14:39:21 by inbennou          #+#    #+#             */
-/*   Updated: 2023/11/27 17:07:52 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/11 16:57:15 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,11 @@ void	ft_putstr_fd(char *s, int fd)
 	{
 		while (s[i])
 		{
-			write(fd, &s[i], 1);
+			if (write(fd, &s[i], 1) < 0)
+			{
+				perror("write");
+				return ;
+			}
 			i++;
 		}
 	}

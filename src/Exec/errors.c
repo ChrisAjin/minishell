@@ -6,7 +6,7 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 14:40:48 by inbennou          #+#    #+#             */
-/*   Updated: 2024/06/11 15:31:41 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/11 17:04:10 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,11 +81,13 @@ void	no_such_file(t_data *minishell, char **env)
 // 	}
 // }
 
-void	dup2_error(t_data *minishell)
+void	dup2_error(t_data *minishell, char **env)
 {
 	perror("dup2 error"); // a voir si on met un msg ou pas
 	close_all(minishell);
 	close_fds();
 	// tout free
+	if (env)
+		free(env);
 	exit(1);
 }

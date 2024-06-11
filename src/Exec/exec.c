@@ -6,7 +6,7 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 14:01:42 by inbennou          #+#    #+#             */
-/*   Updated: 2024/06/11 15:42:10 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/11 16:24:01 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	exec(t_data *minishell)
 		{
 			if (exec_first_child(minishell, env) < 0)
 				return (child_fail(minishell, env));
-			skip(&minishell);
+			skip(&minishell); // pipes - 1 dans skip
 			while (minishell->pipes != 0) // (while pas sur la derniere cmd)
 			{
 				if (exec_middle_childs(minishell, env) < 0)
@@ -45,7 +45,7 @@ int	exec(t_data *minishell)
 }
 
 // pour commande sans path
-int	find_and_exec(t_data *minishell, char **env)
+void	find_and_exec(t_data *minishell, char **env)
 {
 	int		i;
 	char	**paths;
@@ -74,7 +74,7 @@ int	find_and_exec(t_data *minishell, char **env)
 }
 
 // pour commande avec path
-int	exec_path(t_data *minishell, char **env)
+void	exec_path(t_data *minishell, char **env)
 {
 	if (access(minishell->cmd->cmd_param[0], F_OK | X_OK) == 0)
 		if (execve(minishell->cmd->cmd_param[0], minishell->cmd->cmd_param,

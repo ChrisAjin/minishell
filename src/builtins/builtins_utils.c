@@ -6,7 +6,7 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 15:31:03 by inbennou          #+#    #+#             */
-/*   Updated: 2024/06/10 19:07:38 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/11 17:07:57 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,10 @@
 // export: regles a respecter dans les noms, voir cas s'il existe deja (ecrase l'ancien?)
 
 // prends en param la struct pour pouvoir tout free
-int	exec_builtin(t_data *minishell)
+int	exec_builtin(t_data *minishell, char **env)
 {
+	if (env)
+		free(env);
 	if (ft_strncmp(minishell->cmd->cmd_param[0], "echo", 5) == 0)
 		echo(minishell);
 	if (ft_strncmp(minishell->cmd->cmd_param[0], "pwd", 4) == 0)
