@@ -6,31 +6,29 @@
 /*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 18:50:07 by cassassa          #+#    #+#             */
-/*   Updated: 2024/05/28 18:50:24 by cassassa         ###   ########.fr       */
+/*   Updated: 2024/06/11 16:55:20 by cassassa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-static int	cmd_new_elem(t_cmd **new, int infile, int outfile, char **cmd_param)
+static int	cmd_new_elem(t_cmd **new, char **cmd_param)
 {
 	(*new) = malloc(sizeof(t_cmd));
 	if (*new == NULL)
 		return (0);
 	(*new)->skip_cmd = false;
-	(*new)->infile = infile;
-	(*new)->outfile = outfile;
 	(*new)->cmd_param = cmd_param;
 	(*new)->next = NULL;
 	(*new)->prev = NULL;
 	return (1);
 }
 
-int	add_list_cmd(t_cmd **list, int infile, int outfile, char **cmd_param)
+int	add_list_cmd(t_cmd **list, char **cmd_param)
 {
 	t_cmd	*new;
 
-	if (!cmd_new_elem(&new, infile, outfile, cmd_param))
+	if (!cmd_new_elem(&new, cmd_param))
 		return (0);
 	if (!(*list))
 	{

@@ -6,7 +6,7 @@
 /*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 16:45:40 by cassassa          #+#    #+#             */
-/*   Updated: 2024/06/06 14:52:35 by cassassa         ###   ########.fr       */
+/*   Updated: 2024/06/11 17:00:20 by cassassa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,6 @@ extern pid_t		g_signal_pid;
 typedef struct s_cmd
 {
 	bool			skip_cmd;
-	int				infile;
-	int				outfile;
 	char			**cmd_param;
 	struct s_cmd	*prev;
 	struct s_cmd	*next;
@@ -104,10 +102,6 @@ void				free_token(t_token **list);
 // creat_list_token.c
 bool				create_list_token(t_token **begin, char *command);
 
-// cmd_fd.C
-bool				get_outfile(t_token *token, t_cmd *cmd, t_data *data);
-bool				get_infile(t_data *data, t_token *token, t_cmd *cmd);
-
 // cmd_param.c
 char				**get_param(t_data *data, t_token *token);
 
@@ -115,7 +109,7 @@ char				**get_param(t_data *data, t_token *token);
 bool				create_list_cmd(t_data *data);
 
 // list_cmd.c
-int					add_list_cmd(t_cmd **list, int infile, int outfile,
+int					add_list_cmd(t_cmd **list,
 						char **cmd_param);
 
 //quotes.c
