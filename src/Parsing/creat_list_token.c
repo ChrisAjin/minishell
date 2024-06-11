@@ -6,7 +6,7 @@
 /*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 16:04:27 by cassassa          #+#    #+#             */
-/*   Updated: 2024/05/28 19:08:22 by cassassa         ###   ########.fr       */
+/*   Updated: 2024/06/11 17:00:09 by cassassa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ static bool	add_cmd(t_token **begin, char **command)
 		return (false);
 	if ((*begin)->prev == (*begin) || (*begin)->prev->prev->type == PIPE)
 		(*begin)->prev->type = CMD;
-	else
+	else 
 		(*begin)->prev->type = ARG;
 	(*command) += length;
 	return (true);

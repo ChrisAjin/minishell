@@ -1,7 +1,7 @@
 NAME	=	minishell
 
 CC		=	cc
-FLAG	=	-Wall -Wextra -Werror
+FLAG	=	-Wall -Wextra -Werror -g
 
 DIRLIB	=	./libft/
 FILELIB	=	libft.a
@@ -27,7 +27,7 @@ WHITE		= \033[0;97m
 # Source
 FILES	=	main tools_list  creat_list_token \
 			utils free list_token\
-			creat_cmd cmd_fd cmd_param \
+			creat_cmd cmd_param \
 			debug print_error list_cmd \
 			dollar_env dollar_replace quotes
 

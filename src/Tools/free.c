@@ -6,7 +6,7 @@
 /*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 12:40:07 by cassassa          #+#    #+#             */
-/*   Updated: 2024/06/06 14:51:25 by cassassa         ###   ########.fr       */
+/*   Updated: 2024/06/11 16:57:29 by cassassa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,16 +30,7 @@ void	free_array(char **arr)
 		free(arr);
 	arr = NULL;
 }
-static void	free_all_cmd(t_cmd *tmp)
-{
-	if (tmp->infile > 0)
-		close(tmp->infile);
-	tmp->infile = -2;
-	if (tmp->outfile > 0)
-		close(tmp->outfile);
-	tmp->outfile = -2;
-	free_array(tmp->cmd_param);
-}
+
 void	free_cmd(t_cmd **list)
 {
 	t_cmd	*tmp;
@@ -52,10 +43,10 @@ void	free_cmd(t_cmd **list)
 	{
 		tmp = current;
 		current = current->next;
-		free_all_cmd(tmp);
+		free_array(tmp->cmd_param);
 		free(tmp);
 	}
-	free_all_cmd(current);
+	free_array(current->cmd_param);
 	free(current);
 	*list = NULL;
 }
