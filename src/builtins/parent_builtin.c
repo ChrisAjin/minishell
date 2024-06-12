@@ -6,7 +6,7 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 14:59:41 by inbennou          #+#    #+#             */
-/*   Updated: 2024/06/11 20:24:30 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/12 12:58:57 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,14 +36,14 @@ int	parent_builtin(t_data *minishell, char **env)
 {
 	if (env)
 		free(env);
-	if (ft_strncmp(minishell->cmd->cmd_param[0], "echo", 5) == 0)
-		echo(minishell);
-	if (ft_strncmp(minishell->cmd->cmd_param[0], "pwd", 4) == 0)
-		pwd(minishell);
-	if (ft_strncmp(minishell->cmd->cmd_param[0], "env", 4) == 0)
-		env_cmd(minishell);
-	if (ft_strncmp(minishell->cmd->cmd_param[0], "cd", 3) == 0)
-		cd(minishell);
+	// if (ft_strncmp(minishell->cmd->cmd_param[0], "echo", 5) == 0)
+	// 	echo(minishell);
+	// if (ft_strncmp(minishell->cmd->cmd_param[0], "pwd", 4) == 0)
+	// 	pwd(minishell);
+	// if (ft_strncmp(minishell->cmd->cmd_param[0], "env", 4) == 0)
+	// 	env_cmd(minishell);
+	// if (ft_strncmp(minishell->cmd->cmd_param[0], "cd", 3) == 0)
+	// 	cd(minishell);
 	// if (ft_strncmp(minishell->cmd->cmd_param[0], "export", 7) == 0)
 		// export();
 	// if (ft_strncmp(minishell->cmd->cmd_param[0], "unset", 6) == 0)

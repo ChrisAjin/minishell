@@ -6,7 +6,7 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 16:45:40 by cassassa          #+#    #+#             */
-/*   Updated: 2024/06/11 19:41:45 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/12 12:59:41 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,6 +192,7 @@ int				add_old_pwd(char *old_pwd, char **envp);
 int	n_option(char *str);
 void	print_lst(t_list *lst);
 int	only_digit(char *str);
+int	parent_builtin(t_data *minishell, char **env);
 
 // builtins_utils
 void				print_args(char **tab, int index);

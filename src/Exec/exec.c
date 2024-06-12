@@ -6,7 +6,7 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 14:01:42 by inbennou          #+#    #+#             */
-/*   Updated: 2024/06/11 20:19:55 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/12 13:11:43 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ void	find_and_exec(t_data *minishell, char **env)
 			if (execve(cur_path, minishell->cmd->cmd_param, env) < 0)
 				exec_fail(minishell, paths, env);
 		free(cur_path);
+		i++;
 	}
 	command_not_found(minishell, paths, env);
 }

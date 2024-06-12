@@ -6,7 +6,7 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 14:13:14 by inbennou          #+#    #+#             */
-/*   Updated: 2024/06/11 19:47:30 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/12 13:07:16 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,12 @@ void	only_child(t_data *minishell, char **env)
 			dup2_error(minishell, env);
 	}
 	close_all(minishell);
-	if (minishell->cmd->skip_cmd == true)
-	{
-		free_all(minishell, NULL, -1);
-		exit(0);
-	}
-	// exec_builtin(minishell, env); // !! doit exit si c'est un builtin
+	// if (minishell->cmd->skip_cmd == true)
+	// {
+	// 	free_all(minishell, NULL, -1);
+	// 	exit(0);
+	// }
+	// // exec_builtin(minishell, env); // !! doit exit si c'est un builtin
 	if (ft_strchr(minishell->cmd->cmd_param[0], '/') != 0) // ou if access == 0
 		exec_path(minishell, env);
 	find_and_exec(minishell, env);

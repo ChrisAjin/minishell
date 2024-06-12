@@ -6,7 +6,7 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 16:44:38 by inbennou          #+#    #+#             */
-/*   Updated: 2024/06/11 19:48:53 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/12 12:56:17 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,9 @@ int	infile_count(t_data *minishell)
 
 	tmp = minishell->token;
 	redir = 0;
+	if (tmp->type == INPUT)
+		redir++;
+	tmp = tmp->next;
 	while (tmp != minishell->token && tmp->type != PIPE)
 	{
 		if (tmp->type == INPUT)
@@ -35,6 +38,9 @@ int	outfile_count(t_data *minishell)
 
 	tmp = minishell->token;
 	redir = 0;
+	if (tmp->type == TRUNC || tmp->type == APPEND)
+		redir++;
+	tmp = tmp->next;
 	while (tmp != minishell->token && tmp->type != PIPE)
 	{
 		if (tmp->type == TRUNC || tmp->type == APPEND)
@@ -50,14 +56,13 @@ void	open_infile(t_data *minishell, int inf_count)
 	int	fd;
 	int	inf_nbr;
 
-	tmp = minishell->token;
+	tmp = minishell->token->next;
 	fd = -1;
 	inf_nbr = 0;
 	while (tmp != minishell->token && tmp->type != PIPE)
 	{
-		if (tmp->type == INPUT)
+		if (tmp->prev->type == INPUT)
 		{
-			tmp = tmp->next;
 			fd = open(tmp->str, O_RDONLY, 0644);
 			if (fd < 0)
 				perror(tmp->str);
@@ -78,14 +83,13 @@ void	open_outfile(t_data *minishell, int outf_count)
 	int	fd;
 	int	inf_nbr;
 
-	tmp = minishell->token;
+	tmp = minishell->token->next;
 	fd = -1;
 	inf_nbr = 0;
 	while (tmp != minishell->token && tmp->type != PIPE)
 	{
-		if (tmp->type == TRUNC || tmp->type == APPEND)
+		if (tmp->prev->type == TRUNC || tmp->prev->type == APPEND)
 		{
-			tmp = tmp->next;
 			if (tmp->type == TRUNC)
 				fd = open(tmp->str, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 			else
