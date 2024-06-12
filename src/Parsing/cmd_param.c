@@ -6,74 +6,75 @@
 /*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 16:03:43 by cassassa          #+#    #+#             */
-/*   Updated: 2024/05/28 17:42:49 by cassassa         ###   ########.fr       */
+/*   Updated: 2024/06/11 22:53:38 by cassassa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-static int count_args(t_data *data, t_token *token)
+static int	count_args(t_data *data, t_token *token)
 {
-    int count;
-    t_token *tmp;
+	int		count;
+	t_token	*tmp;
 
-    count = 0;
-    tmp = token;
-    if (tmp->type == CMD || (tmp->type == ARG && \
-        tmp->prev != data->token->prev && tmp->prev->type > 5))
-        count ++;
-    tmp = tmp->next;
-    while (tmp != data->token && tmp->type != PIPE)
-    {
-        if (tmp->type == CMD || (tmp->type == ARG && \
-            tmp->prev != data->token->prev && tmp->prev->type > 5))
-            count ++;
-        tmp = tmp->next;
-    }
-    return (count);
+	count = 0;
+	tmp = token;
+	if (tmp->type == CMD || (tmp->type == ARG && \
+		tmp->prev != data->token->prev && tmp->prev->type > 5))
+		count ++;
+	tmp = tmp->next;
+	while (tmp != data->token && tmp->type != PIPE)
+	{
+		if (tmp->type == CMD || (tmp->type == ARG && \
+		tmp->prev != data->token->prev && tmp->prev->type > 5))
+			count ++;
+		tmp = tmp->next;
+	}
+	return (count);
 }
 
-static int add_to_cmd_param(char **cmd_param, int *i, char *str)
+static int	add_to_cmd_param(char **cmd_param, int *i, char *str)
 {
-    cmd_param[*i] = ft_strdup(str);
-    if(!cmd_param[*i])
-        return (0);
-    (*i)++;
-    return (1);
+	cmd_param[*i] = ft_strdup(str);
+	if (!cmd_param[*i])
+		return (0);
+	(*i)++;
+    cmd_param[*i] = 0;
+	return (1);
 }
 
-static void *free_cmd_param(char **cmd, int i)
+static void	*free_cmd_param(char **cmd, int i)
 {
-    while (--i != -1)
-        free(cmd[i]);
-    free(cmd);
-    return (NULL);
+	while (--i != -1)
+		free(cmd[i]);
+	free(cmd);
+	return (NULL);
 }
 
-char **get_param(t_data *data, t_token *token)
+char	**get_param(t_data *data, t_token *token)
 {
-    char **cmd_param;
-    int i;
-    t_token *tmp;
+	char	**cmd_param;
+	int		i;
+	t_token	*tmp;
 
-    i = 0;
-    cmd_param = malloc(sizeof(char *) * (count_args(data,token) + 1));
-    if (cmd_param == NULL)
-        return (NULL);
-    tmp = token;
-    if (tmp->type != PIPE && (tmp->type == CMD || (tmp->type == ARG && \
-        tmp->prev != data->token->prev && tmp->prev->type > 5)) && \
-            !add_to_cmd_param(cmd_param, &i, tmp->str))
-        return (free_cmd_param(cmd_param, i));
-    tmp = tmp->next;
-    while (tmp != data->token && tmp->type != PIPE)
-    {
-        if ((tmp->type == CMD || (tmp->type == ARG && \
-            tmp->prev != data->token->prev && tmp->prev->type > 5)) && \
-                !add_to_cmd_param(cmd_param, &i, tmp->str))
-            return (free_cmd_param(cmd_param, i));
-        tmp = tmp->next;
-    }
-    cmd_param[i] = NULL;
-    return (cmd_param);
+	i = 0;
+	cmd_param = malloc(sizeof(char *) * (count_args(data, token) + 1));
+	if (cmd_param == NULL)
+		return (NULL);
+	tmp = token;
+	if (tmp->type != PIPE && (tmp->type == CMD || (tmp->type == ARG && \
+		tmp->prev != data->token->prev && tmp->prev->type > 5)) && \
+		!add_to_cmd_param(cmd_param, &i, tmp->str))
+		return (free_cmd_param(cmd_param, i));
+	tmp = tmp->next;
+	while (tmp != data->token && tmp->type != PIPE)
+	{
+		if ((tmp->type == CMD || (tmp->type == ARG && \
+			tmp->prev != data->token->prev && tmp->prev->type > 5)) && \
+			!add_to_cmd_param(cmd_param, &i, tmp->str))
+			return (free_cmd_param(cmd_param, i));
+		tmp = tmp->next;
+	}
+	cmd_param[i] = NULL;
+	return (cmd_param);
 }

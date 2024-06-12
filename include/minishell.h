@@ -6,7 +6,7 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 16:45:40 by cassassa          #+#    #+#             */
-/*   Updated: 2024/06/12 12:59:41 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/12 13:24:21 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,6 +135,7 @@ int		replace_dollar(char **line, t_data *data);
 
 //DEBUG.c
 void	print_token(t_token *token);
+void	print_cmd(t_cmd *cmd);
 
 // exec.c
 int					exec(t_data *minishell);
