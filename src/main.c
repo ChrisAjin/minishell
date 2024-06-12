@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 16:44:44 by cassassa          #+#    #+#             */
-/*   Updated: 2024/06/11 17:46:16 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/11 23:02:09 by cassassa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ bool parsline (t_data *data, char *line)
 	}
 	free(line);
 	print_token(data->token);
+	
 	if (data->token && data->token->prev->type == PIPE)
 	{
 		write(2, "Error: Unclosed pipe\n",21);
@@ -97,6 +98,7 @@ bool parsline (t_data *data, char *line)
 		free_cmd(&data->cmd);
 		return(false);
 	}
+	print_cmd(data->cmd);
 	return (check_pipe(data));
 }
 

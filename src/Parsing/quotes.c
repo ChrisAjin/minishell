@@ -6,7 +6,7 @@
 /*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 12:10:59 by cassassa          #+#    #+#             */
-/*   Updated: 2024/06/05 00:47:30 by cassassa         ###   ########.fr       */
+/*   Updated: 2024/06/11 20:14:12 by cassassa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,18 @@
 
 void quoting_choice(bool *doubleq, bool *simpleq, int *index, char c)
 {
-    if ((c == '\'' || c == '"' ) && !*simpleq && !doubleq)
+    if ((c == '\'' || c == '"' ) && !*simpleq && !*doubleq)
     {
-        if (c == '\'' && !doubleq)
+        if (c == '\'' && !*doubleq)
             *simpleq = true;
-        else if (c == '"' && !simpleq)
+        else if (c == '"' && !*simpleq)
             *doubleq = true;
         if (index)
             ++(*index);
     }
     else if ((c == '\'' || c == '"'))
     {
-        if (c == '\'' && !doubleq && *simpleq)
+        if (c == '\'' && !*doubleq && *simpleq)
             *simpleq = false;
         else if (c == '"' && !*simpleq && *doubleq)
             *doubleq = false;
@@ -48,7 +48,7 @@ int open_quote(t_data *data, char *line)
     {
         quoting_choice(&doubleq, &simpleq, &i, line[i]);
         if (line[i] && line[i] != '\'' && line[i] != '"')
-            i++;
+            ++i;
     }
     if (doubleq || simpleq)
     {

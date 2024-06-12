@@ -6,7 +6,7 @@
 /*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 16:04:27 by cassassa          #+#    #+#             */
-/*   Updated: 2024/06/11 17:00:09 by cassassa         ###   ########.fr       */
+/*   Updated: 2024/06/11 20:34:59 by cassassa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ static int	length_cmd(char *command, int *quotes)
 			if (command[i])
 				++i;
 		}
-		if (command[i] && command[i] != '"' && command[i] != '\''
-			&& !is_space(command[i]) && !is_special(command + i))
+		if (command[i] && command[i] != '"' && command[i] != '\'' && \
+			!is_space(command[i]) && !is_special(command + i))
 			++i;
 	}
 	return (i);
@@ -86,7 +86,7 @@ static bool	add_cmd(t_token **begin, char **command)
 		return (false);
 	if ((*begin)->prev == (*begin) || (*begin)->prev->prev->type == PIPE)
 		(*begin)->prev->type = CMD;
-	else 
+	else
 		(*begin)->prev->type = ARG;
 	(*command) += length;
 	return (true);
@@ -101,13 +101,11 @@ static bool	add_special(t_token **begin, char **command)
 		return (false);
 	if (spe == INPUT && !add_to_list_token(begin, ft_strdup("<"), INPUT))
 		return (false);
-	else if (spe == HEREDOC && !add_to_list_token(begin, ft_strdup("<<"),
-			HEREDOC))
+	else if (spe == HEREDOC && !add_to_list_token(begin, ft_strdup("<<"), HEREDOC))
 		return (false);
 	else if (spe == TRUNC && !add_to_list_token(begin, ft_strdup(">"), TRUNC))
 		return (false);
-	else if (spe == APPEND && !add_to_list_token(begin, ft_strdup(">>"),
-			APPEND))
+	else if (spe == APPEND && !add_to_list_token(begin, ft_strdup(">>"), APPEND))
 		return (false);
 	else if (spe == PIPE && !add_to_list_token(begin, ft_strdup("|"), PIPE))
 		return (false);
@@ -131,8 +129,8 @@ bool	create_list_token(t_token **begin, char *command)
 				free_token(begin);
 			return (false);
 		}
-		else if (*command && is_special(command) && !add_special(begin,
-				&command))
+		else if (*command && is_special(command) && \
+					!add_special(begin, &command))
 		{
 			if (*begin)
 				free_token(begin);

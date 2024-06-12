@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 16:45:40 by cassassa          #+#    #+#             */
-/*   Updated: 2024/06/11 17:49:42 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/11 20:28:41 by cassassa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,6 +135,7 @@ int		replace_dollar(char **line, t_data *data);
 
 //DEBUG.c
 void	print_token(t_token *token);
+void	print_cmd(t_cmd *cmd);
 
 // exec.c
 int					exec(t_data *minishell);
