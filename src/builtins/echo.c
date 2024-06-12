@@ -6,15 +6,14 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 19:16:00 by inbennou          #+#    #+#             */
-/*   Updated: 2024/06/11 20:25:35 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/12 16:15:08 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// mettre un exit ?
 // gerer echo $?
-void	echo(t_data *minishell)
+int	echo(t_data *minishell)
 {
 	int	n;
 	int	i;
@@ -25,18 +24,18 @@ void	echo(t_data *minishell)
 	{
 		printf("\n");
 		free_all(minishell, NULL, -1);
-		minishell->exit_code = 0;
+		return (0);
 	}
 	if (n_option(minishell->cmd->cmd_param[1]))
 		n = 1;
 	while (n_option(minishell->cmd->cmd_param[i]))
 		i++;
 	if (minishell->cmd->cmd_param[i] != NULL)
-		print_args(minishell->cmd->cmd_param, i);
+		return (print_args(minishell, i));
 	if (n != 1)
 		printf("\n");
 	free_all(minishell, NULL, -1);
-	minishell->exit_code = 0;
+	return (0);
 }
 
 int	n_option(char *str)
@@ -58,25 +57,26 @@ int	n_option(char *str)
 		return (0);
 }
 
-void	print_args(char **tab, int index)
+int	print_args(t_data *minishell, int index)
 {
 	int	y;
 
 	y = index;
-	while (tab[y + 1])
+	while (minishell->cmd->cmd_param[y + 1])
 	{
-		if (printf("%s ", tab[y]) < 0)
+		if (printf("%s ", minishell->cmd->cmd_param[y]) < 0)
 		{
 			perror("printf");
-			// free all
-			exit(1);
+			free_all(minishell, NULL, -1);
+			return (1);
 		}
 		y++;
 	}
-	if (printf("%s", tab[y]) < 0)
+	if (printf("%s", minishell->cmd->cmd_param[y]) < 0)
 	{
 		perror("printf");
-		// free all
-		exit(1);
+		free_all(minishell, NULL, -1);
+		return (1);
 	}
+	return (0);
 }

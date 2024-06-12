@@ -3,7 +3,7 @@ NAME	=	minishell
 CC		=	cc
 FLAG	=	-Wall -Wextra -Werror -g
 
-DIRLIB	=	./libft/
+DIRLIB	=	./libft-ines/
 FILELIB	=	libft.a
 NAMELFT	=	$(addprefix $(DIRLIB), $(FILELIB))
 
@@ -31,8 +31,8 @@ FILES	=	main tools_list  creat_list_token \
 			debug print_error list_cmd \
 			dollar_env dollar_replace quotes \
 			childs errors exec_child exec open exec_utils \
-			builtins_utils cd echo env exit export \
-			parent_builtin pwd
+			builtins_utils cd env exit export \
+			parent_builtin pwd echo
 
 SRCS	=	$(addprefix $(SRC_DIR), $(addsuffix .c, $(FILES)))
 OBJS	=	$(addprefix $(OBJ_DIR), $(addsuffix .o, $(FILES)))

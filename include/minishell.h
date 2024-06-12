@@ -6,15 +6,15 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 16:45:40 by cassassa          #+#    #+#             */
-/*   Updated: 2024/06/12 13:24:21 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/12 16:30:29 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include "../libft/src/libft.h"
-// # include "../libft-ines/libft.h"
+// # include "../libft/src/libft.h"
+# include "../libft-ines/libft.h"
 # include <fcntl.h>
 # include <limits.h>
 # include <readline/history.h>
@@ -179,24 +179,25 @@ void					open_infile(t_data *minishell, int inf_count);
 void					open_outfile(t_data *minishell, int outf_count);
 
 // builtins
-int					exec_builtin(t_data *minishell, char **env);
+void					exec_builtin(t_data *minishell);
 void				exit_shell(t_data *minishell);
-void				echo(t_data *minishell);
-void				env_cmd(t_data *minishell);
+int				echo(t_data *minishell);
+int				env_cmd(t_data *minishell);
 int					cd(t_data *minishell);
-void				pwd(t_data *minishell);
+int				pwd(t_data *minishell);
 char				*get_pwd(void);
 char				*get_home(char **envp);
 int					ch_dir_home(char **envp, char *old_pwd);
 int				add_pwd(char *cur_dir, char **envp);
 int				add_old_pwd(char *old_pwd, char **envp);
 int	n_option(char *str);
-void	print_lst(t_list *lst);
+int	print_lst(t_list *lst);
 int	only_digit(char *str);
 int	parent_builtin(t_data *minishell, char **env);
+int	is_builtin(char *cmd);
 
 // builtins_utils
-void				print_args(char **tab, int index);
+int				print_args(t_data *minishell, int index);
 // void				printf_tab(char **tab);
 
 #endif
