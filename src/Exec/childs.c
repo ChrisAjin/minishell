@@ -6,7 +6,7 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 14:13:14 by inbennou          #+#    #+#             */
-/*   Updated: 2024/06/12 16:30:56 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/12 18:22:23 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,9 @@ void	only_child(t_data *minishell, char **env)
 	if (is_builtin(minishell->cmd->cmd_param[0]) == 1)
 	{
 		free(env);
+		free_all(minishell, NULL, -1);
 		exec_builtin(minishell);
+		exit(minishell->exit_code);
 	}
 	if (ft_strchr(minishell->cmd->cmd_param[0], '/') != 0) // ou if access == 0
 		exec_path(minishell, env);

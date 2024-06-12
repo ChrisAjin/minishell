@@ -6,7 +6,7 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 19:16:00 by inbennou          #+#    #+#             */
-/*   Updated: 2024/06/12 16:15:08 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/12 18:18:26 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	echo(t_data *minishell)
 	if (minishell->cmd->cmd_param[1] == NULL)
 	{
 		printf("\n");
-		free_all(minishell, NULL, -1);
+		// free_all(minishell, NULL, -1);
 		return (0);
 	}
 	if (n_option(minishell->cmd->cmd_param[1]))
@@ -34,7 +34,7 @@ int	echo(t_data *minishell)
 		return (print_args(minishell, i));
 	if (n != 1)
 		printf("\n");
-	free_all(minishell, NULL, -1);
+	// free_all(minishell, NULL, -1);
 	return (0);
 }
 

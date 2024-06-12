@@ -6,7 +6,7 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 16:45:40 by cassassa          #+#    #+#             */
-/*   Updated: 2024/06/12 16:30:29 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/12 18:42:24 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,7 +150,7 @@ void					middle_child(t_data *minishell, char **env);
 void					last_child(t_data *minishell, char **env);
 
 // errors.c
-int	child_fail(t_data *minishell, char **env);
+int					child_fail(t_data *minishell, char **env);
 void					command_not_found(t_data *minishell, char **paths, char **env);
 void					exec_fail(t_data *minishell, char **paths, char **env);
 void				permission_denied(t_data *minishell, char**env);
@@ -163,7 +163,7 @@ int	exec_first_child(t_data *minishell, char **env);
 int	exec_middle_childs(t_data *minishell, char **env);
 int	exec_last_child(t_data *minishell, char **env);
 
-// utils.c
+// exec_utils.c
 char				**split_path(char **envp);
 void				wait_and_error(t_data *minishell, int pid_lastchild);
 int					renew_pipe(t_data *minishell);
@@ -178,27 +178,37 @@ int					outfile_count(t_data *minishell);
 void					open_infile(t_data *minishell, int inf_count);
 void					open_outfile(t_data *minishell, int outf_count);
 
-// builtins
+// builtins_utils
 void					exec_builtin(t_data *minishell);
-void				exit_shell(t_data *minishell);
-int				echo(t_data *minishell);
-int				env_cmd(t_data *minishell);
-int					cd(t_data *minishell);
-int				pwd(t_data *minishell);
+int					is_builtin(char *cmd);
 char				*get_pwd(void);
-char				*get_home(char **envp);
+
+// cd
+int					cd(t_data *minishell);
 int					ch_dir_home(char **envp, char *old_pwd);
 int				add_pwd(char *cur_dir, char **envp);
 int				add_old_pwd(char *old_pwd, char **envp);
-int	n_option(char *str);
-int	print_lst(t_list *lst);
-int	only_digit(char *str);
-int	parent_builtin(t_data *minishell, char **env);
-int	is_builtin(char *cmd);
+char				*get_home(char **envp);
 
-// builtins_utils
+// echo
+int				echo(t_data *minishell);
+int				n_option(char *str);
 int				print_args(t_data *minishell, int index);
-// void				printf_tab(char **tab);
+
+// env
+int				env_cmd(t_data *minishell);
+int				print_lst(t_list *lst);
+
+// exit
+void				exit_shell(t_data *minishell);
+int				only_digit(char *str);
+
+// parent_builtin
+int				parent_builtin(t_data *minishell);
+int				which_builtin(t_data *minishell);
+
+// pwd
+int				pwd(t_data *minishell);
 
 #endif
 
