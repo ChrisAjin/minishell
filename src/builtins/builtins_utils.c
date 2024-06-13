@@ -6,21 +6,25 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 15:31:03 by inbennou          #+#    #+#             */
-/*   Updated: 2024/06/12 16:30:15 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/13 16:31:18 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../include/minishell.h"
 
 // cd export unset et exit faut pas fork quand c'est une seule commande
 
 // export: regles a respecter dans les noms, voir cas s'il existe deja (ecrase l'ancien?)
 
 // prends en param la struct pour pouvoir tout free
-void	exec_builtin(t_data *minishell)
+void	exec_builtin(t_data *minishell, char **env)
 {
 	if (ft_strncmp(minishell->cmd->cmd_param[0], "echo", 5) == 0)
+	{
+		free(env);
+		free_all(minishell, NULL, -1);
 		exit(echo(minishell));
+	}
 	if (ft_strncmp(minishell->cmd->cmd_param[0], "pwd", 4) == 0)
 		exit(pwd(minishell));
 	if (ft_strncmp(minishell->cmd->cmd_param[0], "env", 4) == 0)

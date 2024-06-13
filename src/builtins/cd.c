@@ -6,11 +6,11 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 21:55:35 by inbennou          #+#    #+#             */
-/*   Updated: 2024/06/11 19:24:20 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/13 16:56:28 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../include/minishell.h"
 
 // mene vers le chemin tab[1]
 // si tab[1] == '~' || tab[1] == '\0' mene vers home
@@ -26,6 +26,7 @@
 
 // tester cd dans un fichier supprime
 
+// free env
 int	cd(t_data *minishell)
 {
 	char	**env;
@@ -39,7 +40,7 @@ int	cd(t_data *minishell)
 	{
 		if (ch_dir_home(env, old_pwd) < 0)
 		{
-			free_all(minishell, NULL, -1);
+			// free_all(minishell, NULL, -1);
 			return (1);
 		}
 	}
@@ -50,17 +51,17 @@ int	cd(t_data *minishell)
 			perror("cd");
 			if (old_pwd)
 				free(old_pwd);
-			free_all(minishell, NULL, -1);
+			// free_all(minishell, NULL, -1);
 			return (1);
 		}
 	}
 	cur_dir = get_pwd();
 	if (add_pwd(cur_dir, env) || add_old_pwd(old_pwd, env) < 0)
 	{
-		free_all(minishell, NULL, -1);
+		// free_all(minishell, NULL, -1);
 		return (1);
 	}
-	free_all(minishell, NULL, -1);
+	// free_all(minishell, NULL, -1);
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 14:13:14 by inbennou          #+#    #+#             */
-/*   Updated: 2024/06/12 18:22:23 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/13 16:31:46 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,15 +38,16 @@ void	only_child(t_data *minishell, char **env)
 	close_all(minishell);
 	if (minishell->cmd->skip_cmd == true)
 	{
+		free(env);
 		free_all(minishell, NULL, -1);
 		exit(0);
 	}
 	if (is_builtin(minishell->cmd->cmd_param[0]) == 1)
 	{
-		free(env);
-		free_all(minishell, NULL, -1);
-		exec_builtin(minishell);
-		exit(minishell->exit_code);
+		exec_builtin(minishell, env);
+		// free(env);
+		// free_all(minishell, NULL, -1);
+		// exit(minishell->exit_code);
 	}
 	if (ft_strchr(minishell->cmd->cmd_param[0], '/') != 0) // ou if access == 0
 		exec_path(minishell, env);
@@ -79,13 +80,16 @@ void	first_child(t_data *minishell, char **env)
 	close_all(minishell);
 	if (minishell->cmd->skip_cmd == true)
 	{
+		free(env);
 		free_all(minishell, NULL, -1);
 		exit(0);
 	}
 	if (is_builtin(minishell->cmd->cmd_param[0]) == 1)
 	{
-		free(env);
-		exec_builtin(minishell);
+		exec_builtin(minishell, env);
+		// free(env);
+		// free_all(minishell, NULL, -1);
+		// exit(minishell->exit_code);
 	}
 	if (ft_strchr(minishell->cmd->cmd_param[0], '/') != 0) // ou if access == 0
 		exec_path(minishell, env);
@@ -124,13 +128,16 @@ void	middle_child(t_data *minishell, char **env)
 	close_all(minishell);
 	if (minishell->cmd->skip_cmd == true)
 	{
+		free(env);
 		free_all(minishell, NULL, -1);
 		exit(0);
 	}
 	if (is_builtin(minishell->cmd->cmd_param[0]) == 1)
 	{
-		free(env);
-		exec_builtin(minishell);
+		exec_builtin(minishell, env);
+		// free(env);
+		// free_all(minishell, NULL, -1);
+		// exit(minishell->exit_code);
 	}
 	if (ft_strchr(minishell->cmd->cmd_param[0], '/') != 0) // ou if access == 0
 		exec_path(minishell, env);
@@ -163,13 +170,16 @@ void	last_child(t_data *minishell, char **env)
 	close_all(minishell);
 	if (minishell->cmd->skip_cmd == true)
 	{
+		free(env);
 		free_all(minishell, NULL, -1);
 		exit(0);
 	}
 	if (is_builtin(minishell->cmd->cmd_param[0]) == 1)
 	{
-		free(env);
-		exec_builtin(minishell);
+		exec_builtin(minishell, env);
+		// free(env);
+		// free_all(minishell, NULL, -1);
+		// exit(minishell->exit_code);
 	}
 	if (ft_strchr(minishell->cmd->cmd_param[0], '/') != 0) // ou if access == 0
 		exec_path(minishell, env);

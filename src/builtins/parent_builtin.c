@@ -6,7 +6,7 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 14:59:41 by inbennou          #+#    #+#             */
-/*   Updated: 2024/06/12 18:39:34 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/13 16:53:02 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ int	which_builtin(t_data *minishell)
 	if (ft_strncmp(minishell->cmd->cmd_param[0], "cd", 3) == 0)
 		minishell->exit_code = cd(minishell);
 	// if (ft_strncmp(minishell->cmd->cmd_param[0], "export", 7) == 0)
-		// minishell->exit_code = export();
+	// 	minishell->exit_code = export();
 	// if (ft_strncmp(minishell->cmd->cmd_param[0], "unset", 6) == 0)
-		// minishell->exit_code = unset();
+	// 	minishell->exit_code = unset();
 	if (ft_strncmp(minishell->cmd->cmd_param[0], "exit", 5) == 0)
 		exit_shell(minishell);
 	return (0);
@@ -52,7 +52,7 @@ int	parent_builtin(t_data *minishell)
 	{
 		if (dup2(minishell->outfile, STDOUT_FILENO) < 0)
 		{
-			perror("dup2 error");
+			perror("dup2 error"); // retirer
 			return (-1);
 		}
 	}

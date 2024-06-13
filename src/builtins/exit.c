@@ -6,18 +6,19 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 16:16:04 by inbennou          #+#    #+#             */
-/*   Updated: 2024/06/12 13:04:58 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/13 16:52:39 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../include/minishell.h"
 
+// beaucoup de leaks des fonctions de parsing avec exit, voir ou mettre les free
 void	exit_shell(t_data *minishell)
 {
 	if (minishell->pipes == 0)
 		if (write(1, "exit\n", 5) < 0)
 			perror("write error");
-	free_all(minishell, NULL, -1);
+	// free_all(minishell, NULL, -1);
 	// rl_clear_history
 	if (only_digit(minishell->cmd->cmd_param[1]))
 		minishell->exit_code = ft_atoi(minishell->cmd->cmd_param[1]);
@@ -33,6 +34,8 @@ int	only_digit(char *str)
 	int	i;
 
 	i = 0;
+	if (!str || str[0] == '\0')
+		return (0);
 	if (str[i] == '+' || str[i] == '-')
 		i++;
 	while (str[i])

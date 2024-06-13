@@ -6,7 +6,7 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 16:45:40 by cassassa          #+#    #+#             */
-/*   Updated: 2024/06/12 18:42:24 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/13 16:31:10 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,7 +179,7 @@ void					open_infile(t_data *minishell, int inf_count);
 void					open_outfile(t_data *minishell, int outf_count);
 
 // builtins_utils
-void					exec_builtin(t_data *minishell);
+void					exec_builtin(t_data *minishell, char **env);
 int					is_builtin(char *cmd);
 char				*get_pwd(void);
 
