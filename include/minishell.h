@@ -6,7 +6,7 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 16:45:40 by cassassa          #+#    #+#             */
-/*   Updated: 2024/06/13 16:31:10 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/13 19:37:50 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -204,6 +204,7 @@ void				exit_shell(t_data *minishell);
 int				only_digit(char *str);
 
 // parent_builtin
+int				is_parent_builtin(char *cmd);
 int				parent_builtin(t_data *minishell);
 int				which_builtin(t_data *minishell);
 

@@ -6,12 +6,13 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 19:07:53 by inbennou          #+#    #+#             */
-/*   Updated: 2024/06/13 16:21:20 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/13 20:10:39 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
+// :(((((((
 int	export(t_data *minishell)
 {
 	// t_list	*export;

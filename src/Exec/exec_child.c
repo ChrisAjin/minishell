@@ -6,7 +6,7 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 15:34:23 by inbennou          #+#    #+#             */
-/*   Updated: 2024/06/13 16:38:32 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/13 19:37:59 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	one_cmd(t_data *minishell, char **env)
 {
 	int	pid;
 
-	if (is_builtin(minishell->cmd->cmd_param[0]))
+	if (is_parent_builtin(minishell->cmd->cmd_param[0]))
 		return (parent_builtin(minishell));
 	pid = fork();
 	if (pid < 0)

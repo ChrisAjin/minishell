@@ -6,7 +6,7 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 15:44:29 by cassassa          #+#    #+#             */
-/*   Updated: 2024/06/12 16:19:23 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/13 17:19:22 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@ void print_token(t_token *token)
     tmp = token;
     while (tmp->next != token)
     {
-        // printf("Type : %d, [%s]\n", tmp->type, tmp->str);
+        printf("Type : %d, [%s]\n", tmp->type, tmp->str);
         tmp = tmp->next;
     }
-//     printf("Type : %d, [%s]\n", tmp->type, tmp->str);
+    printf("Type : %d, [%s]\n", tmp->type, tmp->str);
 }
 
 void	print_tab(char **tab)
@@ -31,19 +31,19 @@ void	print_tab(char **tab)
 
 	if (!(tab))
 	{
-		// printf("NULL");
+		printf("NULL");
 		return ;
 	}
 	i = 0;
-	// printf("[");
+	printf("[");
 	while (tab[i])
 	{
-		// printf("%s", tab[i]);
-		// if (tab[i + 1])
-			// printf(", ");
+		printf("%s", tab[i]);
+		if (tab[i + 1])
+			printf(", ");
 		i++;
 	}
-	// printf("]");
+	printf("]");
 }
 
 void	print_cmd(t_cmd *cmd)
@@ -53,14 +53,14 @@ void	print_cmd(t_cmd *cmd)
 	tmp = cmd;
 	while (tmp->next != cmd)
 	{
-		// printf("Skip -> %d, cmd : ",
-		// tmp->skip_cmd);
-		// print_tab(tmp->cmd_param);
+		printf("Skip -> %d, cmd : ",
+		tmp->skip_cmd);
+		print_tab(tmp->cmd_param);
         
-		// printf("\n");
+		printf("\n");
 		tmp = tmp->next;
 	}
-	// printf("Skip -> %d, cmd : ", tmp->skip_cmd);
-	// print_tab(tmp->cmd_param);
-	// printf("\n");
+	printf("Skip -> %d, cmd : ", tmp->skip_cmd);
+	print_tab(tmp->cmd_param);
+	printf("\n");
 }

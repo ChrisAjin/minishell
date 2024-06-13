@@ -6,12 +6,14 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 19:16:00 by inbennou          #+#    #+#             */
-/*   Updated: 2024/06/13 16:36:53 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/13 19:55:36 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
+
+// ca marche plus :(
 // gerer echo $?
 int	echo(t_data *minishell)
 {
@@ -19,19 +21,31 @@ int	echo(t_data *minishell)
 	int	i;
 
 	n = 0;
-	i = 2;
-	if (minishell->cmd->cmd_param[1] == NULL)
+	i = 1;
+	if (!minishell->cmd->cmd_param[1] || minishell->cmd->cmd_param[1] == NULL)
 	{
 		printf("\n");
 		// free_all(minishell, NULL, -1);
 		return (0);
 	}
+	if (ft_strncmp(minishell->cmd->cmd_param[1], "$?", 3) == 0)
+	{
+		printf("%d\n", minishell->exit_code);
+		return (0);
+	}
 	if (n_option(minishell->cmd->cmd_param[1]))
+	{
 		n = 1;
+		i = 2;
+	}
 	while (n_option(minishell->cmd->cmd_param[i]))
 		i++;
 	if (minishell->cmd->cmd_param[i] != NULL)
-		return (print_args(minishell, i));
+	{
+		dprintf(2, "oui\n");
+		if (print_args(minishell, i) < 0)
+			minishell->exit_code = 1;
+	}
 	if (n != 1)
 		printf("\n");
 	// free_all(minishell, NULL, -1);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 12:32:17 by cassassa          #+#    #+#             */
-/*   Updated: 2024/06/06 14:52:17 by cassassa         ###   ########.fr       */
+/*   Updated: 2024/06/13 18:59:37 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,10 +81,10 @@ bool make_env2(t_data *data)
 	char	path[PATH_MAX];
 	char 	*tmp;
 
-	tmp = ft_strdup("OLDPWD");
+	tmp = ft_strdup("OLDPWD=");
 	if (!tmp || !add_to_list(&(data->env), tmp) || getcwd(path,PATH_MAX) == NULL)
 		free_all(data, ERR_MALLOC, EXT_MALLOC);
-	tmp = ft_strjoin("PWD", path);
+	tmp = ft_strjoin("PWD=", path);
 	if (!tmp || !add_to_list(&(data->env), tmp))
 		free_all(data, ERR_MALLOC, EXT_MALLOC);
 	return (1);

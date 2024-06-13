@@ -6,16 +6,20 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 16:22:27 by inbennou          #+#    #+#             */
-/*   Updated: 2024/06/13 16:36:59 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/13 20:10:23 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
+// double free et probleme de OLDPWD :(
+// voir pourquoi env -i ./minishell on a quand mm pwd et old pwd
 // voir si quand plusieurs childs le texte s'ecrit quand mm dans le bon ordre
 // tester dans le bash pour confirmer les cas d'erreurs
 int	env_cmd(t_data *minishell)
 {
+	if (!minishell->cmd->cmd_param[1] || minishell->cmd->cmd_param[1] == NULL)
+		return (print_lst(minishell->env));
 	if (minishell->cmd->cmd_param[1][0] == '-')
 	{
 		ft_putstr_fd("invalid option -- ", 2);
@@ -23,7 +27,7 @@ int	env_cmd(t_data *minishell)
 		// free_all(minishell, NULL, -1);
 		return (125);
 	}
-	else if (minishell->cmd->cmd_param[1][0] != '\0')
+	else 
 	{
 		// free_all(minishell, NULL, -1);
 		ft_putstr_fd("No such file or directory: ", 2);
@@ -31,19 +35,30 @@ int	env_cmd(t_data *minishell)
 		return (127);
 	}
 	// free_all(minishell, NULL, -1);
-	return (print_lst(minishell->env));
+	// if (minishell->cmd->cmd_param[1][0] != '\0')
 }
 
 int	print_lst(t_list *lst)
 {
-	while (lst)
+	t_list	*temp;
+
+	if (!lst)
+		return (1);
+	temp = lst;
+	if (printf("%s\n", temp->str) < 0)
 	{
-		if (printf("%s\n", lst->str) < 0)
+		perror("printf");
+		return (1);
+	}
+	temp = temp->next;
+	while (temp != lst)
+	{
+		if (printf("%s\n", temp->str) < 0)
 		{
 			perror("printf");
 			return (1);
 		}
-		lst = lst->next;
+		temp = temp->next;
 	}
 	return (0);
 }

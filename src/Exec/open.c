@@ -6,7 +6,7 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 16:44:38 by inbennou          #+#    #+#             */
-/*   Updated: 2024/06/12 12:56:17 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/13 18:50:49 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	open_infile(t_data *minishell, int inf_count)
 		{
 			fd = open(tmp->str, O_RDONLY, 0644);
 			if (fd < 0)
-				perror(tmp->str);
+				perror(tmp->str); // ajouter minishell->exit_code = 1;
 			inf_nbr++;
 			if (inf_nbr != inf_count)
 				close(fd);
@@ -95,7 +95,7 @@ void	open_outfile(t_data *minishell, int outf_count)
 			else
 				fd = open(tmp->str, O_CREAT | O_WRONLY | O_APPEND, 0644);
 			if (fd < 0)
-				perror(tmp->str);
+				perror(tmp->str); // ajouter minishell->exit_code = 1;
 			inf_nbr++;
 			if (inf_nbr != outf_count)
 				close(fd);

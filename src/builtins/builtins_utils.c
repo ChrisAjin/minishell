@@ -6,7 +6,7 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 15:31:03 by inbennou          #+#    #+#             */
-/*   Updated: 2024/06/13 16:31:18 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/13 18:42:08 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	exec_builtin(t_data *minishell, char **env)
 	{
 		free(env);
 		free_all(minishell, NULL, -1);
-		exit(echo(minishell));
+		exit(echo(minishell)); // ou exit minishell->exit code
 	}
 	if (ft_strncmp(minishell->cmd->cmd_param[0], "pwd", 4) == 0)
 		exit(pwd(minishell));
@@ -41,6 +41,8 @@ void	exec_builtin(t_data *minishell, char **env)
 
 int	is_builtin(char *cmd)
 {
+	if (!cmd || cmd[0] == '\0')
+		return (0);
 	if (ft_strncmp(cmd, "echo", 5) == 0)
 		return (1);
 	if (ft_strncmp(cmd, "pwd", 4) == 0)
@@ -57,7 +59,6 @@ int	is_builtin(char *cmd)
 		return (1);
 	return (0);
 }
-
 
 char	*get_pwd()
 {

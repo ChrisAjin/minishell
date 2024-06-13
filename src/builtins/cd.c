@@ -6,7 +6,7 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 21:55:35 by inbennou          #+#    #+#             */
-/*   Updated: 2024/06/13 16:56:28 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/13 20:06:24 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 
 // tester cd dans un fichier supprime
 
+// toujours l'erreur could not set OLDPWD :(
 // free env
 int	cd(t_data *minishell)
 {
@@ -41,6 +42,7 @@ int	cd(t_data *minishell)
 		if (ch_dir_home(env, old_pwd) < 0)
 		{
 			// free_all(minishell, NULL, -1);
+			free(env);
 			return (1);
 		}
 	}
@@ -51,6 +53,7 @@ int	cd(t_data *minishell)
 			perror("cd");
 			if (old_pwd)
 				free(old_pwd);
+			free(env);
 			// free_all(minishell, NULL, -1);
 			return (1);
 		}
@@ -59,6 +62,7 @@ int	cd(t_data *minishell)
 	if (add_pwd(cur_dir, env) || add_old_pwd(old_pwd, env) < 0)
 	{
 		// free_all(minishell, NULL, -1);
+		free(env);
 		return (1);
 	}
 	// free_all(minishell, NULL, -1);
@@ -106,7 +110,7 @@ int	add_pwd(char *cur_dir, char **env)
 	i = 0;
 	if (cur_dir == NULL)
 		return (1);
-	while (env[i])
+	while (env && env[i])
 	{
 		if (ft_strncmp(env[i], "PWD=", 4) == 0)
 		{
@@ -133,7 +137,7 @@ int	add_old_pwd(char *old_pwd, char **env)
 	i = 0;
 	if (old_pwd == NULL)
 		return (1);
-	while (env[i])
+	while (env && env[i])
 	{
 		if (ft_strncmp(env[i], "OLDPWD=", 7) == 0)
 		{

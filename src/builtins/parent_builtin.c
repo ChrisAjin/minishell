@@ -6,18 +6,31 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 14:59:41 by inbennou          #+#    #+#             */
-/*   Updated: 2024/06/13 16:53:02 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/13 19:46:10 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
+int	is_parent_builtin(char *cmd)
+{
+	if (!cmd || cmd[0] == '\0')
+		return (0);
+	if (ft_strncmp(cmd, "env", 4) == 0)
+		return (1);
+	if (ft_strncmp(cmd, "cd", 3) == 0)
+		return (1);
+	// if (ft_strncmp(cmd, "export", 7) == 0)
+		// return (1);
+	// if (ft_strncmp(cmd, "unset", 6) == 0)
+		// return (1);
+	if (ft_strncmp(cmd, "exit", 5) == 0)
+		return (1);
+	return (0);
+}
+
 int	which_builtin(t_data *minishell)
 {
-	if (ft_strncmp(minishell->cmd->cmd_param[0], "echo", 5) == 0)
-		minishell->exit_code = echo(minishell);
-	if (ft_strncmp(minishell->cmd->cmd_param[0], "pwd", 4) == 0)
-		minishell->exit_code = pwd(minishell);
 	if (ft_strncmp(minishell->cmd->cmd_param[0], "env", 4) == 0)
 		minishell->exit_code = env_cmd(minishell);
 	if (ft_strncmp(minishell->cmd->cmd_param[0], "cd", 3) == 0)
@@ -31,7 +44,6 @@ int	which_builtin(t_data *minishell)
 	return (0);
 }
 
-// dup2 dans le parent et re dup2 pour remettre sur stdin et stdout
 // init inf et outf a -1 aussi a la fin
 int	parent_builtin(t_data *minishell)
 {
@@ -40,42 +52,12 @@ int	parent_builtin(t_data *minishell)
 		minishell->outfile = -1;
 	else
 		open_outfile(minishell, outfile_count(minishell));
-	if (minishell->infile > 0)
-	{
-		if (dup2(minishell->infile, STDIN_FILENO) < 0)
-		{
-			perror("dup2 error"); // retirer
-			return (-1);
-		}
-	}
-	if (minishell->outfile > 0)
-	{
-		if (dup2(minishell->outfile, STDOUT_FILENO) < 0)
-		{
-			perror("dup2 error"); // retirer
-			return (-1);
-		}
-	}
 	which_builtin(minishell);
-	if (minishell->infile > 0)
-	{
-		if (dup2(STDIN_FILENO, minishell->infile) < 0)
-		{
-			perror("dup2 error"); // retirer
-			return (-1);
-		}
-	}
-	if (minishell->outfile > 0)
-	{
-		if (dup2(STDOUT_FILENO, minishell->outfile) < 0)
-		{
-			perror("dup2 error");
-			return (-1);
-		}
-	}
 	if (minishell->infile > 0)
 		close(minishell->infile);
 	if (minishell->outfile > 0)
 		close(minishell->outfile);
+	minishell->infile = -1;
+	minishell->outfile = -1;
 	return (0);
 }

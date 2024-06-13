@@ -6,7 +6,7 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 14:13:14 by inbennou          #+#    #+#             */
-/*   Updated: 2024/06/13 16:31:46 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/13 19:42:33 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,11 @@ void	only_child(t_data *minishell, char **env)
 		// exec_here_doc
 	open_infile(minishell, infile_count(minishell));
 	if (infile_count(minishell) != 0 && minishell->infile < 0)
+	{
 		minishell->outfile = -1;
+		free_all(minishell, NULL, -1);
+		exit(1);
+	}
 	else
 		open_outfile(minishell, outfile_count(minishell));
 	if (minishell->infile > 0)
@@ -59,7 +63,11 @@ void	first_child(t_data *minishell, char **env)
 	// if here_doc
 	open_infile(minishell, infile_count(minishell));
 	if (infile_count(minishell) != 0 && minishell->infile < 0)
+	{
 		minishell->outfile = -1;
+		free_all(minishell, NULL, -1);
+		exit(1);
+	}
 	else
 		open_outfile(minishell, outfile_count(minishell));
 	if (minishell->infile > 0)
@@ -102,7 +110,11 @@ void	middle_child(t_data *minishell, char **env)
 	// if here doc
 	open_infile(minishell, infile_count(minishell));
 	if (infile_count(minishell) != 0 && minishell->infile < 0)
+	{
 		minishell->outfile = -1;
+		free_all(minishell, NULL, -1);
+		exit(1);
+	}
 	else
 		open_outfile(minishell, outfile_count(minishell));
 	if (minishell->infile > 0)
@@ -149,7 +161,11 @@ void	last_child(t_data *minishell, char **env)
 	// if here_doc
 	open_infile(minishell, infile_count(minishell));
 	if (infile_count(minishell) != 0 && minishell->infile < 0)
+	{
 		minishell->outfile = -1;
+		free_all(minishell, NULL, -1);
+		exit(1);
+	}
 	else
 		open_outfile(minishell, outfile_count(minishell));
 	if (minishell->infile > 0)
