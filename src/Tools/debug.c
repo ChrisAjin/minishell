@@ -6,7 +6,7 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 15:44:29 by cassassa          #+#    #+#             */
-/*   Updated: 2024/06/13 17:19:22 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/14 19:03:12 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,8 @@ void	print_cmd(t_cmd *cmd)
 		printf("\n");
 		tmp = tmp->next;
 	}
+	tmp = tmp->next;
+	print_tab(tmp->cmd_param);
 	printf("Skip -> %d, cmd : ", tmp->skip_cmd);
 	print_tab(tmp->cmd_param);
 	printf("\n");

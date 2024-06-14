@@ -6,7 +6,7 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 15:31:03 by inbennou          #+#    #+#             */
-/*   Updated: 2024/06/13 18:42:08 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/14 16:48:23 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,21 +20,17 @@
 void	exec_builtin(t_data *minishell, char **env)
 {
 	if (ft_strncmp(minishell->cmd->cmd_param[0], "echo", 5) == 0)
-	{
-		free(env);
-		free_all(minishell, NULL, -1);
-		exit(echo(minishell)); // ou exit minishell->exit code
-	}
+		free_and_exit(minishell, env, echo(minishell));
 	if (ft_strncmp(minishell->cmd->cmd_param[0], "pwd", 4) == 0)
-		exit(pwd(minishell));
+		free_and_exit(minishell, env, pwd(minishell));
 	if (ft_strncmp(minishell->cmd->cmd_param[0], "env", 4) == 0)
-		exit(env_cmd(minishell));
+		free_and_exit(minishell, env, env_cmd(minishell));
 	if (ft_strncmp(minishell->cmd->cmd_param[0], "cd", 3) == 0)
-		exit(cd(minishell));
+		free_and_exit(minishell, env, cd(minishell));
 	// if (ft_strncmp(minishell->cmd->cmd_param[0], "export", 7) == 0)
-		// exit(export());
+		// free_and_exit(minishell, env, export(minishell));
 	// if (ft_strncmp(minishell->cmd->cmd_param[0], "unset", 6) == 0)
-		// exit(unset());
+		// free_and_exit(minishell, env, unset(minishell));
 	if (ft_strncmp(minishell->cmd->cmd_param[0], "exit", 5) == 0)
 		exit_shell(minishell);
 }
@@ -72,4 +68,11 @@ char	*get_pwd()
 		return (NULL);
 	}
 	return (path);
+}
+
+void	free_and_exit(t_data *minishell, char **env, int ret)
+{
+	free(env);
+	free_all(minishell, NULL, -1);
+	exit(ret);
 }

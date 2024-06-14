@@ -6,7 +6,7 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 19:07:53 by inbennou          #+#    #+#             */
-/*   Updated: 2024/06/13 20:10:39 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/14 18:35:31 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ int	export(t_data *minishell)
 		//	free all
 		// }
 	}
-	// free all
 	return (minishell->exit_code);
 }
 

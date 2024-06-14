@@ -6,7 +6,7 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 16:45:40 by cassassa          #+#    #+#             */
-/*   Updated: 2024/06/13 19:37:50 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/14 18:10:38 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,10 +158,10 @@ void				no_such_file(t_data *minishell, char **env);
 void				dup2_error(t_data *minishell, char **env);
 
 // exec_child
-int	one_cmd(t_data *minishell, char **env);
-int	exec_first_child(t_data *minishell, char **env);
-int	exec_middle_childs(t_data *minishell, char **env);
-int	exec_last_child(t_data *minishell, char **env);
+int					one_cmd(t_data *minishell, char **env);
+int					exec_first_child(t_data *minishell, char **env);
+int					exec_middle_childs(t_data *minishell, char **env);
+int					exec_last_child(t_data *minishell, char **env);
 
 // exec_utils.c
 char				**split_path(char **envp);
@@ -169,8 +169,8 @@ void				wait_and_error(t_data *minishell, int pid_lastchild);
 int					renew_pipe(t_data *minishell);
 int					close_all(t_data *minishell);
 void					close_fds(void);
-void	skip(t_data **minishell);
-void	free_tab(char **tab);
+void					skip(t_data **minishell);
+void					free_tab(char **tab);
 
 // open
 int					infile_count(t_data *minishell);
@@ -182,13 +182,15 @@ void					open_outfile(t_data *minishell, int outf_count);
 void					exec_builtin(t_data *minishell, char **env);
 int					is_builtin(char *cmd);
 char				*get_pwd(void);
+void					free_and_exit(t_data *minishell, char **env, int ret);
+int					size_tab(char **cmd_param);
 
 // cd
 int					cd(t_data *minishell);
-int					ch_dir_home(char **envp, char *old_pwd);
-int				add_pwd(char *cur_dir, char **envp);
-int				add_old_pwd(char *old_pwd, char **envp);
-char				*get_home(char **envp);
+int					ch_dir_home(t_list *env, char *old_pwd);
+int				add_pwd(char *cur_dir, t_data *minishell);
+int				add_old_pwd(char *old_pwd, t_data *minishell);
+char				*get_home(t_list *env);
 
 // echo
 int				echo(t_data *minishell);
