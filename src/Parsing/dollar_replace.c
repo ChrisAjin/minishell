@@ -6,7 +6,7 @@
 /*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 12:10:57 by cassassa          #+#    #+#             */
-/*   Updated: 2024/06/06 15:01:37 by cassassa         ###   ########.fr       */
+/*   Updated: 2024/06/14 15:07:08 by cassassa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ int	replace_dollar(char **line, t_data *data)
 	while ((*line)[i])
 	{
 		quoting_choice(&doubleq, &data->simpleq, NULL, (*line)[i]);
-		if ((*line)[i] && (*line)[i + 1] && (*line)[i] == '$' && \
+		if ((*line)[i] && (*line)[i + 1] && (*line)[i] == '$' &&\
 			((*line)[i + 1] != '\'' && (*line)[i + 1] != '"') && \
 			(ft_isalpha((*line)[i + 1]) || (*line)[i + 1] == '?' || \
 			(*line)[i + 1] == '_') && !data->simpleq && \
@@ -114,6 +114,8 @@ int	replace_dollar(char **line, t_data *data)
 			return (0);
 		if ((*line)[i] && !add_char(&(*line)[i], &str, data, &i))
 			return (0);
+		if (((*line)[i] == '$' && (*line)[i + 1] == '$'))
+			return (1);
 	}
 	free(*line);
 	*line = str;
