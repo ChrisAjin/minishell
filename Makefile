@@ -29,7 +29,7 @@ FILES	=	main tools_list  creat_list_token \
 			utils free list_token\
 			creat_cmd cmd_param \
 			debug print_error list_cmd \
-			dollar_env dollar_replace quotes
+			dollar_env dollar_replace quotes cmd_fd data_check
 
 SRCS	=	$(addprefix $(SRC_DIR), $(addsuffix .c, $(FILES)))
 OBJS	=	$(addprefix $(OBJ_DIR), $(addsuffix .o, $(FILES)))
