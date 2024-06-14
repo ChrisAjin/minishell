@@ -6,7 +6,7 @@
 /*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 16:44:44 by cassassa          #+#    #+#             */
-/*   Updated: 2024/06/11 23:02:09 by cassassa         ###   ########.fr       */
+/*   Updated: 2024/06/14 11:27:30 by cassassa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,14 +84,22 @@ bool parsline (t_data *data, char *line)
 	}
 	free(line);
 	print_token(data->token);
-	
 	if (data->token && data->token->prev->type == PIPE)
 	{
-		write(2, "Error: Unclosed pipe\n",21);
+		ft_putstr_fd("minishell: syntax error near unexpected token '|'\n",2);
 		data->exit_code = 2;
 		free_token(&data->token);
 		return (false);
 	}
+	if(data->token->next && data->token->next->type == PIPE)
+	{
+		ft_putstr_fd("minishell: syntax error near unexpected token '||'\n",2);
+		data->exit_code = 2;
+		free_token(&data->token);
+		return (false);
+	}
+	if (check_pipe_red_herdoc(data))
+		return (false);
 	if (!data->token || !create_list_cmd(data))
 	{
 		free_token(&data->token);
@@ -108,6 +116,8 @@ int	main(int argc, char **argv, char **env)
 	char	*line;
 
 	/*init data*/
+	if (!isatty(0))
+		return (printf("tty required!!\n"), 1);
 	init_data(&data, argc, argv);
 	if (!make_env(&data, env))
 		free_all(&data, ERR_MALLOC, EXT_MALLOC);

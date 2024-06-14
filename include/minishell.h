@@ -6,7 +6,7 @@
 /*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 16:45:40 by cassassa          #+#    #+#             */
-/*   Updated: 2024/06/11 20:28:41 by cassassa         ###   ########.fr       */
+/*   Updated: 2024/06/14 11:27:26 by cassassa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,9 @@ bool				create_list_token(t_token **begin, char *command);
 // cmd_param.c
 char				**get_param(t_data *data, t_token *token);
 
+//cmd_fd.C
+
+
 // creat_cmd.c
 bool				create_list_cmd(t_data *data);
 
@@ -145,6 +148,8 @@ int					exec_path(t_data *minishell, char **env);
 int					exec_first_child(t_data *minishell, char **env);
 int					exec_last_child(t_data *minishell, char **env);
 
+//here_doc.c
+int		here_doc(t_data *data, char *word);
 // childs.c
 int					only_child(t_data *minishell, char **env);
 int					first_child(t_data *minishell, char **env);
@@ -185,9 +190,15 @@ int					ch_dir_home(char **envp, char *old_pwd);
 int				add_pwd(char *cur_dir, char **envp);
 int				add_old_pwd(char *old_pwd, char **envp);
 
+//cmd_fd.c
+bool	get_infile(t_data *data, t_token *token, t_cmd *cmd);
+
 // builtins_utils
 void				print_args(char **tab, int index);
 // void				printf_tab(char **tab);
+
+//data_check.c
+int	check_pipe_red_herdoc(t_data *data);
 
 #endif
 

@@ -3,62 +3,58 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 15:57:20 by inbennou          #+#    #+#             */
-/*   Updated: 2024/06/04 19:10:43 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/14 10:39:46 by cassassa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../include/minishell.h"
 
-// recuperer tout dans une str avec un join qui free la str au debut
-// mettre la str dans la struct token
-// putstr fd la str directement dans le pipe si strlen < 65000
-// (avec un putstr fd qui ecrit char par char?) + write protege avec perror
-// --> mm comportement que bash, cree un fichier temp que si c'est trop grand
-
-// ajouter un define pour LIM?
-// pour only child (pas pareil pour les pipes)
-void	exec_here_doc(t_data *minishell)
+static bool	read_in_stdin(t_data *data, int fd, char *word)
 {
-	// if redir
-		// open (inf et outf trunc ou append)
-		// dup2 outf stdout
-	// if il y a une cmd (peut etre avant ou apres le <<)
-		// if (pipe(pip) < 0)
-			// pipe error
-		// fill here doc qui ecrit dans le pipe
-		// dup2 stdin pip[0]
-		// exec cmd
-	// else
-		// gnl(0) jusqu'a LIM
-	// close all
-}
+	char	*buf;
 
-void	fill_here_doc(t_data *minishell, char *limiter)
-{
-	char	*line;
-	char	*temp_line;
-
-	temp_line = NULL;
-	line = NULL;
 	while (1)
 	{
-		ft_putstr_fd("> ", 2);
-		line = get_next_line(0, 0);
-		if (line == NULL)
+		buf = NULL;
+		buf = readline("> ");
+		if (!buf)
+		{
+			print_error("warning: here-document delimited by end-of-file ");
+			print_error("(wanted '");
+			print_error(word);
+			print_error("')\n");
 			break ;
-		temp_line = ft_strtrim(line, "\n");
-		if (ft_strncmp(temp_line, limiter, ft_strlen(limiter) + 1) == 0)
+		}
+		if (!ft_strncmp(word, buf, INT_MAX))
 			break ;
-		ft_putstr_fd(line, minishell->pip[1]);
-		free(line);
-		line = NULL;
-		free(temp_line);
-		temp_line = NULL;
+		if (!replace_dollar(&buf, data))
+			free_all(data, ERR_MALLOC, EXT_MALLOC);
+		write(fd, buf, ft_strlen(buf));
+		write(fd, "\n", 1);
+		free(buf);
 	}
-	free(line);
-	free(temp_line);
-	get_next_line(0, 1);
+	free(buf);
+	close(fd);
+	return (true);
+}
+
+int	here_doc(t_data *data, char *word)
+{
+	int	fd;
+
+	fd = open(".heredoc.tmp", O_CREAT | O_WRONLY | O_TRUNC, 0644);
+	if (fd < 0)
+		return (-1);
+	if (!read_in_stdin(data, fd, word))
+	{
+		unlink(".heredoc.tmp");
+		return (-1);
+	}
+	fd = open(".heredoc.tmp", O_RDONLY);
+	if (fd > 0)
+		unlink(".heredoc.tmp");
+	return (fd);
 }
