@@ -6,7 +6,7 @@
 /*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 18:50:07 by cassassa          #+#    #+#             */
-/*   Updated: 2024/06/11 16:55:20 by cassassa         ###   ########.fr       */
+/*   Updated: 2024/06/14 17:58:06 by cassassa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static int	cmd_new_elem(t_cmd **new, char **cmd_param)
 	return (1);
 }
 
-int	add_list_cmd(t_cmd **list, char **cmd_param)
+int	append_cmd(t_cmd **list, char **cmd_param)
 {
 	t_cmd	*new;
 
@@ -44,4 +44,24 @@ int	add_list_cmd(t_cmd **list, char **cmd_param)
 		(*list)->prev = new;
 	}
 	return (1);
+}
+
+
+size_t	len_cmd(t_cmd *list)
+{
+	t_cmd	*tmp;
+	size_t	i;
+
+	if ((list))
+	{
+		tmp = list;
+		i = 1;
+		while (tmp->next != list)
+		{
+			++i;
+			tmp = tmp->next;
+		}
+		return (i);
+	}
+	return (0);
 }

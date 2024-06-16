@@ -6,7 +6,7 @@
 /*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 16:03:43 by cassassa          #+#    #+#             */
-/*   Updated: 2024/06/11 22:53:38 by cassassa         ###   ########.fr       */
+/*   Updated: 2024/06/14 16:12:11 by cassassa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ static int	add_to_cmd_param(char **cmd_param, int *i, char *str)
 	if (!cmd_param[*i])
 		return (0);
 	(*i)++;
-    cmd_param[*i] = 0;
 	return (1);
 }
 

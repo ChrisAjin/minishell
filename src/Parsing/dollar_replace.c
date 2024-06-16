@@ -6,7 +6,7 @@
 /*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 12:10:57 by cassassa          #+#    #+#             */
-/*   Updated: 2024/06/14 15:07:08 by cassassa         ###   ########.fr       */
+/*   Updated: 2024/06/14 16:08:15 by cassassa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,18 +95,18 @@ int	add_char(char *c, char **str, t_data *data, int *index)
 
 int	replace_dollar(char **line, t_data *data)
 {
-	bool	doubleq;
+	bool	dq;
 	int		i;
 	char	*str;
 
 	i = 0;
-	doubleq = false;
+	dq = false;
 	data->simpleq = false;
 	str = ft_strdup("");
 	while ((*line)[i])
 	{
-		quoting_choice(&doubleq, &data->simpleq, NULL, (*line)[i]);
-		if ((*line)[i] && (*line)[i + 1] && (*line)[i] == '$' &&\
+		quoting_choice(&dq, &data->simpleq, NULL, (*line)[i]);
+		if ((*line)[i] && (*line)[i + 1] && (*line)[i] == '$' && \
 			((*line)[i + 1] != '\'' && (*line)[i + 1] != '"') && \
 			(ft_isalpha((*line)[i + 1]) || (*line)[i + 1] == '?' || \
 			(*line)[i + 1] == '_') && !data->simpleq && \
@@ -114,7 +114,7 @@ int	replace_dollar(char **line, t_data *data)
 			return (0);
 		if ((*line)[i] && !add_char(&(*line)[i], &str, data, &i))
 			return (0);
-		if (((*line)[i] == '$' && (*line)[i + 1] == '$'))
+		if ((*line)[i] == '$' && (*line)[i + 1] == '$')
 			return (1);
 	}
 	free(*line);

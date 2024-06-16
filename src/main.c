@@ -6,7 +6,7 @@
 /*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 16:44:44 by cassassa          #+#    #+#             */
-/*   Updated: 2024/06/14 11:27:30 by cassassa         ###   ########.fr       */
+/*   Updated: 2024/06/14 18:05:48 by cassassa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,9 @@ int	make_env(t_data *data, char **env)
 	}
 	data->env = list;
 	return (1);
+	
 }
+
 void	init_data(t_data *data, int argc, char **argv)
 {
 	(void)argc;
@@ -77,7 +79,7 @@ bool parsline (t_data *data, char *line)
 		free(line);
 		return (false);
 	}
-	if(!create_list_token(&data->token, line) || !replace_dollar(&line, data))
+	if(!replace_dollar(&line, data) || !create_list_token(&data->token, line) )
 	{
 		free(line);
 		free_all(data,ERR_MALLOC, EXT_MALLOC);
@@ -123,6 +125,7 @@ int	main(int argc, char **argv, char **env)
 		free_all(&data, ERR_MALLOC, EXT_MALLOC);
 	while (1)
 	{
+		handle_signal_in_out(&data);
 		line = readline("minishell> ");
 		if (!line)
 			free_all(&data, "exit\n", data.exit_code);
@@ -134,7 +137,6 @@ int	main(int argc, char **argv, char **env)
 		/* exec part*/
 		free_cmd(&data.cmd);
 		free_token(&data.token);
-		g_signal_pid = 0;
 	}
 	//rl_clear_history();
 	free_all(&data, NULL, -1);

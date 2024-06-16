@@ -6,7 +6,7 @@
 /*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 16:45:40 by cassassa          #+#    #+#             */
-/*   Updated: 2024/06/14 11:27:26 by cassassa         ###   ########.fr       */
+/*   Updated: 2024/06/14 18:04:18 by cassassa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@
 # define EXT_MALLOC 1
 # define ERR_MALLOC "error malloc\n"
 
-extern pid_t		g_signal_pid;
+int	g_ext_status;
 
 typedef struct s_cmd
 {
@@ -71,6 +71,10 @@ typedef struct s_data
 	t_list			*env;
 	t_token			*token;
 	t_cmd			*cmd;
+	int			sig;
+	int			sigflg;
+	int			f_stdin;
+	int			f_stdout;
 	int				exit_code;
 	int				pipes;
 	int				infile;
@@ -78,7 +82,7 @@ typedef struct s_data
 	int				pip[2];
 	int				temp_fd;
 	bool			simpleq;
-	bool			doubleq;
+
 }					t_data;
 // main.c
 int					make_env(t_data *data, char **env);
@@ -112,15 +116,14 @@ bool				create_list_token(t_token **begin, char *command);
 // cmd_param.c
 char				**get_param(t_data *data, t_token *token);
 
-//cmd_fd.C
-
-
 // creat_cmd.c
 bool				create_list_cmd(t_data *data);
 
 // list_cmd.c
-int					add_list_cmd(t_cmd **list,
-						char **cmd_param);
+int					add_list_cmd(t_cmd **list, char **cmd_param);
+int	append_cmd(t_cmd **list, char **cmd_param);
+void	free_cmd(t_cmd **list);
+size_t	len_cmd(t_cmd *list);
 
 //quotes.c
 int open_quote(t_data *data, char *line);
@@ -139,6 +142,11 @@ int		replace_dollar(char **line, t_data *data);
 //DEBUG.c
 void	print_token(t_token *token);
 void	print_cmd(t_cmd *cmd);
+
+//signal.c
+void	handle_signal_in_out(t_data *data);
+
+
 
 // exec.c
 int					exec(t_data *minishell);
@@ -189,9 +197,6 @@ char				*get_home(char **envp);
 int					ch_dir_home(char **envp, char *old_pwd);
 int				add_pwd(char *cur_dir, char **envp);
 int				add_old_pwd(char *old_pwd, char **envp);
-
-//cmd_fd.c
-bool	get_infile(t_data *data, t_token *token, t_cmd *cmd);
 
 // builtins_utils
 void				print_args(char **tab, int index);
