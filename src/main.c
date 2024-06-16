@@ -6,7 +6,7 @@
 /*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 16:44:44 by cassassa          #+#    #+#             */
-/*   Updated: 2024/06/16 20:09:50 by cassassa         ###   ########.fr       */
+/*   Updated: 2024/06/16 20:32:37 by cassassa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,12 +84,7 @@ bool parsline (t_data *data, char *line)
 		free_all(data,ERR_MALLOC, EXT_MALLOC);
 	}
 	free(line);
-<<<<<<< HEAD
-	print_token(data->token);
-=======
 	//print_token(data->token);
-	
->>>>>>> origin/ines_3
 	if (data->token && data->token->prev->type == PIPE)
 	{
 		ft_putstr_fd("minishell: syntax error near unexpected token '|'\n",2);
