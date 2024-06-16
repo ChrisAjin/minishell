@@ -6,17 +6,18 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 19:07:53 by inbennou          #+#    #+#             */
-/*   Updated: 2024/06/11 17:14:50 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/14 18:35:31 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../include/minishell.h"
 
+// :(((((((
 int	export(t_data *minishell)
 {
-	t_list	*export;
+	// t_list	*export;
 
-	if (minishell->cmd->cmd_param[1] == '\0')
+	if (minishell->cmd->cmd_param[1] == NULL)
 		minishell->exit_code = 2;
 	if (ft_strchr(minishell->cmd->cmd_param[1], '='))
 	{
@@ -38,7 +39,6 @@ int	export(t_data *minishell)
 		//	free all
 		// }
 	}
-	// free all
 	return (minishell->exit_code);
 }
 

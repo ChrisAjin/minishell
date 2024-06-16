@@ -6,18 +6,18 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 15:34:23 by inbennou          #+#    #+#             */
-/*   Updated: 2024/06/11 16:36:58 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/14 18:12:17 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// comment faire si redir avec parent builtin :(
 int	one_cmd(t_data *minishell, char **env)
 {
 	int	pid;
 
-	parent_builtin(minishell);
+	if (is_parent_builtin(minishell->cmd->cmd_param[0]))
+		return (parent_builtin(minishell));
 	pid = fork();
 	if (pid < 0)
 	{
@@ -34,13 +34,16 @@ int	exec_first_child(t_data *minishell, char **env)
 {
 	int	pid;
 
+	if (pipe(minishell->pip) < 0)
+		perror("pipe error");
 	pid = fork();
 	if (pid < 0)
 	{
 		perror("fork error");
 		return (-1);
 	}
-	first_child(minishell, env);
+	if (pid == 0)
+		first_child(minishell, env);
 	return (0);
 }
 
@@ -71,7 +74,9 @@ int	exec_last_child(t_data *minishell, char **env)
 		perror("fork error");
 		return (-1);
 	}
-	last_child(minishell, env);
+	if (pid == 0)
+		last_child(minishell, env);
+	close_all(minishell);
 	wait_and_error(minishell, pid);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 14:38:38 by inbennou          #+#    #+#             */
-/*   Updated: 2023/11/27 17:05:36 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/12 15:53:04 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,16 @@
 
 void	ft_putendl_fd(char *s, int fd)
 {
-	int	i;
-
-	i = 0;
 	if (s)
 	{
-		while (s[i])
+		if (write(fd, s, ft_strlen(s)) < 0)
 		{
-			write(fd, &s[i], 1);
-			i++;
+			perror("write");
+			return ;
 		}
 	}
-	write(fd, "\n", 1);
+	if (write(fd, "\n", 1) < 0)
+		perror("write");
 }
 
 /*

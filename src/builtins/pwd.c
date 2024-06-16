@@ -6,13 +6,13 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 16:18:23 by inbennou          #+#    #+#             */
-/*   Updated: 2024/06/10 18:31:10 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/14 17:12:16 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../include/minishell.h"
 
-void	pwd(t_data *minishell)
+int	pwd(t_data *minishell)
 {
 	char	*pwd;
 
@@ -21,12 +21,11 @@ void	pwd(t_data *minishell)
 	if (!pwd || pwd[0] == '\0')
 	{
 		perror("Could not get current working directory");
-		// free all
-		exit(1);
+		free_all(minishell, NULL, -1);
+		return (1);
 	}
 	else
 		printf("%s\n", pwd);
 	free(pwd);
-	// free all
-	exit(0);
+	return (0);
 }

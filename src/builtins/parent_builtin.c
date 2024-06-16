@@ -6,28 +6,67 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 14:59:41 by inbennou          #+#    #+#             */
-/*   Updated: 2024/06/11 17:13:24 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/14 18:02:09 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../include/minishell.h"
 
-// utiliser des cmd differentes dans la parent pour ne pas double free?
-// init minishell->exit_code
-// faire des fnctions qui exit pas sinon exit ailleurs pour les childs
-int	parent_builtin(t_data *minishell)
+int	is_parent_builtin(char *cmd)
 {
-	if (!minishell->cmd->cmd_param || minishell->cmd->cmd_param[0] == '\0')
+	if (!cmd || cmd[0] == '\0')
+		return (0);
+	if (ft_strncmp(cmd, "env", 4) == 0)
 		return (1);
-	// if redir open et dup2?
-	if (ft_strncmp(minishell->cmd->cmd_param[0], "cd", 3) == 0)
-		cd(minishell);
-	// if (ft_strncmp(minishell->cmd->cmd_param[0], "export", 7) == 0)
-	// 	export(minishell->cmd->cmd_param);
-	// if (ft_strncmp(minishell->cmd->cmd_param[0], "unset", 6) == 0)
-	// 	unset(minishell->cmd->cmd_param);
-	if (ft_strncmp(minishell->cmd->cmd_param[0], "exit", 5) == 0)
-		exit_shell(1);
+	if (ft_strncmp(cmd, "cd", 3) == 0)
+		return (1);
+	// if (ft_strncmp(cmd, "export", 7) == 0)
+		// return (1);
+	// if (ft_strncmp(cmd, "unset", 6) == 0)
+		// return (1);
+	if (ft_strncmp(cmd, "exit", 5) == 0)
+		return (1);
 	return (0);
 }
 
+int	which_builtin(t_data *minishell)
+{
+	if (ft_strncmp(minishell->cmd->cmd_param[0], "env", 4) == 0)
+		minishell->exit_code = env_cmd(minishell);
+	if (ft_strncmp(minishell->cmd->cmd_param[0], "cd", 3) == 0)
+		minishell->exit_code = cd(minishell);
+	// if (ft_strncmp(minishell->cmd->cmd_param[0], "export", 7) == 0)
+	// 	minishell->exit_code = export();
+	// if (ft_strncmp(minishell->cmd->cmd_param[0], "unset", 6) == 0)
+	// 	minishell->exit_code = unset();
+	if (ft_strncmp(minishell->cmd->cmd_param[0], "exit", 5) == 0)
+		exit_shell(minishell);
+	return (0);
+}
+
+int	parent_builtin(t_data *minishell)
+{
+	open_infile(minishell, infile_count(minishell));
+	if (infile_count(minishell) != 0 && minishell->infile < 0)
+		minishell->outfile = -1;
+	else
+		open_outfile(minishell, outfile_count(minishell));
+	if (infile_count(minishell) > 0 && minishell->infile < 0)
+	{
+		minishell->exit_code = 1;
+		return (1);
+	}
+	if (outfile_count(minishell) > 0 && minishell->outfile < 0)
+	{
+		minishell->exit_code = 1;
+		return (1);
+	}
+	which_builtin(minishell);
+	if (minishell->infile > 0)
+		close(minishell->infile);
+	if (minishell->outfile > 0)
+		close(minishell->outfile);
+	minishell->infile = -1;
+	minishell->outfile = -1;
+	return (0);
+}

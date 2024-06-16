@@ -6,7 +6,7 @@
 /*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 16:45:40 by cassassa          #+#    #+#             */
-/*   Updated: 2024/06/14 18:04:18 by cassassa         ###   ########.fr       */
+/*   Updated: 2024/06/16 20:08:27 by cassassa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define MINISHELL_H
 
 # include "../libft/src/libft.h"
-// # include "../libft-ines/libft.h"
+//# include "../libft-ines/libft.h"
 # include <fcntl.h>
 # include <limits.h>
 # include <readline/history.h>
@@ -150,34 +150,40 @@ void	handle_signal_in_out(t_data *data);
 
 // exec.c
 int					exec(t_data *minishell);
-int					one_cmd(t_data *minishell, char **env);
-int					find_and_exec(t_data *minishell, char **env);
-int					exec_path(t_data *minishell, char **env);
-int					exec_first_child(t_data *minishell, char **env);
-int					exec_last_child(t_data *minishell, char **env);
+void					find_and_exec(t_data *minishell, char **env);
+void					exec_path(t_data *minishell, char **env);
+int	pipe_count(t_data *minishell);
 
 //here_doc.c
 int		here_doc(t_data *data, char *word);
 // childs.c
-int					only_child(t_data *minishell, char **env);
-int					first_child(t_data *minishell, char **env);
-int					middle_child(t_data *minishell, char **env);
-int					last_child(t_data *minishell, char **env);
+void					only_child(t_data *minishell, char **env);
+void					first_child(t_data *minishell, char **env);
+void					middle_child(t_data *minishell, char **env);
+void					last_child(t_data *minishell, char **env);
 
 // errors.c
+int					child_fail(t_data *minishell, char **env);
 void					command_not_found(t_data *minishell, char **paths, char **env);
 void					exec_fail(t_data *minishell, char **paths, char **env);
 void				permission_denied(t_data *minishell, char**env);
 void				no_such_file(t_data *minishell, char **env);
 void				dup2_error(t_data *minishell, char **env);
 
-// utils.c
+// exec_child
+int					one_cmd(t_data *minishell, char **env);
+int					exec_first_child(t_data *minishell, char **env);
+int					exec_middle_childs(t_data *minishell, char **env);
+int					exec_last_child(t_data *minishell, char **env);
+
+// exec_utils.c
 char				**split_path(char **envp);
 void				wait_and_error(t_data *minishell, int pid_lastchild);
-int					exec_middle_childs(t_data *minishell, char **env);
 int					renew_pipe(t_data *minishell);
 int					close_all(t_data *minishell);
-int					close_fds(void);
+void					close_fds(void);
+void					skip(t_data **minishell);
+void					free_tab(char **tab);
 
 // open
 int					infile_count(t_data *minishell);
@@ -185,22 +191,40 @@ int					outfile_count(t_data *minishell);
 void					open_infile(t_data *minishell, int inf_count);
 void					open_outfile(t_data *minishell, int outf_count);
 
-// builtins
-int					exec_builtin(t_data *minishell, char **env);
-void				exit_shell(t_data *minishell);
-void				echo(t_data *minishell);
-void				env_cmd(t_data *minishell);
-int					cd(t_data *minishell);
-void				pwd(t_data *minishell);
-char				*get_pwd(void);
-char				*get_home(char **envp);
-int					ch_dir_home(char **envp, char *old_pwd);
-int				add_pwd(char *cur_dir, char **envp);
-int				add_old_pwd(char *old_pwd, char **envp);
-
 // builtins_utils
-void				print_args(char **tab, int index);
-// void				printf_tab(char **tab);
+void					exec_builtin(t_data *minishell, char **env);
+int					is_builtin(char *cmd);
+char				*get_pwd(void);
+void					free_and_exit(t_data *minishell, char **env, int ret);
+int					size_tab(char **cmd_param);
+
+// cd
+int					cd(t_data *minishell);
+int					ch_dir_home(t_list *env, char *old_pwd);
+int				add_pwd(char *cur_dir, t_data *minishell);
+int				add_old_pwd(char *old_pwd, t_data *minishell);
+char				*get_home(t_list *env);
+
+// echo
+int				echo(t_data *minishell);
+int				n_option(char *str);
+int				print_args(t_data *minishell, int index);
+
+// env
+int				env_cmd(t_data *minishell);
+int				print_lst(t_list *lst);
+
+// exit
+void				exit_shell(t_data *minishell);
+int				only_digit(char *str);
+
+// parent_builtin
+int				is_parent_builtin(char *cmd);
+int				parent_builtin(t_data *minishell);
+int				which_builtin(t_data *minishell);
+
+// pwd
+int				pwd(t_data *minishell);
 
 //data_check.c
 int	check_pipe_red_herdoc(t_data *data);

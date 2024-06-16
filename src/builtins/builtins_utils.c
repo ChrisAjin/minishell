@@ -6,37 +6,53 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 15:31:03 by inbennou          #+#    #+#             */
-/*   Updated: 2024/06/11 17:07:57 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/14 16:48:23 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../include/minishell.h"
 
 // cd export unset et exit faut pas fork quand c'est une seule commande
-
-// !!! tous les builtins doivent exit pour kill les childs !!! sinon exit apres exec builtin
 
 // export: regles a respecter dans les noms, voir cas s'il existe deja (ecrase l'ancien?)
 
 // prends en param la struct pour pouvoir tout free
-int	exec_builtin(t_data *minishell, char **env)
+void	exec_builtin(t_data *minishell, char **env)
 {
-	if (env)
-		free(env);
 	if (ft_strncmp(minishell->cmd->cmd_param[0], "echo", 5) == 0)
-		echo(minishell);
+		free_and_exit(minishell, env, echo(minishell));
 	if (ft_strncmp(minishell->cmd->cmd_param[0], "pwd", 4) == 0)
-		pwd(minishell);
+		free_and_exit(minishell, env, pwd(minishell));
 	if (ft_strncmp(minishell->cmd->cmd_param[0], "env", 4) == 0)
-		env_cmd(minishell);
+		free_and_exit(minishell, env, env_cmd(minishell));
 	if (ft_strncmp(minishell->cmd->cmd_param[0], "cd", 3) == 0)
-		exit(cd(minishell));
-	if (ft_strncmp(minishell->cmd->cmd_param[0], "export", 7) == 0)
-		// exit(export());
-	if (ft_strncmp(minishell->cmd->cmd_param[0], "unset", 6) == 0)
-		// exit(unset());
+		free_and_exit(minishell, env, cd(minishell));
+	// if (ft_strncmp(minishell->cmd->cmd_param[0], "export", 7) == 0)
+		// free_and_exit(minishell, env, export(minishell));
+	// if (ft_strncmp(minishell->cmd->cmd_param[0], "unset", 6) == 0)
+		// free_and_exit(minishell, env, unset(minishell));
 	if (ft_strncmp(minishell->cmd->cmd_param[0], "exit", 5) == 0)
 		exit_shell(minishell);
+}
+
+int	is_builtin(char *cmd)
+{
+	if (!cmd || cmd[0] == '\0')
+		return (0);
+	if (ft_strncmp(cmd, "echo", 5) == 0)
+		return (1);
+	if (ft_strncmp(cmd, "pwd", 4) == 0)
+		return (1);
+	if (ft_strncmp(cmd, "env", 4) == 0)
+		return (1);
+	if (ft_strncmp(cmd, "cd", 3) == 0)
+		return (1);
+	// if (ft_strncmp(cmd, "export", 7) == 0)
+		// return (1);
+	// if (ft_strncmp(cmd, "unset", 6) == 0)
+		// return (1);
+	if (ft_strncmp(cmd, "exit", 5) == 0)
+		return (1);
 	return (0);
 }
 
@@ -52,4 +68,11 @@ char	*get_pwd()
 		return (NULL);
 	}
 	return (path);
+}
+
+void	free_and_exit(t_data *minishell, char **env, int ret)
+{
+	free(env);
+	free_all(minishell, NULL, -1);
+	exit(ret);
 }

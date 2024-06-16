@@ -3,7 +3,7 @@ NAME	=	minishell
 CC		=	cc
 FLAG	=	-Wall -Wextra -Werror -g
 
-DIRLIB	=	./libft/
+DIRLIB	=	./libft-ines/
 FILELIB	=	libft.a
 NAMELFT	=	$(addprefix $(DIRLIB), $(FILELIB))
 
@@ -29,7 +29,10 @@ FILES	=	main tools_list  creat_list_token \
 			utils free list_token\
 			creat_cmd cmd_param \
 			debug print_error list_cmd \
-			dollar_env dollar_replace quotes cmd_fd data_check here_doc signal
+			dollar_env dollar_replace quotes \
+			childs errors exec_child exec open exec_utils \
+			builtins_utils cd env exit export \
+			parent_builtin pwd echo data_check here_doc signal cmd_fd
 
 SRCS	=	$(addprefix $(SRC_DIR), $(addsuffix .c, $(FILES)))
 OBJS	=	$(addprefix $(OBJ_DIR), $(addsuffix .o, $(FILES)))
@@ -40,7 +43,11 @@ $(OBJF) :
 	@mkdir -p $(OBJ_DIR)
 
 # Add the path to the builtin folder to vpath
+<<<<<<< HEAD
 vpath %.c $(SRC_DIR) $(SRC_DIR)Tools $(SRC_DIR)Parsing $(SRC_DIR)Exec
+=======
+vpath %.c $(SRC_DIR) $(SRC_DIR)Tools $(SRC_DIR)Parsing $(SRC_DIR)Exec $(SRC_DIR)builtins
+>>>>>>> origin/ines_3
 
 all : $(NAME)
 

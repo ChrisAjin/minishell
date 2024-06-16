@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utlis.c                                            :+:      :+:    :+:   */
+/*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 19:58:42 by inbennou          #+#    #+#             */
-/*   Updated: 2024/06/11 15:39:36 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/12 15:50:51 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ int	close_all(t_data *minishell)
 }
 
 // que pour les childs, en cas d'erreur, apres le msg d'erreur
-int	close_fds()
+void	close_fds()
 {
 	close(0);
 	close(1);
@@ -98,7 +98,20 @@ void	skip(t_data **minishell)
 {
 	while ((*minishell)->token->type != PIPE)
 		(*minishell)->token = (*minishell)->token->next;
-	(*minishell)->token->next;
+	(*minishell)->token = (*minishell)->token->next;
 	(*minishell)->cmd = (*minishell)->cmd->next;
 	(*minishell)->pipes -= 1;
+}
+
+void	free_tab(char **tab)
+{
+	int	i;
+
+	i = 0;
+	while (tab[i])
+	{
+		free(tab[i]);
+		i++;
+	}
+	free(tab);
 }

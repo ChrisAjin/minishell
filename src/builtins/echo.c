@@ -6,36 +6,40 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 19:16:00 by inbennou          #+#    #+#             */
-/*   Updated: 2024/06/10 18:31:55 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/14 17:52:42 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../include/minishell.h"
 
 // gerer echo $?
-void	echo(t_data *minishell)
+int	echo(t_data *minishell)
 {
 	int	n;
 	int	i;
 
 	n = 0;
-	i = 2;
-	if (minishell->cmd->cmd_param[1] == NULL)
+	i = 1;
+	if (!minishell->cmd->cmd_param[1] || minishell->cmd->cmd_param[1] == NULL)
 	{
 		printf("\n");
-		// free all
-		exit(0);
+		return (0);
+	}
+	if (ft_strncmp("$?", minishell->cmd->cmd_param[1], 3) == 0)
+	{
+		printf("%d\n", minishell->exit_code);
+		return (0);
 	}
 	if (n_option(minishell->cmd->cmd_param[1]))
 		n = 1;
 	while (n_option(minishell->cmd->cmd_param[i]))
 		i++;
-	if (minishell->cmd->cmd_param[i] != NULL)
-		print_args(minishell->cmd->cmd_param, i);
+	if (minishell->cmd->cmd_param[i])
+		if (print_args(minishell, i) < 0)
+			return (1);
 	if (n != 1)
 		printf("\n");
-	// free all
-	exit(0);
+	return (0);
 }
 
 int	n_option(char *str)
@@ -57,25 +61,26 @@ int	n_option(char *str)
 		return (0);
 }
 
-void	print_args(char **tab, int index)
+int	print_args(t_data *minishell, int index)
 {
 	int	y;
 
 	y = index;
-	while (tab[y + 1])
+	while (minishell->cmd->cmd_param[y + 1])
 	{
-		if (printf("%s ", tab[y]) < 0)
+		if (printf("%s ", minishell->cmd->cmd_param[y]) < 0)
 		{
 			perror("printf");
-			// free all
-			exit(1);
+			// free_all(minishell, NULL, -1);
+			return (1);
 		}
 		y++;
 	}
-	if (printf("%s", tab[y]) < 0)
+	if (printf("%s", minishell->cmd->cmd_param[y]) < 0)
 	{
 		perror("printf");
-		// free all
-		exit(1);
+		// free_all(minishell, NULL, -1);
+		return (1);
 	}
+	return (0);
 }
