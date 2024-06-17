@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   list_cmd.c                                         :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/28 18:50:07 by cassassa          #+#    #+#             */
-/*   Updated: 2024/06/14 17:58:06 by cassassa         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../../include/minishell.h"
 
 static int	cmd_new_elem(t_cmd **new, char **cmd_param)
@@ -46,6 +34,30 @@ int	append_cmd(t_cmd **list, char **cmd_param)
 	return (1);
 }
 
+static void	free_all_cmd(t_cmd *tmp)
+{
+	free_array(tmp->cmd_param);
+}
+
+void	free_cmd(t_cmd **list)
+{
+	t_cmd	*tmp;
+	t_cmd	*current;
+
+	if (!(*list))
+		return ;
+	current = *list;
+	while (current->next != *list)
+	{
+		tmp = current;
+		current = current->next;
+		free_all_cmd(tmp);
+		free(tmp);
+	}
+	free_all_cmd(current);
+	free(current);
+	*list = NULL;
+}
 
 size_t	len_cmd(t_cmd *list)
 {

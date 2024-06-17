@@ -6,7 +6,7 @@
 /*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 16:45:40 by cassassa          #+#    #+#             */
-/*   Updated: 2024/06/16 20:22:38 by cassassa         ###   ########.fr       */
+/*   Updated: 2024/06/17 17:20:16 by cassassa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,14 +81,14 @@ typedef struct s_data
 	int				outfile;
 	int				pip[2];
 	int				temp_fd;
-	bool			simpleq;
+	bool			sq;
 
 }					t_data;
 // main.c
 int					make_env(t_data *data, char **env);
 // Tools_list.c
 int					free_list(t_list **list);
-int					add_to_list(t_list **list, char *elem);
+int					append(t_list **list, char *elem);
 size_t	len_list(t_list *list);
 
 // utils.c
@@ -104,10 +104,9 @@ bool				print_error_token(t_token *token, t_data *data);
 // free
 void				free_all(t_data *data, char *err, int ext);
 void				free_array(char **arr);
-void				free_cmd(t_cmd **list);
 bool	print_error(char *str);
 // list_token.c
-int					add_to_list_token(t_token **list, char *str, int type);
+int					append_token(t_token **list, char *str, int type);
 void				free_token(t_token **list);
 
 // creat_list_token.c
@@ -120,7 +119,6 @@ char				**get_param(t_data *data, t_token *token);
 bool				create_list_cmd(t_data *data);
 
 // list_cmd.c
-int					add_list_cmd(t_cmd **list, char **cmd_param);
 int	append_cmd(t_cmd **list, char **cmd_param);
 void	free_cmd(t_cmd **list);
 size_t	len_cmd(t_cmd *list);
@@ -230,5 +228,3 @@ int				pwd(t_data *minishell);
 int	check_pipe_red_herdoc(t_data *data);
 
 #endif
-
-// Code résolu
