@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   dollar_replace.c                                   :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/03 12:10:57 by cassassa          #+#    #+#             */
-/*   Updated: 2024/06/16 20:09:07 by cassassa         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../../include/minishell.h"
 
 static int	in_env(t_data *data, char *line, int size, char **str)
@@ -80,7 +68,7 @@ int	add_char(char *c, char **str, t_data *data, int *index)
 	int		i;
 
 	i = 0;
-	if (c[i] == '$' && !data->simpleq && exist_in_env(c, &i, data))
+	if (c[i] == '$' && !data->sq && exist_in_env(c, &i, data))
 		return (1);
 	char_to_str[0] = *c;
 	char_to_str[1] = '\0';
@@ -101,15 +89,15 @@ int	replace_dollar(char **line, t_data *data)
 
 	i = 0;
 	dq = false;
-	data->simpleq = false;
+	data->sq = false;
 	str = ft_strdup("");
 	while ((*line)[i])
 	{
-		quoting_choice(&dq, &data->simpleq, NULL, (*line)[i]);
+		quoting_choice(&dq, &data->sq, NULL, (*line)[i]);
 		if ((*line)[i] && (*line)[i + 1] && (*line)[i] == '$' && \
 			((*line)[i + 1] != '\'' && (*line)[i + 1] != '"') && \
 			(ft_isalpha((*line)[i + 1]) || (*line)[i + 1] == '?' || \
-			(*line)[i + 1] == '_') && !data->simpleq && \
+			(*line)[i + 1] == '_') && !data->sq && \
 			!add_dollar((*line), &i, &str, data))
 			return (0);
 		if ((*line)[i] && !add_char(&(*line)[i], &str, data, &i))

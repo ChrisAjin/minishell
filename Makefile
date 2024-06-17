@@ -25,14 +25,13 @@ CYAN		= \033[0;96m
 WHITE		= \033[0;97m
 
 # Source
-FILES	=	main tools_list  creat_list_token \
-			utils free list_token\
-			creat_cmd cmd_param \
-			debug print_error list_cmd \
-			dollar_env dollar_replace quotes \
+FILES	=	main cmd_param create_cmd create_token \
+			data_check dollar_env dollar_replace quote \
+			array_utils debug free list_cmd list_token list_utils \
+			mini_utils \
 			childs errors exec_child exec open exec_utils \
 			builtins_utils cd env exit export \
-			parent_builtin pwd echo data_check here_doc signal
+			parent_builtin pwd echo here_doc signal
 
 SRCS	=	$(addprefix $(SRC_DIR), $(addsuffix .c, $(FILES)))
 OBJS	=	$(addprefix $(OBJ_DIR), $(addsuffix .o, $(FILES)))

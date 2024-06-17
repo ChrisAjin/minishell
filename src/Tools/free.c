@@ -1,24 +1,4 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   free.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/26 12:40:07 by cassassa          #+#    #+#             */
-/*   Updated: 2024/06/11 17:45:13 by inbennou         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-
-#include "../../include/minishell.h"
-
-bool	print_error(char *str)
-{
-	if (str)
-		write(2, str, ft_strlen(str));
-	return (true);
-}
+#include "../include/minishell.h"
 
 void	free_array(char **arr)
 {
@@ -32,24 +12,23 @@ void	free_array(char **arr)
 	arr = NULL;
 }
 
-void	free_cmd(t_cmd **list)
+bool	print_error(char *str)
 {
-	t_cmd	*tmp;
-	t_cmd	*current;
+	if (str)
+		write(2, str, ft_strlen(str));
+	return (true);
+}
 
-	if (!(*list))
-		return ;
-	current = *list;
-	while (current->next != *list)
-	{
-		tmp = current;
-		current = current->next;
-		free_array(tmp->cmd_param);
-		free(tmp);
-	}
-	free_array(current->cmd_param);
-	free(current);
-	*list = NULL;
+bool	print_error_token(t_token *token, t_data *data)
+{
+	write(2, "syntax error near unexpected token ", 35);
+	write(2, "'", 1);
+	if (token->next == data->token)
+		write(2, "newline", 7);
+	else
+		write(2, token->next->str, ft_strlen(token->next->str));
+	write(2, "'\n", 2);
+	return (false);
 }
 
 void	free_all(t_data *data, char *err, int ext)
@@ -64,11 +43,10 @@ void	free_all(t_data *data, char *err, int ext)
 		close(data->pip[0]);
 	if (data->pip[1] && data->pip[1] != -1)
 		close(data->pip[1]);
-    (void)err;
-	//if (err)
-	//	print_error(err);
-	//if (!access(".heredoc.tmp", F_OK))
-	//	unlink(".heredoc.tmp");
+	if (err)
+		print_error(err);
+	if (!access(".heredoc.tmp", F_OK))
+		unlink(".heredoc.tmp");
 	if (ext != -1)
 		exit(ext);
 }
