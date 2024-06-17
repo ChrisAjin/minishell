@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/26 12:32:17 by cassassa          #+#    #+#             */
-/*   Updated: 2024/06/16 20:09:41 by cassassa         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../../include/minishell.h"
 
 char	**list_to_arr(t_list *env)
@@ -37,6 +25,7 @@ char	**list_to_arr(t_list *env)
 	return (dest);
 }
 
+
 bool	is_space(char c)
 {
 	if (c && (c == ' ' || c == '\n' || c == '\r' || c == '\f' || c == '\t' \
@@ -44,6 +33,7 @@ bool	is_space(char c)
 		return (true);
 	return (false);
 }
+
 int	is_special(char *str)
 {
 	if (str && *str && ft_strlen(str) >= 2)
@@ -64,11 +54,12 @@ int	is_special(char *str)
 	}
 	return (0);
 }
-bool check_pipe(t_data *data)
+
+bool	check_pipe(t_data *data)
 {
 	if (data->token->type == PIPE)
 	{
-		write(2, "syntax error near unexpected toekn '|'\n", 39);
+		write(2, "syntax error near unexpected token '|'\n", 39);
 		free_token(&data->token);
 		free_cmd(&data->cmd);
 		return (false);
@@ -76,16 +67,30 @@ bool check_pipe(t_data *data)
 	return (true);
 }
 
-bool make_env2(t_data *data)
+bool	make_env2(t_data *data)
 {
 	char	path[PATH_MAX];
-	char 	*tmp;
+	char	*tmp;
 
-	tmp = ft_strdup("OLDPWD=");
-	if (!tmp || !add_to_list(&(data->env), tmp) || getcwd(path,PATH_MAX) == NULL)
+	tmp = ft_strdup("OLDPWD");
+	if (!tmp || !append(&(data->env), tmp) || getcwd(path, PATH_MAX) == NULL)
 		free_all(data, ERR_MALLOC, EXT_MALLOC);
 	tmp = ft_strjoin("PWD=", path);
-	if (!tmp || !add_to_list(&(data->env), tmp))
+	if (!tmp || !append(&(data->env), tmp))
 		free_all(data, ERR_MALLOC, EXT_MALLOC);
 	return (1);
+}
+
+void	absolute_path(char **path, char *cmd, t_data *data)
+{
+	*path = ft_strdup(cmd);
+	if (!(*path))
+		free_all(data, ERR_MALLOC, EXT_MALLOC);
+	if (access((*path), F_OK))
+	{
+		write(2, (*path), ft_strlen((*path)));
+		write(2, " : command not found\n", 21);
+		free(*path);
+		*path = NULL;
+	}
 }

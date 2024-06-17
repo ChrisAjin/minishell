@@ -6,7 +6,7 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 16:44:44 by cassassa          #+#    #+#             */
-/*   Updated: 2024/06/17 12:53:44 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/17 18:13:43 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	make_env(t_data *data, char **env)
 		tmp = ft_strdup(env[i]);
 		if (!tmp)
 			return (free_list(&list));
-		if (!add_to_list(&list, tmp))
+		if (!append(&list, tmp))
 			return (free_list(&list));
 	}
 	data->env = list;
@@ -69,41 +69,75 @@ bool	empty_line(char *line)
 	return (false);
 }
 
-bool parsline (t_data *data, char *line)
+// bool parsline (t_data *data, char *line)
+// {
+// 	if (open_quote(data, line))
+// 	{
+// 		free(line);
+// 		return (false);
+// 	}
+// 	if(!replace_dollar(&line, data) || !create_list_token(&data->token, line) )
+// 	{
+// 		free(line);
+// 		free_all(data,ERR_MALLOC, EXT_MALLOC);
+// 	}
+// 	free(line);
+// 	//print_token(data->token);
+// 	if (data->token && data->token->prev->type == PIPE)
+// 	{
+// 		ft_putstr_fd("minishell: syntax error near unexpected token '|'\n",2);
+// 		data->exit_code = 2;
+// 		free_token(&data->token);
+// 		return (false);
+// 	}
+// 	if(data->token->next && data->token->next->type == PIPE)
+// 	{
+// 		ft_putstr_fd("minishell: syntax error near unexpected token '||'\n",2);
+// 		data->exit_code = 2;
+// 		free_token(&data->token);
+// 		return (false);
+// 	}
+// 	if (check_pipe_red_herdoc(data))
+// 		return (false);
+// 	if (!data->token || !create_list_cmd(data))
+// 	{
+// 		free_token(&data->token);
+// 		free_cmd(&data->cmd);
+// 		return(false);
+// 	}
+// 	//print_cmd(data->cmd);
+// 	return (check_pipe(data));
+// }
+
+bool	parseline(t_data *data, char *line)
 {
 	if (open_quote(data, line))
 	{
 		free(line);
 		return (false);
 	}
-	if(!replace_dollar(&line, data) || !create_list_token(&data->token, line) )
+	if (!replace_dollar(&line, data) || !create_list_token(&data->token, line))
 	{
 		free(line);
-		free_all(data,ERR_MALLOC, EXT_MALLOC);
+		free_all(data, ERR_MALLOC, EXT_MALLOC);
 	}
+	
 	free(line);
 	print_token(data->token);
 	if (data->token && data->token->prev->type == PIPE)
 	{
-		ft_putstr_fd("minishell: syntax error near unexpected token '|'\n",2);
-		data->exit_code = 2;
-		free_token(&data->token);
-		return (false);
-	}
-	if(data->token->next && data->token->next->type == PIPE)
-	{
-		ft_putstr_fd("minishell: syntax error near unexpected token '||'\n",2);
+		write(2, "Error: Unclosed pipe\n", 21);
 		data->exit_code = 2;
 		free_token(&data->token);
 		return (false);
 	}
 	if (check_pipe_red_herdoc(data))
-		return (false);
+ 	 	return (false);
 	if (!data->token || !create_list_cmd(data))
 	{
 		free_token(&data->token);
 		free_cmd(&data->cmd);
-		return(false);
+		return (false);
 	}
 	print_cmd(data->cmd);
 	return (check_pipe(data));
@@ -122,14 +156,14 @@ int	main(int argc, char **argv, char **env)
 		free_all(&data, ERR_MALLOC, EXT_MALLOC);
 	while (1)
 	{
-		// handle_signal_in_out(&data);
+		//handle_signal_in_out(&data);
 		line = readline("minishell> ");
 		if (!line)
 			free_all(&data, "exit\n", data.exit_code);
 		if (empty_line(line))
 			continue ;
 		//add_history(line);
-		if (!parsline(&data, line))
+		if (!parseline(&data, line))
 			continue ;
 		exec(&data);
 		free_cmd(&data.cmd);

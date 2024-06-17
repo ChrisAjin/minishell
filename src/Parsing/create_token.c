@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   creat_list_token.c                                 :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/27 16:04:27 by cassassa          #+#    #+#             */
-/*   Updated: 2024/06/14 15:49:50 by cassassa         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../../include/minishell.h"
 
 static int	length_cmd(char *command, int *quotes)
@@ -82,7 +70,7 @@ static bool	add_cmd(t_token **begin, char **command)
 	if (!str)
 		return (false);
 	copy_token(*command, length - (2 * quotes), str, i);
-	if (!add_to_list_token(begin, str, 0))
+	if (!append_token(begin, str, 0))
 		return (false);
 	if ((*begin)->prev == (*begin) || (*begin)->prev->prev->type == PIPE)
 		(*begin)->prev->type = CMD;
@@ -99,15 +87,15 @@ static bool	add_special(t_token **begin, char **command)
 	spe = is_special(*command);
 	if (!spe)
 		return (false);
-	if (spe == INPUT && !add_to_list_token(begin, ft_strdup("<"), INPUT))
+	if (spe == INPUT && !append_token(begin, ft_strdup("<"), INPUT))
 		return (false);
-	else if (spe == HEREDOC && !add_to_list_token(begin, ft_strdup("<<"), HEREDOC))
+	else if (spe == HEREDOC && !append_token(begin, ft_strdup("<<"), HEREDOC))
 		return (false);
-	else if (spe == TRUNC && !add_to_list_token(begin, ft_strdup(">"), TRUNC))
+	else if (spe == TRUNC && !append_token(begin, ft_strdup(">"), TRUNC))
 		return (false);
-	else if (spe == APPEND && !add_to_list_token(begin, ft_strdup(">>"), APPEND))
+	else if (spe == APPEND && !append_token(begin, ft_strdup(">>"), APPEND))
 		return (false);
-	else if (spe == PIPE && !add_to_list_token(begin, ft_strdup("|"), PIPE))
+	else if (spe == PIPE && !append_token(begin, ft_strdup("|"), PIPE))
 		return (false);
 	if (spe == INPUT || spe == TRUNC || spe == PIPE)
 		(*command)++;
