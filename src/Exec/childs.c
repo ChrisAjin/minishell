@@ -6,7 +6,7 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 14:13:14 by inbennou          #+#    #+#             */
-/*   Updated: 2024/06/17 13:44:59 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/17 15:08:04 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,17 @@ void	is_here_doc(t_data *minishell, char **env, int read, int write) // write = 
 	if (dup2(read, STDIN_FILENO) < 0) // pip[0] ou temp fd si c'est un middle jcrois
 		dup2_error(minishell, env);
 	if (minishell->outfile > 0)
+	{
 		if (dup2(minishell->outfile, STDOUT_FILENO) < 0)
 			dup2_error(minishell, env);
+	}
 	else if (write > 0)
+	{
 		if (dup2(write, STDOUT_FILENO) < 0) // ou dans stdout si c'est last
 			dup2_error(minishell, env);
+	}
 	close_all(minishell);
-	if (ft_strchr(minishell->cmd->cmd_param[0], "/") == 0)
+	if (ft_strchr(minishell->cmd->cmd_param[0], '/') == 0)
 		exec_path(minishell, env);
 	find_and_exec(minishell, env);
 }

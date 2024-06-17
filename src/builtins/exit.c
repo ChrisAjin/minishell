@@ -6,7 +6,7 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 16:16:04 by inbennou          #+#    #+#             */
-/*   Updated: 2024/06/17 13:46:28 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/17 15:10:30 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ void	exit_shell(t_data *minishell)
 	if (minishell->pipes == 0)
 		if (write(1, "exit\n", 5) < 0)
 			perror("write error");
-	if (ft_strlen(minishell->cmd->cmd_param[1] <= 11)
-		&& only_digit(minishell->cmd->cmd_param[1]))
+	if ((ft_strlen(minishell->cmd->cmd_param[1]) <= 11)
+		&& (only_digit(minishell->cmd->cmd_param[1])))
 		minishell->exit_code = ft_atoi(minishell->cmd->cmd_param[1]);
 	else if (minishell->cmd->cmd_param[1] != NULL)
 		minishell->exit_code = 2;

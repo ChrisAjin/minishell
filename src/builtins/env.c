@@ -6,7 +6,7 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 16:22:27 by inbennou          #+#    #+#             */
-/*   Updated: 2024/06/14 17:07:25 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/17 15:42:05 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	env_cmd(t_data *minishell)
 		ft_putendl_fd(minishell->cmd->cmd_param[1], 2);
 		return (125);
 	}
-	else 
+	else
 	{
 		ft_putstr_fd("No such file or directory: ", 2);
 		ft_putendl_fd(minishell->cmd->cmd_param[1], 2);

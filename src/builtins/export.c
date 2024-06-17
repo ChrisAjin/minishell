@@ -6,11 +6,19 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 19:07:53 by inbennou          #+#    #+#             */
-/*   Updated: 2024/06/14 18:35:31 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/17 15:45:57 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+// pas valide si:
+// ya pas de =
+// commence par un digit
+// commence par un - pcq considere comme une option
+
+// pour l'instant:
+// ecrire env avec declare -x avant chaque ligne
 
 // :(((((((
 int	export(t_data *minishell)
