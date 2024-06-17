@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 16:44:44 by cassassa          #+#    #+#             */
-/*   Updated: 2024/06/16 20:32:37 by cassassa         ###   ########.fr       */
+/*   Updated: 2024/06/17 12:53:44 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
-pid_t	g_signal_pid;
 
 int	make_env(t_data *data, char **env)
 {
@@ -53,7 +51,7 @@ void	init_data(t_data *data, int argc, char **argv)
 	data->pip[1] = -1;
 	data->temp_fd = -1;
 	/*init signal a add*/
-	g_signal_pid = 0;
+	// g_signal_pid = 0;
 	//signals();
 }
 bool	empty_line(char *line)
@@ -84,7 +82,7 @@ bool parsline (t_data *data, char *line)
 		free_all(data,ERR_MALLOC, EXT_MALLOC);
 	}
 	free(line);
-	//print_token(data->token);
+	print_token(data->token);
 	if (data->token && data->token->prev->type == PIPE)
 	{
 		ft_putstr_fd("minishell: syntax error near unexpected token '|'\n",2);
@@ -107,7 +105,7 @@ bool parsline (t_data *data, char *line)
 		free_cmd(&data->cmd);
 		return(false);
 	}
-	//print_cmd(data->cmd);
+	print_cmd(data->cmd);
 	return (check_pipe(data));
 }
 
@@ -124,7 +122,7 @@ int	main(int argc, char **argv, char **env)
 		free_all(&data, ERR_MALLOC, EXT_MALLOC);
 	while (1)
 	{
-		handle_signal_in_out(&data);
+		// handle_signal_in_out(&data);
 		line = readline("minishell> ");
 		if (!line)
 			free_all(&data, "exit\n", data.exit_code);

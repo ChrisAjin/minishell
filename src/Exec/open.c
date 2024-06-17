@@ -6,11 +6,29 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 16:44:38 by inbennou          #+#    #+#             */
-/*   Updated: 2024/06/14 19:51:55 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/17 13:41:56 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	open_inf_outf(t_data *minishell)
+{
+	open_infile(minishell, infile_count(minishell));
+	if (infile_count(minishell) != 0 && minishell->infile < 0)
+	{
+		minishell->outfile = -1;
+		free_all(minishell, NULL, -1);
+		exit(1);
+	}
+	else
+		open_outfile(minishell, outfile_count(minishell));
+	if (infile_count(minishell) > 0 && minishell->infile < 0)
+		exit(1);
+	if (outfile_count(minishell) > 0 && minishell->outfile < 0)
+		exit(1);
+	return (0);
+}
 
 int	infile_count(t_data *minishell)
 {
@@ -91,15 +109,9 @@ void	open_outfile(t_data *minishell, int outf_count)
 		if (tmp->prev->type == TRUNC || tmp->prev->type == APPEND)
 		{
 			if (tmp->prev->type == TRUNC)
-			{
-				// dprintf(2, "cmd=%s TRUNC\n", minishell->cmd->cmd_param[0]);
 				fd = open(tmp->str, O_CREAT | O_WRONLY | O_TRUNC, 0644);
-			}
 			else
-			{
-				//dprintf(2, "cmd=%s APP\n", minishell->cmd->cmd_param[0]);
 				fd = open(tmp->str, O_CREAT | O_WRONLY | O_APPEND, 0644);
-			}
 			if (fd < 0)
 				perror(tmp->str); // ajouter minishell->exit_code = 1;
 			inf_nbr++;

@@ -32,7 +32,7 @@ FILES	=	main tools_list  creat_list_token \
 			dollar_env dollar_replace quotes \
 			childs errors exec_child exec open exec_utils \
 			builtins_utils cd env exit export \
-			parent_builtin pwd echo data_check here_doc signal
+			parent_builtin pwd echo data_check here_doc
 
 SRCS	=	$(addprefix $(SRC_DIR), $(addsuffix .c, $(FILES)))
 OBJS	=	$(addprefix $(OBJ_DIR), $(addsuffix .o, $(FILES)))

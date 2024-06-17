@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 16:45:40 by cassassa          #+#    #+#             */
-/*   Updated: 2024/06/16 20:22:38 by cassassa         ###   ########.fr       */
+/*   Updated: 2024/06/17 13:38:51 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@
 # define EXT_MALLOC 1
 # define ERR_MALLOC "error malloc\n"
 
-int	g_ext_status;
+// int	g_ext_status;
 
 typedef struct s_cmd
 {
@@ -156,6 +156,8 @@ int	pipe_count(t_data *minishell);
 
 //here_doc.c
 int		here_doc(t_data *data, char *word);
+void		is_here_doc(t_data *minishell, char **env, int read, int write);
+
 // childs.c
 void					only_child(t_data *minishell, char **env);
 void					first_child(t_data *minishell, char **env);
@@ -186,6 +188,7 @@ void					skip(t_data **minishell);
 void					free_tab(char **tab);
 
 // open
+int					open_inf_outf(t_data *minishell);
 int					infile_count(t_data *minishell);
 int					outfile_count(t_data *minishell);
 void					open_infile(t_data *minishell, int inf_count);
