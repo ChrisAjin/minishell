@@ -6,80 +6,90 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 19:07:53 by inbennou          #+#    #+#             */
-/*   Updated: 2024/06/17 15:45:57 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/18 14:09:11 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-// pas valide si:
-// ya pas de =
-// commence par un digit
-// commence par un - pcq considere comme une option
+t_list	*ft_lstnew(char *content);
+int	export_print_lst(t_list *lst);
+void	ft_lstadd_back(t_list **lst, t_list *new);
 
-// pour l'instant:
-// ecrire env avec declare -x avant chaque ligne
-
-// :(((((((
 int	export(t_data *minishell)
 {
-	// t_list	*export;
+	t_list	*new_elem;
 
 	if (minishell->cmd->cmd_param[1] == NULL)
-		minishell->exit_code = 2;
-	if (ft_strchr(minishell->cmd->cmd_param[1], '='))
+		return (export_print_lst(minishell->env));
+	if (minishell->cmd->cmd_param[1][0] == '-')
+	{
+		ft_putstr_fd("export: ", 2);
+		ft_putstr_fd(minishell->cmd->cmd_param[1], 2);
+		ft_putendl_fd(": invalid option", 2);
+		return (2);
+	}
+	else
 	{
 		if (ft_isdigit(minishell->cmd->cmd_param[1][0]))
 		{
 			ft_putstr_fd("export: ", 2);
 			ft_putstr_fd(minishell->cmd->cmd_param[1], 2);
-			ft_putendl_fd(": not a valid identifier", 2);
-			minishell->exit_code = 1;
-			// free all
+			ft_putend_fd(": not a valid identifier", 2);
+			return (1);
 		}
-		// else
-		// {
-		// 	export = new_lst(minishell->cmd->cmd_param[1]);
-		// 	if (export == NULL)
-		// 		minishell->exit_code = 1;
-		// 	if (export != NULL)
-		// 		add_to_lst(minishell->env, export);
-		//	free all
-		// }
+		if (ft_strchr(minishell->cmd->cmd_param[1], '=') == 0)
+			return (0);
+		// add to list
+		// new_elem = ft_lstnew(minishell->cmd->cmd_param[1]);
+		// ft_lstadd_back((*minishell).env, new_elem);
 	}
-	return (minishell->exit_code);
 }
 
-// t_list	*new_lst(char *str)
-// {
-// 	t_list	*lst;
+int	export_print_lst(t_list *lst)
+{
+	t_list	*temp;
 
-// 	lst = malloc(sizeof(t_list));
-// 	if (!lst)
-// 		return (NULL);
-// 	lst->str = str;
-// 	lst->next = NULL;
-// 	return (lst);
-// }
+	if (!lst)
+		return (1);
+	temp = lst;
+	if (printf("declare -x %s\n", temp->str) < 0)
+	{
+		perror("printf");
+		return (1);
+	}
+	temp = temp->next;
+	while (temp != lst)
+	{
+		if (printf("declare -x %s\n", temp->str) < 0)
+		{
+			perror("printf");
+			return (1);
+		}
+		temp = temp->next;
+	}
+	return (0);
+}
 
-// t_list	*last_lst(t_list *lst)
-// {
-// 	t_list	*temp;
+t_list	*ft_lstnew(char *content)
+{
+	t_list	*lst;
 
-// 	temp = lst;
-// 	temp = temp->next;
-// 	while (temp != lst)
-// 		temp = temp->next;
-// 	return (temp);
-// }
+	lst = malloc(sizeof(t_list));
+	if (!lst)
+		return (NULL);
+	lst->str = content;
+	lst->next = NULL;
+	return (lst);
+}
 
-// void	add_to_lst(t_list **lst, t_list *new)
-// {
-// 	t_list	*last;
+void	ft_lstadd_back(t_list **lst, t_list *new)
+{
+	t_list	*last;
 
-// 	last = last_lst(*lst);
-// 	if (!last)
-// 		*lst = new;
-// 	else
-// 		last->next = new;
-// }
+	last = ft_lstlast(*lst);
+	if (!last)
+		*lst = new;
+	else
+		last->next = new;
+}
