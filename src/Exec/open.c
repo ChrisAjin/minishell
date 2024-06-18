@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   open.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 16:44:38 by inbennou          #+#    #+#             */
-/*   Updated: 2024/06/14 19:51:55 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/18 13:42:10 by cassassa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ void	open_outfile(t_data *minishell, int outf_count)
 	tmp = minishell->token->next;
 	fd = -1;
 	inf_nbr = 0;
-	while (tmp != minishell->token && tmp->type != PIPE)
+	while (tmp->type != 0 && tmp->type != PIPE)
 	{
 		if (tmp->prev->type == TRUNC || tmp->prev->type == APPEND)
 		{
