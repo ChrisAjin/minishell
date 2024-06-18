@@ -6,7 +6,7 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 16:45:40 by cassassa          #+#    #+#             */
-/*   Updated: 2024/06/18 14:11:44 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/18 16:18:51 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,10 @@ bool	print_error(char *str);
 int					append_token(t_token **list, char *str, int type);
 void				free_token(t_token **list);
 
+// add_list.c
+void append_list(t_list **list, char *str);
+void add_root_list(t_list **list, char *str);
+
 // creat_list_token.c
 bool				create_list_token(t_token **begin, char *command);
 int add_root(t_token **list, char *str, int type);
@@ -144,6 +148,7 @@ int		replace_dollar(char **line, t_data *data);
 void	print_token(t_token *token);
 void	print_cmd(t_cmd *cmd);
 void print_tokens(t_token *head);
+void print_list(t_list *head);
 
 //signal.c
 //void	handle_signal_in_out(t_data *data);
@@ -230,6 +235,13 @@ int				which_builtin(t_data *minishell);
 
 // pwd
 int				pwd(t_data *minishell);
+
+// export
+int				export(t_data *minishell);
+int				export_print_lst(t_list *lst);
+int				is_var(char *str, t_list *env);
+int				change_var(char *str, t_list *env);
+int				not_valid(t_data *minishell);
 
 //data_check.c
 int	check_pipe_red_herdoc(t_data *data);

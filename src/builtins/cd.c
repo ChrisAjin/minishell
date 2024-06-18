@@ -6,7 +6,7 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 21:55:35 by inbennou          #+#    #+#             */
-/*   Updated: 2024/06/14 17:47:29 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/18 17:49:05 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,13 @@ int	cd(t_data *minishell)
 
 	if (size_tab(minishell->cmd->cmd_param) > 2)
 	{
-		ft_putendl_fd("cd: too many arguments", 2);
+		ft_putendl_fd("minishell: cd: too many arguments", 2);
 		return (1);
 	}
 	old_pwd = get_pwd();
 	if (!old_pwd)
 	{
-		ft_putendl_fd("cd: error retrieving current directory", 2);
+		ft_putendl_fd("minishell: cd: error retrieving current directory", 2);
 		return (1);
 	}
 	if (minishell->cmd->cmd_param[1] == NULL
@@ -81,7 +81,7 @@ int	add_old_pwd(char *old_pwd, t_data *minishell)
 		}
 		minishell->env = minishell->env->next;
 	}
-	ft_putendl_fd("Could not set OLDPWD.", 2);
+	// ft_putendl_fd("Could not set OLDPWD.", 2);
 	return (1);
 }
 
@@ -105,7 +105,7 @@ int	add_pwd(char *cur_dir, t_data *minishell)
 		}
 		minishell->env = minishell->env->next;
 	}
-	ft_putendl_fd("Could not set PWD.", 2);
+	// ft_putendl_fd("Could not set PWD.", 2);
 	return (1);
 }
 

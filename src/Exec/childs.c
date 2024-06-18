@@ -6,7 +6,7 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 14:13:14 by inbennou          #+#    #+#             */
-/*   Updated: 2024/06/17 15:08:04 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/18 18:03:25 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	is_here_doc(t_data *minishell, char **env, int read, int write) // write = 
 	while (minishell->token->type != HEREDOC)
 		minishell->token = minishell->token->next;
 	minishell->token = minishell->token->next;
-	ft_putstr_fd(minishell->token->str, minishell->pip[1]); // putstr i++ ou s et quel pipe en fonction du child
+	ft_putstr_fd(minishell->token->str, minishell->pip[1]); // putstr i++ ou s
 	if (dup2(read, STDIN_FILENO) < 0) // pip[0] ou temp fd si c'est un middle jcrois
 		dup2_error(minishell, env);
 	if (minishell->outfile > 0)

@@ -6,7 +6,7 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 15:31:03 by inbennou          #+#    #+#             */
-/*   Updated: 2024/06/17 18:21:43 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/18 14:16:07 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ void	exec_builtin(t_data *minishell, char **env)
 		free_and_exit(minishell, env, env_cmd(minishell));
 	if (ft_strncmp(minishell->cmd->cmd_param[0], "cd", 3) == 0)
 		free_and_exit(minishell, env, cd(minishell));
-	// if (ft_strncmp(minishell->cmd->cmd_param[0], "export", 7) == 0)
-	// free_and_exit(minishell, env, export(minishell));
+	if (ft_strncmp(minishell->cmd->cmd_param[0], "export", 7) == 0)
+		free_and_exit(minishell, env, export(minishell));
 	// if (ft_strncmp(minishell->cmd->cmd_param[0], "unset", 6) == 0)
 	// free_and_exit(minishell, env, unset(minishell));
 	if (ft_strncmp(minishell->cmd->cmd_param[0], "exit", 5) == 0)
@@ -49,8 +49,8 @@ int	is_builtin(char *cmd)
 		return (1);
 	if (ft_strncmp(cmd, "cd", 3) == 0)
 		return (1);
-	// if (ft_strncmp(cmd, "export", 7) == 0)
-	// return (1);
+	if (ft_strncmp(cmd, "export", 7) == 0)
+		return (1);
 	// if (ft_strncmp(cmd, "unset", 6) == 0)
 	// return (1);
 	if (ft_strncmp(cmd, "exit", 5) == 0)

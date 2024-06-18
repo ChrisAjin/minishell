@@ -6,7 +6,7 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 16:16:04 by inbennou          #+#    #+#             */
-/*   Updated: 2024/06/17 18:19:08 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/18 17:51:49 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	only_digit(char *str)
 	{
 		if (ft_isdigit(str[i]) != 1)
 		{
-			ft_putendl_fd("exit: numeric argument required", 2);
+			ft_putendl_fd("minishell: exit: numeric argument required", 2);
 			return (0);
 		}
 		i++;

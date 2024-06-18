@@ -6,20 +6,17 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 19:07:53 by inbennou          #+#    #+#             */
-/*   Updated: 2024/06/18 14:09:11 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/18 17:52:04 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-t_list	*ft_lstnew(char *content);
-int	export_print_lst(t_list *lst);
-void	ft_lstadd_back(t_list **lst, t_list *new);
-
 int	export(t_data *minishell)
 {
-	t_list	*new_elem;
+	char	*cmd;
 
+	cmd = minishell->cmd->cmd_param[1];
 	if (minishell->cmd->cmd_param[1] == NULL)
 		return (export_print_lst(minishell->env));
 	if (minishell->cmd->cmd_param[1][0] == '-')
@@ -31,19 +28,57 @@ int	export(t_data *minishell)
 	}
 	else
 	{
-		if (ft_isdigit(minishell->cmd->cmd_param[1][0]))
-		{
-			ft_putstr_fd("export: ", 2);
-			ft_putstr_fd(minishell->cmd->cmd_param[1], 2);
-			ft_putend_fd(": not a valid identifier", 2);
-			return (1);
-		}
-		if (ft_strchr(minishell->cmd->cmd_param[1], '=') == 0)
-			return (0);
-		// add to list
-		// new_elem = ft_lstnew(minishell->cmd->cmd_param[1]);
-		// ft_lstadd_back((*minishell).env, new_elem);
+		if (ft_isdigit(minishell->cmd->cmd_param[1][0])
+			|| ft_strchr(minishell->cmd->cmd_param[1], '=') == 0)
+			not_valid(minishell);
+		if (is_var(cmd, minishell->env))
+			change_var(cmd, minishell->env);
+		else
+			append_list(&minishell->env, minishell->cmd->cmd_param[1]);
 	}
+	return (0);
+}
+
+int	not_valid(t_data *minishell)
+{
+	ft_putstr_fd("export: ", 2);
+	ft_putstr_fd(minishell->cmd->cmd_param[1], 2);
+	ft_putendl_fd(": not a valid identifier", 2);
+	return (1);
+}
+
+int	change_var(char *str, t_list *env)
+{
+	t_list	*temp;
+
+	temp = env->next;
+	while (temp != env)
+	{
+		if (ft_strncmp(temp->str, str, ft_strlen_c(str, '=')) == 0)
+		{
+			free(temp->str);
+			temp->str = ft_strdup(str);
+			env = temp;
+			return (0);
+		}
+		temp = temp->next;
+	}
+	env = temp;
+	return (1);
+}
+
+int	is_var(char *str, t_list *env)
+{
+	t_list	*temp;
+
+	temp = env->next;
+	while (temp != env)
+	{
+		if (ft_strncmp(temp->str, str, ft_strlen_c(str, '=')) == 0)
+			return (1);
+		temp = temp->next;
+	}
+	return (0);
 }
 
 int	export_print_lst(t_list *lst)
@@ -69,27 +104,4 @@ int	export_print_lst(t_list *lst)
 		temp = temp->next;
 	}
 	return (0);
-}
-
-t_list	*ft_lstnew(char *content)
-{
-	t_list	*lst;
-
-	lst = malloc(sizeof(t_list));
-	if (!lst)
-		return (NULL);
-	lst->str = content;
-	lst->next = NULL;
-	return (lst);
-}
-
-void	ft_lstadd_back(t_list **lst, t_list *new)
-{
-	t_list	*last;
-
-	last = ft_lstlast(*lst);
-	if (!last)
-		*lst = new;
-	else
-		last->next = new;
 }
