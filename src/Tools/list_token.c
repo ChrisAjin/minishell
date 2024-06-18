@@ -17,6 +17,31 @@ static int	token_new_elem(t_token **new, char *str, int type)
 	return (1);
 }
 
+int	add_root(t_token **list, char *str, int type)
+{
+	t_token	*new;
+	t_token	*last;
+
+	if (!token_new_elem(&new, str, type))
+		return (0);
+	if (*list == NULL)
+	{
+		*list = new;
+		(*list)->prev = *list;
+		(*list)->next = *list;
+	}
+	else
+	{
+		last = (*list)->prev;
+		new->next = *list;
+		new->prev = last;
+		last->next = new;
+		(*list)->prev = new;
+		*list = new;
+	}
+	return (1);
+}
+
 static void	add_first(t_token **list, t_token *new)
 {
 	(*list) = new;

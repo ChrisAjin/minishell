@@ -1,5 +1,14 @@
 #include "../../include/minishell.h"
 
+void print_tokens(t_token *head) {
+    if (head == NULL) return;
+    t_token *temp = head;
+    do {
+        printf("Token: %s, Type: %d\n", temp->str, temp->type);
+        temp = temp->next;
+    } while (temp != head);
+}
+
 void	print_token(t_token *token)
 {
 	t_token	*tmp;

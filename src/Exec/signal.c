@@ -6,7 +6,7 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 18:03:01 by cassassa          #+#    #+#             */
-/*   Updated: 2024/06/17 12:40:17 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/18 14:12:14 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ void	handle_signal_ctrl_c(int sig, t_data *ptr)
 	}
 	if (sig == SIGINT)
 	{
-		g_ext_status = 1;
 		if (!context->sigflg)
         {
             //rl_replace_line("", 0);   // Efface la ligne courante dans readline
@@ -33,15 +32,13 @@ void	handle_signal_ctrl_c(int sig, t_data *ptr)
 			//rl_redisplay();
             ft_putstr_fd("\n", 1);
         }
-			
-		
+
+
 	}
 }
 
 void	handle_signal_in_out(t_data *data)
 {
-	dup2(data->f_stdin, 0);
-	dup2(data->f_stdout, 1);
 	data->sig = 0;
 	handle_signal_ctrl_c(-200, data);
 	signal(SIGQUIT, (void (*)(int))handle_signal_ctrl_c);

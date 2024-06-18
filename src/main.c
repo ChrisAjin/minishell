@@ -6,7 +6,7 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 16:44:44 by cassassa          #+#    #+#             */
-/*   Updated: 2024/06/17 18:13:43 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/18 14:11:22 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	make_env(t_data *data, char **env)
 	}
 	data->env = list;
 	return (1);
-	
+
 }
 
 void	init_data(t_data *data, int argc, char **argv)
@@ -51,7 +51,6 @@ void	init_data(t_data *data, int argc, char **argv)
 	data->pip[1] = -1;
 	data->temp_fd = -1;
 	/*init signal a add*/
-	// g_signal_pid = 0;
 	//signals();
 }
 bool	empty_line(char *line)
@@ -121,7 +120,7 @@ bool	parseline(t_data *data, char *line)
 		free(line);
 		free_all(data, ERR_MALLOC, EXT_MALLOC);
 	}
-	
+	add_root(&data->token, ft_strdup("new_root"), 0);
 	free(line);
 	print_token(data->token);
 	if (data->token && data->token->prev->type == PIPE)
@@ -163,6 +162,7 @@ int	main(int argc, char **argv, char **env)
 		if (empty_line(line))
 			continue ;
 		//add_history(line);
+
 		if (!parseline(&data, line))
 			continue ;
 		exec(&data);

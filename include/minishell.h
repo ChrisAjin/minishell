@@ -6,7 +6,7 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 16:45:40 by cassassa          #+#    #+#             */
-/*   Updated: 2024/06/17 18:03:53 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/18 14:11:44 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <errno.h>
+# include <signal.h>
 // # include <stdarg.h>
 // # include <stddef.h>
 // # include <string.h>
@@ -40,8 +41,9 @@
 
 # define EXT_MALLOC 1
 # define ERR_MALLOC "error malloc\n"
+# define PATH_MAX        4096
 
-// int	g_ext_status;
+//int	g_ext_status;
 
 typedef struct s_cmd
 {
@@ -111,6 +113,7 @@ void				free_token(t_token **list);
 
 // creat_list_token.c
 bool				create_list_token(t_token **begin, char *command);
+int add_root(t_token **list, char *str, int type);
 
 // cmd_param.c
 char				**get_param(t_data *data, t_token *token);
@@ -140,9 +143,10 @@ int		replace_dollar(char **line, t_data *data);
 //DEBUG.c
 void	print_token(t_token *token);
 void	print_cmd(t_cmd *cmd);
+void print_tokens(t_token *head);
 
 //signal.c
-void	handle_signal_in_out(t_data *data);
+//void	handle_signal_in_out(t_data *data);
 
 
 
