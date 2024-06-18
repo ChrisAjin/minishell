@@ -6,7 +6,7 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 16:22:27 by inbennou          #+#    #+#             */
-/*   Updated: 2024/06/18 17:51:05 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/18 18:13:10 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,8 @@ int	print_lst(t_list *lst)
 
 	if (!lst)
 		return (1);
-	// temp = lst;
-	// if (printf("%s\n", temp->str) < 0)
-	// {
-	// 	perror("printf");
-	// 	return (1);
-	// }
+	while (ft_strncmp(lst->str, "NEW_ENV", 7) != 0)
+		lst = lst->next;
 	temp = lst->next;
 	while (temp != lst)
 	{
