@@ -32,7 +32,7 @@ FILES	=	main cmd_param create_cmd create_token \
 			childs errors exec_child exec open exec_utils \
 			builtins_utils cd env exit export \
 			parent_builtin pwd echo here_doc add_list \
-			exec_utils2 errors2
+			exec_utils2 errors2 unset
 
 SRCS	=	$(addprefix $(SRC_DIR), $(addsuffix .c, $(FILES)))
 OBJS	=	$(addprefix $(OBJ_DIR), $(addsuffix .o, $(FILES)))

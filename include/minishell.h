@@ -6,7 +6,7 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 16:45:40 by cassassa          #+#    #+#             */
-/*   Updated: 2024/06/19 15:52:59 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/19 16:40:32 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -247,6 +247,9 @@ int				is_var(char *str, t_list *env);
 int				change_var(char *str, t_list *env);
 int				not_valid(t_data *minishell);
 int				has_space(char	*str);
+
+// unset
+int				unset(t_data *minishell);
 
 //data_check.c
 int				check_pipe_red_herdoc(t_data *data);

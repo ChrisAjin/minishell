@@ -6,13 +6,12 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 19:16:00 by inbennou          #+#    #+#             */
-/*   Updated: 2024/06/14 17:52:42 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/19 16:18:56 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-// gerer echo $?
 int	echo(t_data *minishell)
 {
 	int	n;
@@ -71,7 +70,6 @@ int	print_args(t_data *minishell, int index)
 		if (printf("%s ", minishell->cmd->cmd_param[y]) < 0)
 		{
 			perror("printf");
-			// free_all(minishell, NULL, -1);
 			return (1);
 		}
 		y++;
@@ -79,7 +77,6 @@ int	print_args(t_data *minishell, int index)
 	if (printf("%s", minishell->cmd->cmd_param[y]) < 0)
 	{
 		perror("printf");
-		// free_all(minishell, NULL, -1);
 		return (1);
 	}
 	return (0);

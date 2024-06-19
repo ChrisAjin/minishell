@@ -16,7 +16,7 @@
 int	unset(t_data *minishell)
 {
 	t_list	*temp;
-	t_list	*del;
+	// char	*del;
 
 	temp = minishell->env->next;
 	if (minishell->cmd->cmd_param[1][0] == '-')
@@ -25,14 +25,20 @@ int	unset(t_data *minishell)
 		ft_putendl_fd(minishell->cmd->cmd_param[1], 2);
 		return (2);
 	}
-	// while (temp != minishell->env)
-	// {
-		// if (ft_strncmp(minishell->cmd->cmd_param[1], temp->str,
-		// 		ft_strlen(minishell->cmd->cmd_param[1]) == 0))
-		// 	{
-		// 		del = temp->str;
-		// 		temp->prev->next = temp->next;
-		// 		free(del);
-		// 	}
-	// }
+	if (ft_strchr(minishell->cmd->cmd_param[1], '=') == 0)
+		return (0);
+	while (temp != minishell->env)
+	{
+		if (ft_strncmp(minishell->cmd->cmd_param[1], temp->str,
+				(ft_strlen_c(minishell->cmd->cmd_param[1], '=') - 1) == 0))
+			{
+				temp->prev->next = temp->next;
+				free(temp->str);
+				// free(del);
+				minishell->env = temp;
+				return (0);
+			}
+		temp = temp->next;
+	}
+	return (0);
 }
