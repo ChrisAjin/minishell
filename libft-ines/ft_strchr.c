@@ -6,7 +6,7 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 16:55:55 by inbennou          #+#    #+#             */
-/*   Updated: 2024/03/18 15:07:44 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/19 15:03:49 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ char	*ft_strchr(const char *str, int c)
 
 	i = 0;
 	ch = c;
+	if (!str)
+		return (0);
 	while ((str[i] != ch) && (str[i]))
 		i++;
 	if (str[i] == ch)

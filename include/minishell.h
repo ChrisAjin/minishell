@@ -6,7 +6,7 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 16:45:40 by cassassa          #+#    #+#             */
-/*   Updated: 2024/06/18 16:18:51 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/19 15:52:59 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,17 +153,15 @@ void print_list(t_list *head);
 //signal.c
 //void	handle_signal_in_out(t_data *data);
 
-
-
 // exec.c
 int					exec(t_data *minishell);
 void					find_and_exec(t_data *minishell, char **env);
 void					exec_path(t_data *minishell, char **env);
-int	pipe_count(t_data *minishell);
+int					pipe_count(t_data *minishell);
 
 //here_doc.c
 int		here_doc(t_data *data, char *word);
-void		is_here_doc(t_data *minishell, char **env, int read, int write);
+// void		is_here_doc(t_data *minishell, char **env, int read, int write);
 
 // childs.c
 void					only_child(t_data *minishell, char **env);
@@ -172,14 +170,17 @@ void					middle_child(t_data *minishell, char **env);
 void					last_child(t_data *minishell, char **env);
 
 // errors.c
-int					child_fail(t_data *minishell, char **env);
 void					command_not_found(t_data *minishell, char **paths, char **env);
-void					exec_fail(t_data *minishell, char **paths, char **env);
 void				permission_denied(t_data *minishell, char**env);
 void				no_such_file(t_data *minishell, char **env);
+
+// errors2.c
+int					child_fail(t_data *minishell, char **env);
+void					exec_fail(t_data *minishell, char **paths, char **env, char *cur_path);
 void				dup2_error(t_data *minishell, char **env);
 
-// exec_child
+// exec_child.c
+int					exec_one_cmd(t_data *minishell, char **env);
 int					one_cmd(t_data *minishell, char **env);
 int					exec_first_child(t_data *minishell, char **env);
 int					exec_middle_childs(t_data *minishell, char **env);
@@ -190,9 +191,12 @@ char				**split_path(char **envp);
 void				wait_and_error(t_data *minishell, int pid_lastchild);
 int					renew_pipe(t_data *minishell);
 int					close_all(t_data *minishell);
-void					close_fds(void);
 void					skip(t_data **minishell);
+
+// exec utils2
 void					free_tab(char **tab);
+void					close_fds(void);
+void					init_fds(t_data *minishell);
 
 // open
 int					open_inf_outf(t_data *minishell);
@@ -230,7 +234,7 @@ int				only_digit(char *str);
 
 // parent_builtin
 int				is_parent_builtin(char *cmd);
-int				parent_builtin(t_data *minishell);
+int				parent_builtin(t_data *minishell, char **env);
 int				which_builtin(t_data *minishell);
 
 // pwd
@@ -242,8 +246,9 @@ int				export_print_lst(t_list *lst);
 int				is_var(char *str, t_list *env);
 int				change_var(char *str, t_list *env);
 int				not_valid(t_data *minishell);
+int				has_space(char	*str);
 
 //data_check.c
-int	check_pipe_red_herdoc(t_data *data);
+int				check_pipe_red_herdoc(t_data *data);
 
 #endif

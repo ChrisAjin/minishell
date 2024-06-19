@@ -6,13 +6,12 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 19:58:42 by inbennou          #+#    #+#             */
-/*   Updated: 2024/06/12 15:50:51 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/19 15:18:05 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// !!! proteger l'appel de split paths
 char	**split_path(char **env)
 {
 	int		i;
@@ -85,15 +84,6 @@ int	close_all(t_data *minishell)
 	return (0);
 }
 
-// que pour les childs, en cas d'erreur, apres le msg d'erreur
-void	close_fds()
-{
-	close(0);
-	close(1);
-	close(2);
-}
-
-// skip juste apres le prochain pipe et skip cmd
 void	skip(t_data **minishell)
 {
 	while ((*minishell)->token->type != PIPE)
@@ -101,17 +91,8 @@ void	skip(t_data **minishell)
 	(*minishell)->token = (*minishell)->token->next;
 	(*minishell)->cmd = (*minishell)->cmd->next;
 	(*minishell)->pipes -= 1;
-}
-
-void	free_tab(char **tab)
-{
-	int	i;
-
-	i = 0;
-	while (tab[i])
-	{
-		free(tab[i]);
-		i++;
-	}
-	free(tab);
+	if ((*minishell)->cmd->cmd_param[0] == NULL)
+		(*minishell)->cmd->skip_cmd = true;
+	else
+		(*minishell)->cmd->skip_cmd = false;
 }

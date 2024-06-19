@@ -6,7 +6,7 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 16:44:44 by cassassa          #+#    #+#             */
-/*   Updated: 2024/06/18 16:21:24 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/19 15:30:47 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	init_data(t_data *data, int argc, char **argv)
 	data->pipes = 0;
 	data->infile = -1;
 	data->outfile = -1;
-	data->pip[0] = -1;
+	data-> pip[0]= -1;
 	data->pip[1] = -1;
 	data->temp_fd = -1;
 	/*init signal a add*/
@@ -123,7 +123,7 @@ bool	parseline(t_data *data, char *line)
 	add_root(&data->token, ft_strdup("new_root"), 0);
 	free(line);
 	//append_list(&data->env, ft_strdup("NEW_ENV"));
-	//print_list(data->env);
+	// print_list(data->env);
 	if (data->token && data->token->prev->type == PIPE)
 	{
 		write(2, "Error: Unclosed pipe\n", 21);
@@ -139,7 +139,7 @@ bool	parseline(t_data *data, char *line)
 		free_cmd(&data->cmd);
 		return (false);
 	}
-	// print_cmd(data->cmd);
+	print_cmd(data->cmd);
 	return (check_pipe(data));
 }
 
@@ -154,7 +154,7 @@ int	main(int argc, char **argv, char **env)
 	init_data(&data, argc, argv);
 	if (!make_env(&data, env))
 		free_all(&data, ERR_MALLOC, EXT_MALLOC);
-	add_root_list(&data.env, ft_strdup("NEW_ENV"));
+	add_root_list(&data.env, ft_strdup("1NEW_ENV"));
 
 	while (1)
 	{
