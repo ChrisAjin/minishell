@@ -6,7 +6,7 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 16:44:44 by cassassa          #+#    #+#             */
-/*   Updated: 2024/06/20 15:46:56 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/20 19:55:09 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,7 @@ bool	parseline(t_data *data, char *line)
 		free(line);
 		return (false);
 	}
+	
 	if (!replace_dollar(&line, data) || !create_list_token(&data->token, line))
 	{
 		free(line);
@@ -132,7 +133,10 @@ bool	parseline(t_data *data, char *line)
 		return (false);
 	}
 	if (check_pipe_red_herdoc(data))
- 	 	return (false);
+	{
+		return (false);
+	}
+ 	 	
 	if (!data->token || !create_list_cmd(data))
 	{
 		free_token(&data->token);

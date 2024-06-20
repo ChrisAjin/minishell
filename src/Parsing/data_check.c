@@ -16,14 +16,14 @@ int	check_reder_tkn(t_token *token)
 	{
 		if (is_reder(tmp->type) && !tmp->next)
 		{
-			ft_putstr_fd("\033[1;31m:(\033[0m Minishell: syntax error near " \
+			ft_putstr_fd("Minishell: syntax error near " \
 				"unexpected token 'newline'\n", 2);
 			return (1);
 		}
-		if (is_reder(tmp->type) && !tmp->next
+		if (is_reder(tmp->type) && tmp->next->type != ARG
 			&& (is_reder(tmp->next->type) || tmp->next->type == PIPE))
 		{
-			ft_putstr_fd("\033[1;31m:(\033[0m Minishell: syntax error near" \
+			ft_putstr_fd("Minishell: syntax error near" \
 				"unexpected token '", 2);
 			ft_putstr_fd(tmp->next->str, 2);
 			ft_putstr_fd("'\n", 2);
@@ -45,13 +45,13 @@ int	check_pipe_tkn(t_token *token)
 		{
 			if (!ptr->next || !ptr->prev)
 			{
-				ft_putstr_fd("\033[1;31m:(\033[0m Minishell: syntax error" \
+				ft_putstr_fd("Minishell: syntax error" \
 					" near unexpected token '|'\n", 2);
 				return (1);
 			}
 			else if (ptr->next && ptr->next->type == PIPE)
 			{
-				ft_putstr_fd("\033[1;31m:(\033[0m Minishell: syntax error" \
+				ft_putstr_fd("Minishell: syntax error" \
 				" near unexpected token '||'\n", 2);
 				return (1);
 			}
@@ -76,7 +76,7 @@ int	check_herdoc_tkn(t_token *token)
 	}
 	if (i > 16)
 	{
-		ft_putstr_fd("\033[1;31m:(\033[0m Minishell: maximum here-document count"
+		ft_putstr_fd("Minishell: maximum here-document count"
 			" exceeded\n", 2);
 		return (1);
 	}

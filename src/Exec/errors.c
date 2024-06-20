@@ -6,7 +6,7 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 14:40:48 by inbennou          #+#    #+#             */
-/*   Updated: 2024/06/19 15:22:09 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/20 18:25:20 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	permission_denied(t_data *minishell, char **env)
 
 void	no_such_file(t_data *minishell, char **env)
 {
-	ft_putstr_fd("No such file or directory: ", 2);
+	ft_putstr_fd("No such file or directory:", 2);
 	ft_putendl_fd(minishell->cmd->cmd_param[0], 2);
 	close_all(minishell);
 	close_fds();
