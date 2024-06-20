@@ -6,7 +6,7 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 21:55:35 by inbennou          #+#    #+#             */
-/*   Updated: 2024/06/18 18:20:19 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/20 17:06:10 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,23 +22,30 @@
 
 // tester cd dans un fichier supprime :((((((((((
 
+int	check_args(char	**cmd_param)
+{
+	if (size_tab(cmd_param) > 2)
+	{
+		ft_putendl_fd("minishell: cd: too many arguments", 2);
+		return (1);
+	}
+	return (0);
+}
+
 // pour la norme retirer char **env et adapter a une liste chainee
 int	cd(t_data *minishell)
 {
 	char	*old_pwd;
 	char	*cur_dir;
 
-	if (size_tab(minishell->cmd->cmd_param) > 2)
-	{
-		ft_putendl_fd("minishell: cd: too many arguments", 2);
+	if (check_args(minishell->cmd->cmd_param))
 		return (1);
-	}
 	old_pwd = get_pwd();
 	if (!old_pwd)
-	{
 		ft_putendl_fd("minishell: cd: error retrieving current directory", 2);
-		return (1);
-	}
+	// {
+	// 	return (1);
+	// }
 	if (minishell->cmd->cmd_param[1] == NULL
 		|| ft_strncmp(minishell->cmd->cmd_param[1], "~", 2) == 0)
 	{

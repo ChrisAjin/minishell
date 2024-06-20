@@ -6,7 +6,7 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 16:16:04 by inbennou          #+#    #+#             */
-/*   Updated: 2024/06/18 17:51:49 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/20 14:45:39 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	exit_shell(t_data *minishell)
 		minishell->exit_code = 2;
 	else
 		minishell->exit_code = 0;
-	// rl_clear_history
+	rl_clear_history();
 	free_all(minishell, NULL, -1);
 	exit(minishell->exit_code);
 }
