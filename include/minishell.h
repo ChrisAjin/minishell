@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 16:45:40 by cassassa          #+#    #+#             */
-/*   Updated: 2024/06/19 16:40:32 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/22 17:50:32 by cassassa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@
 typedef struct s_cmd
 {
 	bool			skip_cmd;
+	int				infile;
+	int				outfile;
 	char			**cmd_param;
 	struct s_cmd	*next;
 	struct s_cmd	*prev;
@@ -126,7 +128,8 @@ char				**get_param(t_data *data, t_token *token);
 bool				create_list_cmd(t_data *data);
 
 // list_cmd.c
-int	append_cmd(t_cmd **list, char **cmd_param);
+//int	append_cmd(t_cmd **list, char **cmd_param);
+int	append_cmd(t_cmd **list, int infile, int outfile, char **cmd_param);
 void	free_cmd(t_cmd **list);
 size_t	len_cmd(t_cmd *list);
 
@@ -144,6 +147,9 @@ int		add_dollar(char *line, int *index, char **str, t_data *data);
 int		add_char(char *c, char **str, t_data *data, int *index);
 int		replace_dollar(char **line, t_data *data);
 
+//fd_check.c
+bool	get_outfile(t_token *token, t_cmd *cmd, t_data *data);
+bool	get_infile(t_data *data, t_token *token, t_cmd *cmd);
 //DEBUG.c
 void	print_token(t_token *token);
 void	print_cmd(t_cmd *cmd);

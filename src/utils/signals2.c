@@ -1,25 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   signals2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: reldnah <reldnah@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/06 17:39:12 by inbennou          #+#    #+#             */
-/*   Updated: 2024/06/22 14:13:20 by cassassa         ###   ########.fr       */
+/*   Created: 2023/05/12 11:20:46 by reldnah           #+#    #+#             */
+/*   Updated: 2023/05/12 11:50:05 by reldnah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../../include/minishell.h"
 
-int	ft_strlen(const char *str)
+void	signals2(void)
 {
-	int	i;
-
-	i = 0;
-	if (!str) // Vérification si le pointeur est NULL
-        return 0;
-	while (str[i])
-		i++;
-	return (i);
+	signal(SIGQUIT, SIG_DFL);
 }

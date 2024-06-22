@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   list_token.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: handler <handler@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/04/19 15:53:33 by reldnah           #+#    #+#             */
+/*   Updated: 2023/05/11 22:49:07 by handler          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../include/minishell.h"
 
 static int	token_new_elem(t_token **new, char *str, int type)
@@ -14,31 +26,6 @@ static int	token_new_elem(t_token **new, char *str, int type)
 	(*new)->type = type;
 	(*new)->next = NULL;
 	(*new)->prev = NULL;
-	return (1);
-}
-
-int	add_root(t_token **list, char *str, int type)
-{
-	t_token	*new;
-	t_token	*last;
-
-	if (!token_new_elem(&new, str, type))
-		return (0);
-	if (*list == NULL)
-	{
-		*list = new;
-		(*list)->prev = *list;
-		(*list)->next = *list;
-	}
-	else
-	{
-		last = (*list)->prev;
-		new->next = *list;
-		new->prev = last;
-		last->next = new;
-		(*list)->prev = new;
-		*list = new;
-	}
 	return (1);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 16:44:44 by cassassa          #+#    #+#             */
-/*   Updated: 2024/06/20 19:55:09 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/22 18:00:20 by cassassa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,46 +68,44 @@ bool	empty_line(char *line)
 	return (false);
 }
 
-// bool parsline (t_data *data, char *line)
+// bool	parseline(t_data *data, char *line)
 // {
 // 	if (open_quote(data, line))
 // 	{
 // 		free(line);
 // 		return (false);
 // 	}
-// 	if(!replace_dollar(&line, data) || !create_list_token(&data->token, line) )
+
+// 	if (!replace_dollar(&line, data) || !create_list_token(&data->token, line))
 // 	{
 // 		free(line);
-// 		free_all(data,ERR_MALLOC, EXT_MALLOC);
+// 		free_all(data, ERR_MALLOC, EXT_MALLOC);
 // 	}
+// 	//add_root(&data->token, ft_strdup("new_root"), 0);
 // 	free(line);
-// 	//print_token(data->token);
+// 	//append_list(&data->env, ft_strdup("NEW_ENV"));
+// 	// print_list(data->env);
 // 	if (data->token && data->token->prev->type == PIPE)
 // 	{
-// 		ft_putstr_fd("minishell: syntax error near unexpected token '|'\n",2);
+// 		write(2, "Error: Unclosed pipe\n", 21);
 // 		data->exit_code = 2;
 // 		free_token(&data->token);
 // 		return (false);
 // 	}
-// 	if(data->token->next && data->token->next->type == PIPE)
-// 	{
-// 		ft_putstr_fd("minishell: syntax error near unexpected token '||'\n",2);
-// 		data->exit_code = 2;
-// 		free_token(&data->token);
-// 		return (false);
-// 	}
-// 	if (check_pipe_red_herdoc(data))
-// 		return (false);
+// 	 if (check_pipe_red_herdoc(data))
+// 	 {
+// 	 	return (false);
+// 	 }
+
 // 	if (!data->token || !create_list_cmd(data))
 // 	{
 // 		free_token(&data->token);
 // 		free_cmd(&data->cmd);
-// 		return(false);
+// 		return (false);
 // 	}
-// 	//print_cmd(data->cmd);
+// 	// print_cmd(data->cmd);
 // 	return (check_pipe(data));
 // }
-
 bool	parseline(t_data *data, char *line)
 {
 	if (open_quote(data, line))
@@ -115,16 +113,13 @@ bool	parseline(t_data *data, char *line)
 		free(line);
 		return (false);
 	}
-	
 	if (!replace_dollar(&line, data) || !create_list_token(&data->token, line))
 	{
 		free(line);
 		free_all(data, ERR_MALLOC, EXT_MALLOC);
 	}
-	add_root(&data->token, ft_strdup("new_root"), 0);
 	free(line);
-	//append_list(&data->env, ft_strdup("NEW_ENV"));
-	// print_list(data->env);
+	print_token(data->token);
 	if (data->token && data->token->prev->type == PIPE)
 	{
 		write(2, "Error: Unclosed pipe\n", 21);
@@ -132,18 +127,12 @@ bool	parseline(t_data *data, char *line)
 		free_token(&data->token);
 		return (false);
 	}
-	if (check_pipe_red_herdoc(data))
-	{
-		return (false);
-	}
- 	 	
 	if (!data->token || !create_list_cmd(data))
 	{
 		free_token(&data->token);
 		free_cmd(&data->cmd);
 		return (false);
 	}
-	// print_cmd(data->cmd);
 	return (check_pipe(data));
 }
 
@@ -158,8 +147,7 @@ int	main(int argc, char **argv, char **env)
 	init_data(&data, argc, argv);
 	if (!make_env(&data, env))
 		free_all(&data, ERR_MALLOC, EXT_MALLOC);
-	add_root_list(&data.env, ft_strdup("1NEW_ENV"));
-
+	//add_root_list(&data.env, ft_strdup("1NEW_ENV"));
 	while (1)
 	{
 		//handle_signal_in_out(&data);
@@ -169,10 +157,9 @@ int	main(int argc, char **argv, char **env)
 		if (empty_line(line))
 			continue ;
 		add_history(line);
-
 		if (!parseline(&data, line))
 			continue ;
-		exec(&data);
+		//exec(&data);
 		free_cmd(&data.cmd);
 		free_token(&data.token);
 	}
