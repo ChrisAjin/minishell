@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   free.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: reldnah <reldnah@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/25 14:27:47 by reldnah           #+#    #+#             */
-/*   Updated: 2023/05/10 16:37:33 by reldnah          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../include/minishell.h"
 
 void	free_array(char **arr)
@@ -57,7 +45,6 @@ void	free_all(t_data *data, char *err, int ext)
 		close(data->pip[1]);
 	if (err)
 		print_error(err);
-	rl_clear_history();
 	if (!access(".heredoc.tmp", F_OK))
 		unlink(".heredoc.tmp");
 	if (ext != -1)
