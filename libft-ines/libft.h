@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 14:38:10 by inbennou          #+#    #+#             */
-/*   Updated: 2024/06/20 17:32:10 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/22 13:42:38 by cassassa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,9 +82,9 @@ void				ft_free(char *str);
 // Printf
 int					ft_printf(const char *format, ...);
 int					ft_putdec(int n);
-int					ft_puthexa(unsigned int n);
+//int					ft_puthexa(unsigned int n);
 int					ft_puthexa_low(unsigned int n);
-int					ft_puthexa_p(unsigned long long nbl);
+//int					ft_puthexa_p(unsigned long long nbl);
 int					ft_hexa_not0(unsigned long long nbl);
 int					ft_unsignedputnbr(unsigned int n);
 void				ft_putchar(char c);
