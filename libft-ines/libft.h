@@ -6,7 +6,7 @@
 /*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 14:38:10 by inbennou          #+#    #+#             */
-/*   Updated: 2024/06/22 13:16:08 by cassassa         ###   ########.fr       */
+/*   Updated: 2024/06/22 13:51:47 by cassassa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ void				ft_putendl_fd(char *s, int fd);
 void				ft_putnbr_fd(int n, int fd);
 void				print_tab(char **tab);
 void				free_tab(char **tab);
+void				ft_free(char *str);
 
 //  Bonus
 // t_list				*ft_lstnew(int content);
@@ -81,9 +82,9 @@ void				free_tab(char **tab);
 // Printf
 int					ft_printf(const char *format, ...);
 int					ft_putdec(int n);
-int					ft_puthexa(unsigned int n);
+//int					ft_puthexa(unsigned int n);
 int					ft_puthexa_low(unsigned int n);
-int					ft_puthexa_p(unsigned long long nbl);
+//int					ft_puthexa_p(unsigned long long nbl);
 int					ft_hexa_not0(unsigned long long nbl);
 int					ft_unsignedputnbr(unsigned int n);
 void				ft_putchar(char c);

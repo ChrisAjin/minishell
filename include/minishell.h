@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 16:45:40 by cassassa          #+#    #+#             */
-/*   Updated: 2024/06/18 13:52:27 by cassassa         ###   ########.fr       */
+/*   Updated: 2024/06/19 16:40:32 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,10 @@ bool	print_error(char *str);
 int					append_token(t_token **list, char *str, int type);
 void				free_token(t_token **list);
 
+// add_list.c
+void append_list(t_list **list, char *str);
+void add_root_list(t_list **list, char *str);
+
 // creat_list_token.c
 bool				create_list_token(t_token **begin, char *command);
 int add_root(t_token **list, char *str, int type);
@@ -144,20 +148,21 @@ int		replace_dollar(char **line, t_data *data);
 void	print_token(t_token *token);
 void	print_cmd(t_cmd *cmd);
 void print_tokens(t_token *head);
+void print_list(t_list *head);
 
 //signal.c
 //void	handle_signal_in_out(t_data *data);
-
-
 
 // exec.c
 int					exec(t_data *minishell);
 void					find_and_exec(t_data *minishell, char **env);
 void					exec_path(t_data *minishell, char **env);
-int	pipe_count(t_data *minishell);
+int					pipe_count(t_data *minishell);
 
 //here_doc.c
 int		here_doc(t_data *data, char *word);
+// void		is_here_doc(t_data *minishell, char **env, int read, int write);
+
 // childs.c
 void					only_child(t_data *minishell, char **env);
 void					first_child(t_data *minishell, char **env);
@@ -165,14 +170,17 @@ void					middle_child(t_data *minishell, char **env);
 void					last_child(t_data *minishell, char **env);
 
 // errors.c
-int					child_fail(t_data *minishell, char **env);
 void					command_not_found(t_data *minishell, char **paths, char **env);
-void					exec_fail(t_data *minishell, char **paths, char **env);
 void				permission_denied(t_data *minishell, char**env);
 void				no_such_file(t_data *minishell, char **env);
+
+// errors2.c
+int					child_fail(t_data *minishell, char **env);
+void					exec_fail(t_data *minishell, char **paths, char **env, char *cur_path);
 void				dup2_error(t_data *minishell, char **env);
 
-// exec_child
+// exec_child.c
+int					exec_one_cmd(t_data *minishell, char **env);
 int					one_cmd(t_data *minishell, char **env);
 int					exec_first_child(t_data *minishell, char **env);
 int					exec_middle_childs(t_data *minishell, char **env);
@@ -183,11 +191,15 @@ char				**split_path(char **envp);
 void				wait_and_error(t_data *minishell, int pid_lastchild);
 int					renew_pipe(t_data *minishell);
 int					close_all(t_data *minishell);
-void					close_fds(void);
 void					skip(t_data **minishell);
+
+// exec utils2
 void					free_tab(char **tab);
+void					close_fds(void);
+void					init_fds(t_data *minishell);
 
 // open
+int					open_inf_outf(t_data *minishell);
 int					infile_count(t_data *minishell);
 int					outfile_count(t_data *minishell);
 void					open_infile(t_data *minishell, int inf_count);
@@ -222,13 +234,24 @@ int				only_digit(char *str);
 
 // parent_builtin
 int				is_parent_builtin(char *cmd);
-int				parent_builtin(t_data *minishell);
+int				parent_builtin(t_data *minishell, char **env);
 int				which_builtin(t_data *minishell);
 
 // pwd
 int				pwd(t_data *minishell);
 
+// export
+int				export(t_data *minishell);
+int				export_print_lst(t_list *lst);
+int				is_var(char *str, t_list *env);
+int				change_var(char *str, t_list *env);
+int				not_valid(t_data *minishell);
+int				has_space(char	*str);
+
+// unset
+int				unset(t_data *minishell);
+
 //data_check.c
-int	check_pipe_red_herdoc(t_data *data);
+int				check_pipe_red_herdoc(t_data *data);
 
 #endif

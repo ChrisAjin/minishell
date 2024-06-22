@@ -72,8 +72,10 @@ bool	make_env2(t_data *data)
 	char	path[PATH_MAX];
 	char	*tmp;
 
-	tmp = ft_strdup("OLDPWD");
-	if (!tmp || !append(&(data->env), tmp) || getcwd(path, PATH_MAX) == NULL)
+	// tmp = ft_strdup("OLDPWD");
+	// if (!tmp || !append(&(data->env), tmp) || getcwd(path, PATH_MAX) == NULL)
+	// 	free_all(data, ERR_MALLOC, EXT_MALLOC);
+	if (getcwd(path, PATH_MAX) == NULL)
 		free_all(data, ERR_MALLOC, EXT_MALLOC);
 	tmp = ft_strjoin("PWD=", path);
 	if (!tmp || !append(&(data->env), tmp))

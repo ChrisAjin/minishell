@@ -6,17 +6,12 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 15:31:03 by inbennou          #+#    #+#             */
-/*   Updated: 2024/06/14 16:48:23 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/20 14:51:32 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-// cd export unset et exit faut pas fork quand c'est une seule commande
-
-// export: regles a respecter dans les noms, voir cas s'il existe deja (ecrase l'ancien?)
-
-// prends en param la struct pour pouvoir tout free
 void	exec_builtin(t_data *minishell, char **env)
 {
 	if (ft_strncmp(minishell->cmd->cmd_param[0], "echo", 5) == 0)
@@ -27,10 +22,10 @@ void	exec_builtin(t_data *minishell, char **env)
 		free_and_exit(minishell, env, env_cmd(minishell));
 	if (ft_strncmp(minishell->cmd->cmd_param[0], "cd", 3) == 0)
 		free_and_exit(minishell, env, cd(minishell));
-	// if (ft_strncmp(minishell->cmd->cmd_param[0], "export", 7) == 0)
-		// free_and_exit(minishell, env, export(minishell));
+	if (ft_strncmp(minishell->cmd->cmd_param[0], "export", 7) == 0)
+		free_and_exit(minishell, env, export(minishell));
 	// if (ft_strncmp(minishell->cmd->cmd_param[0], "unset", 6) == 0)
-		// free_and_exit(minishell, env, unset(minishell));
+	// free_and_exit(minishell, env, unset(minishell));
 	if (ft_strncmp(minishell->cmd->cmd_param[0], "exit", 5) == 0)
 		exit_shell(minishell);
 }
@@ -47,16 +42,16 @@ int	is_builtin(char *cmd)
 		return (1);
 	if (ft_strncmp(cmd, "cd", 3) == 0)
 		return (1);
-	// if (ft_strncmp(cmd, "export", 7) == 0)
-		// return (1);
+	if (ft_strncmp(cmd, "export", 7) == 0)
+		return (1);
 	// if (ft_strncmp(cmd, "unset", 6) == 0)
-		// return (1);
+	// return (1);
 	if (ft_strncmp(cmd, "exit", 5) == 0)
 		return (1);
 	return (0);
 }
 
-char	*get_pwd()
+char	*get_pwd(void)
 {
 	char	*path;
 

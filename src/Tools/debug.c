@@ -60,3 +60,11 @@ void	print_cmd(t_cmd *cmd)
 	print_tab(tmp->cmd_param);
 	printf("\n");
 }
+void print_list(t_list *head) {
+    if (head == NULL) return;
+    t_list *temp = head;
+    do {
+        printf("List element: %s\n", temp->str);
+        temp = temp->next;
+    } while (temp != head);
+}

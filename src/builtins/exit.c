@@ -6,7 +6,7 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 16:16:04 by inbennou          #+#    #+#             */
-/*   Updated: 2024/06/14 19:38:18 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/20 14:45:39 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	exit_shell(t_data *minishell)
 		minishell->exit_code = 2;
 	else
 		minishell->exit_code = 0;
-	// rl_clear_history
+	rl_clear_history();
 	free_all(minishell, NULL, -1);
 	exit(minishell->exit_code);
 }
@@ -37,6 +37,8 @@ int	only_digit(char *str)
 	i = 0;
 	if (!str || str[0] == '\0')
 		return (0);
+	if (ft_strlen(str) > 11)
+		return (0);
 	if (str[i] == '+' || str[i] == '-')
 		i++;
 	if (str[i] == '\0')
@@ -45,7 +47,7 @@ int	only_digit(char *str)
 	{
 		if (ft_isdigit(str[i]) != 1)
 		{
-			ft_putendl_fd("exit: numeric argument required", 2);
+			ft_putendl_fd("minishell: exit: numeric argument required", 2);
 			return (0);
 		}
 		i++;

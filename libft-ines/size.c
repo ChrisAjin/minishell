@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   size.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 18:06:17 by inbennou          #+#    #+#             */
-/*   Updated: 2024/02/13 17:45:26 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/22 13:45:49 by cassassa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,6 @@ int	size_hexa(unsigned int nbr)
 	i = 0;
 	if (nbr == 0)
 		return (1);
-	if (nbr < 0)
-		i++;
 	while (nbr != 0)
 	{
 		nbr /= 16;
