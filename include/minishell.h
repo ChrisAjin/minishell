@@ -6,7 +6,7 @@
 /*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 16:45:40 by cassassa          #+#    #+#             */
-/*   Updated: 2024/06/22 18:42:14 by cassassa         ###   ########.fr       */
+/*   Updated: 2024/06/23 20:16:25 by cassassa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -256,5 +256,8 @@ int				unset(t_data *minishell);
 
 //data_check.c
 int				check_pipe_red_herdoc(t_data *data);
+
+//heredoc.c
+int ft_here_doc(t_data *data, char *word, char **str);
 
 #endif
