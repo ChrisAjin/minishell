@@ -3,7 +3,7 @@ NAME	=	minishell
 CC		=	cc
 FLAG	=	-Wall -Wextra -Werror -g
 
-DIRLIB	=	./libft-ines/
+DIRLIB	=	./Libft/
 FILELIB	=	libft.a
 NAMELFT	=	$(addprefix $(DIRLIB), $(FILELIB))
 
@@ -28,11 +28,8 @@ WHITE		= \033[0;97m
 FILES	=	main cmd_param create_cmd create_token \
 			data_check dollar_env dollar_replace quote \
 			array_utils debug free list_cmd list_token list_utils \
-			mini_utils \
-			childs errors exec_child exec open exec_utils \
-			builtins_utils cd env exit export \
-			parent_builtin pwd echo here_doc add_list \
-			exec_utils2 errors2 unset fd_check
+			mini_utils add_list fd_check \
+
 
 SRCS	=	$(addprefix $(SRC_DIR), $(addsuffix .c, $(FILES)))
 OBJS	=	$(addprefix $(OBJ_DIR), $(addsuffix .o, $(FILES)))

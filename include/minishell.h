@@ -6,15 +6,15 @@
 /*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 16:45:40 by cassassa          #+#    #+#             */
-/*   Updated: 2024/06/22 17:50:32 by cassassa         ###   ########.fr       */
+/*   Updated: 2024/06/22 18:42:14 by cassassa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-//# include "../libft/src/libft.h"
-# include "../libft-ines/libft.h"
+# include "../Libft/src/libft.h"
+//# include "../libft-ines/libft.h"
 # include <fcntl.h>
 # include <limits.h>
 # include <readline/history.h>
@@ -48,8 +48,6 @@
 typedef struct s_cmd
 {
 	bool			skip_cmd;
-	int				infile;
-	int				outfile;
 	char			**cmd_param;
 	struct s_cmd	*next;
 	struct s_cmd	*prev;
@@ -128,8 +126,7 @@ char				**get_param(t_data *data, t_token *token);
 bool				create_list_cmd(t_data *data);
 
 // list_cmd.c
-//int	append_cmd(t_cmd **list, char **cmd_param);
-int	append_cmd(t_cmd **list, int infile, int outfile, char **cmd_param);
+int	append_cmd(t_cmd **list, char **cmd_param);
 void	free_cmd(t_cmd **list);
 size_t	len_cmd(t_cmd *list);
 
