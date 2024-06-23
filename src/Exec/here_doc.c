@@ -6,17 +6,20 @@
 /*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 15:57:20 by inbennou          #+#    #+#             */
-/*   Updated: 2024/06/22 20:55:19 by cassassa         ###   ########.fr       */
+/*   Updated: 2024/06/23 21:05:41 by cassassa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-static bool read_in_stdin(t_data *data, char **str, char *word)
+static bool	read_in_stdin(t_data *data, char *word)
 {
-    char *buf;
-    char *new_str;
-    *str = NULL;
+    char	*buf;
+    char	*temp;
+    char	*final_result = ft_strdup("");
+
+    if (!final_result)
+        return false;
 
     while (1)
     {
@@ -31,47 +34,39 @@ static bool read_in_stdin(t_data *data, char **str, char *word)
         }
         if (!ft_strncmp(word, buf, INT_MAX))
         {
-            free(buf);
             break ;
         }
         if (!replace_dollar(&buf, data))
         {
-            free(buf);
             free_all(data, ERR_MALLOC, EXT_MALLOC);
-        }
-
-        char *line_with_newline = ft_strjoin(buf, "\n");
-        if (!line_with_newline)
-        {
-            free(buf);
-            free(*str);
             return false;
         }
-
-        new_str = ft_strjoin(*str, line_with_newline);
-        free(line_with_newline);
-        if (!new_str)
+        temp = ft_strjoin(final_result, buf);
+        free(final_result);
+        if (!temp)
         {
             free(buf);
-            free(*str);
             return false;
         }
-
-        free(*str);
-        *str = new_str;
-
+        final_result = ft_strjoin(temp, "\n");
+        free(temp);
+        if (!final_result)
+        {
+            free(buf);
+            return false;
+        }
         free(buf);
     }
+    free(buf);
+    word = final_result;
+	printf("word :\n%s\n", word);
     return true;
 }
 
-int here_doc(t_data *data, char *word, char **str)
+int here_doc(t_data *data, char *word)
 {
-    *str = NULL;
-
-    if (!read_in_stdin(data, str, word))
+    if (!read_in_stdin(data, word))
     {
-        free(*str);
         return -1;
     }
     return 0;
