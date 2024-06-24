@@ -8,6 +8,9 @@ Tâches à accomplir :
 - [x] Ajouter la gestion des dollars '$$'
 - [x] Ajout de condition pour la gestion des tokens inattendus côté redirection
 - [x] Gnl qui leak
-- [ ] modif here_doc
+- [x] modif here_doc
+- [ ] signaux
+- [ ] code erreur
+- [ ] modifier les libft car libft-ines cause des leak et des malloc error dans le parsing
 
 ## Exec
