@@ -49,7 +49,7 @@ void	sort_array(char **arr, int len)
 		j = i + 1;
 		while (j < len)
 		{
-			diff = ft_strncmp(arr[i], arr[j], __INT_MAX__);
+			diff = ft_strncmpp(arr[i], arr[j], __INT_MAX__);
 			if (diff > 0)
 			{
 				ft_swap_str_tab(i, j, arr);

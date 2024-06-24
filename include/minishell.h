@@ -6,15 +6,15 @@
 /*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 16:45:40 by cassassa          #+#    #+#             */
-/*   Updated: 2024/06/24 13:58:48 by cassassa         ###   ########.fr       */
+/*   Updated: 2024/06/24 15:46:23 by cassassa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include "../Libft/src/libft.h"
-//# include "../libft-ines/libft.h"
+//# include "../Libft/src/libft.h"
+# include "../libft-ines/libft.h"
 # include <fcntl.h>
 # include <limits.h>
 # include <readline/history.h>
@@ -43,7 +43,7 @@
 # define ERR_MALLOC "error malloc\n"
 # define PATH_MAX        4096
 
-//int	g_ext_status;
+extern pid_t g_signal_pid;
 
 typedef struct s_cmd
 {
@@ -73,10 +73,6 @@ typedef struct s_data
 	t_list			*env;
 	t_token			*token;
 	t_cmd			*cmd;
-	int			sig;
-	int			sigflg;
-	int			f_stdin;
-	int			f_stdout;
 	int				exit_code;
 	int				pipes;
 	int				infile;
@@ -154,7 +150,7 @@ void print_tokens(t_token *head);
 void print_list(t_list *head);
 
 //signal.c
-void	handle_signal_in_out(t_data *data);
+void	signals(void);
 // exec.c
 int					exec(t_data *minishell);
 void					find_and_exec(t_data *minishell, char **env);
@@ -163,7 +159,6 @@ int					pipe_count(t_data *minishell);
 
 //here_doc.c
 int		here_doc(t_data *data, char *word);
-// void		is_here_doc(t_data *minishell, char **env, int read, int write);
 
 // childs.c
 void					only_child(t_data *minishell, char **env);
@@ -255,8 +250,5 @@ int				unset(t_data *minishell);
 
 //data_check.c
 int				check_pipe_red_herdoc(t_data *data);
-
-//heredoc.c
-int ft_here_doc(t_data *data, char *word, char **str);
 
 #endif

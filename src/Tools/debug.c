@@ -1,12 +1,17 @@
 #include "../../include/minishell.h"
 
-void print_tokens(t_token *head) {
-    if (head == NULL) return;
-    t_token *temp = head;
-    do {
-        printf("Token: %s, Type: %d\n", temp->str, temp->type);
-        temp = temp->next;
-    } while (temp != head);
+void	print_tokens(t_token *head)
+{
+	t_token	*temp;
+
+	if (head == NULL)
+		return ;
+	temp = head;
+	while (temp != head)
+	{
+		printf("Token: %s, Type: %d\n", temp->str, temp->type);
+		temp = temp->next;
+	}
 }
 
 void	print_token(t_token *token)
@@ -19,7 +24,7 @@ void	print_token(t_token *token)
 		printf("Type : %d, [%s]\n", tmp->type, tmp->str);
 		tmp = tmp->next;
 	}
-	printf("Type : %d, [%s]\n",  tmp->type, tmp->str);
+	printf("Type : %d, [%s]\n", tmp->type, tmp->str);
 }
 
 void	print_tab(char **tab)
@@ -50,8 +55,7 @@ void	print_cmd(t_cmd *cmd)
 	tmp = cmd;
 	while (tmp->next != cmd)
 	{
-		printf("Skip -> %d, cmd : ",
-		tmp->skip_cmd);
+		printf("Skip -> %d, cmd : ", tmp->skip_cmd);
 		print_tab(tmp->cmd_param);
 		printf("\n");
 		tmp = tmp->next;
@@ -60,11 +64,14 @@ void	print_cmd(t_cmd *cmd)
 	print_tab(tmp->cmd_param);
 	printf("\n");
 }
-void print_list(t_list *head) {
-    if (head == NULL) return;
-    t_list *temp = head;
-    do {
-        printf("List element: %s\n", temp->str);
-        temp = temp->next;
-    } while (temp != head);
+void	print_list(t_list *head)
+{
+	if (head == NULL)
+		return ;
+	t_list *temp = head;
+	do
+	{
+		printf("List element: %s\n", temp->str);
+		temp = temp->next;
+	} while (temp != head);
 }

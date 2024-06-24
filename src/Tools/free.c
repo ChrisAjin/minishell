@@ -45,8 +45,8 @@ void	free_all(t_data *data, char *err, int ext)
 		close(data->pip[1]);
 	if (err)
 		print_error(err);
-	if (!access(".heredoc.tmp", F_OK))
-		unlink(".heredoc.tmp");
+	// if (!access(".heredoc.tmp", F_OK))
+	// 	unlink(".heredoc.tmp");
 	if (ext != -1)
 		exit(ext);
 }
