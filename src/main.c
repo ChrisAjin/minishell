@@ -6,7 +6,7 @@
 /*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 16:44:44 by cassassa          #+#    #+#             */
-/*   Updated: 2024/06/24 16:02:38 by cassassa         ###   ########.fr       */
+/*   Updated: 2024/06/24 18:59:29 by cassassa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	init_data(t_data *data, int argc, char **argv)
 	data->pip[1] = -1;
 	data->temp_fd = -1;
 	g_signal_pid = 0;
-	signals();
+	//signals();
 }
 bool	empty_line(char *line)
 {
@@ -82,7 +82,6 @@ bool	parseline(t_data *data, char *line)
 		free(line);
 		free_all(data, ERR_MALLOC, EXT_MALLOC);
 	}
-	//add_root(&data->token, ft_strdup("new_root"), 0);
 	free(line);
 	//append_list(&data->env, ft_strdup("NEW_ENV"));
 	// print_list(data->env);
@@ -97,14 +96,14 @@ bool	parseline(t_data *data, char *line)
 	 {
 		return (false);
 	 }
-
+	add_root(&data->token, ft_strdup("new_root"), 0);
 	if (!data->token || !create_list_cmd(data))
 	{
 		free_token(&data->token);
 		free_cmd(&data->cmd);
 		return (false);
 	}
-	 print_cmd(data->cmd);
+	print_cmd(data->cmd);
 	return (check_pipe(data));
 }
 
