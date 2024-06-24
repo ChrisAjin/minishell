@@ -6,7 +6,7 @@
 /*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 16:45:40 by cassassa          #+#    #+#             */
-/*   Updated: 2024/06/23 20:16:25 by cassassa         ###   ########.fr       */
+/*   Updated: 2024/06/24 13:58:48 by cassassa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,8 +154,7 @@ void print_tokens(t_token *head);
 void print_list(t_list *head);
 
 //signal.c
-//void	handle_signal_in_out(t_data *data);
-
+void	handle_signal_in_out(t_data *data);
 // exec.c
 int					exec(t_data *minishell);
 void					find_and_exec(t_data *minishell, char **env);

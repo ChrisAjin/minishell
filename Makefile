@@ -28,7 +28,7 @@ WHITE		= \033[0;97m
 FILES	=	main cmd_param create_cmd create_token \
 			data_check dollar_env dollar_replace quote \
 			array_utils debug free list_cmd list_token list_utils \
-			mini_utils add_list fd_check here_doc\
+			mini_utils add_list fd_check here_doc signal\
 
 
 SRCS	=	$(addprefix $(SRC_DIR), $(addsuffix .c, $(FILES)))
