@@ -6,7 +6,7 @@
 /*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 16:44:44 by cassassa          #+#    #+#             */
-/*   Updated: 2024/06/24 18:59:29 by cassassa         ###   ########.fr       */
+/*   Updated: 2024/06/25 13:39:09 by cassassa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	init_data(t_data *data, int argc, char **argv)
 	data->pip[1] = -1;
 	data->temp_fd = -1;
 	g_signal_pid = 0;
-	//signals();
+	signals();
 }
 bool	empty_line(char *line)
 {
@@ -118,7 +118,7 @@ int	main(int argc, char **argv, char **env)
 	init_data(&data, argc, argv);
 	if (!make_env(&data, env))
 		free_all(&data, ERR_MALLOC, EXT_MALLOC);
-	add_root_list(&data.env, ft_strdup("1NEW_ENV"));
+	add_root_list(&data.env, "1NEW_ENV");
 	while (1)
 	{
 		line = readline("minishell> ");
