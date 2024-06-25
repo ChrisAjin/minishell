@@ -6,7 +6,7 @@
 /*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 14:38:10 by inbennou          #+#    #+#             */
-/*   Updated: 2024/06/22 13:51:47 by cassassa         ###   ########.fr       */
+/*   Updated: 2024/06/24 15:52:32 by cassassa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ int					ft_tolower(int c);
 char				*ft_strchr(const char *str, int c);
 char				*ft_strrchr(const char *str, int c);
 int					ft_strncmp(const char *s1, const char *s2, unsigned int n);
+int					ft_strncmpp(const char *s1, const char *s2, size_t n);
 int					ft_strcmp(const char *s1, const char *s2);
 void				*ft_memchr(const void *str, int to_find, size_t n);
 int					ft_memcmp(const void *s1, const void *s2, size_t n);

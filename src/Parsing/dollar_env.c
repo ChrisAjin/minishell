@@ -35,7 +35,7 @@ int	exist_in_env(char *line, int *i, t_data *data)
 	len = len_list(tmp);
 	while (len--)
 	{
-		if (ft_strncmp(tmp->str, &line[*i + 1], \
+		if (ft_strncmpp(tmp->str, &line[*i + 1], \
 			end_word(&line[*i + 1], tmp->str)) == 0)
 		{
 			*i += ft_strlen(tmp->str) - \

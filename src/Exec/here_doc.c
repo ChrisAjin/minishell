@@ -6,7 +6,7 @@
 /*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 15:57:20 by inbennou          #+#    #+#             */
-/*   Updated: 2024/06/23 21:05:41 by cassassa         ###   ########.fr       */
+/*   Updated: 2024/06/24 18:33:33 by cassassa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ static bool	read_in_stdin(t_data *data, char *word)
         }
         if (!replace_dollar(&buf, data))
         {
+			free(final_result);
             free_all(data, ERR_MALLOC, EXT_MALLOC);
             return false;
         }

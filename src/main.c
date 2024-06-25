@@ -6,11 +6,13 @@
 /*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 16:44:44 by cassassa          #+#    #+#             */
-/*   Updated: 2024/06/22 19:03:31 by cassassa         ###   ########.fr       */
+/*   Updated: 2024/06/25 13:39:09 by cassassa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+pid_t g_signal_pid;
 
 int	make_env(t_data *data, char **env)
 {
@@ -20,7 +22,6 @@ int	make_env(t_data *data, char **env)
 
 	i = -1;
 	list = NULL;
-	//cas ou il y a une list vide d'env
 	if (!(*env))
 		return (make_env2(data));
 	while (env[++i])
@@ -50,8 +51,8 @@ void	init_data(t_data *data, int argc, char **argv)
 	data-> pip[0]= -1;
 	data->pip[1] = -1;
 	data->temp_fd = -1;
-	/*init signal a add*/
-	//signals();
+	g_signal_pid = 0;
+	signals();
 }
 bool	empty_line(char *line)
 {
@@ -81,7 +82,6 @@ bool	parseline(t_data *data, char *line)
 		free(line);
 		free_all(data, ERR_MALLOC, EXT_MALLOC);
 	}
-	//add_root(&data->token, ft_strdup("new_root"), 0);
 	free(line);
 	//append_list(&data->env, ft_strdup("NEW_ENV"));
 	// print_list(data->env);
@@ -94,17 +94,16 @@ bool	parseline(t_data *data, char *line)
 	}
 	 if (check_pipe_red_herdoc(data))
 	 {
-	 	//free_all(data, ERR_MALLOC, EXT_MALLOC);
 		return (false);
 	 }
-
+	add_root(&data->token, ft_strdup("new_root"), 0);
 	if (!data->token || !create_list_cmd(data))
 	{
 		free_token(&data->token);
 		free_cmd(&data->cmd);
 		return (false);
 	}
-	 print_cmd(data->cmd);
+	print_cmd(data->cmd);
 	return (check_pipe(data));
 }
 
@@ -114,16 +113,14 @@ int	main(int argc, char **argv, char **env)
 	t_data	data;
 	char	*line;
 
-	/*init data*/
 	if (!isatty(0))
 		return (printf("tty required!!\n"), 1);
 	init_data(&data, argc, argv);
 	if (!make_env(&data, env))
 		free_all(&data, ERR_MALLOC, EXT_MALLOC);
-	add_root_list(&data.env, ft_strdup("1NEW_ENV"));
+	add_root_list(&data.env, "1NEW_ENV");
 	while (1)
 	{
-		//handle_signal_in_out(&data);
 		line = readline("minishell> ");
 		if (!line)
 			free_all(&data, "exit\n", data.exit_code);
@@ -132,7 +129,7 @@ int	main(int argc, char **argv, char **env)
 		add_history(line);
 		if (!parseline(&data, line))
 			continue ;
-		//exec(&data);
+		exec(&data);
 		free_cmd(&data.cmd);
 		free_token(&data.token);
 	}
