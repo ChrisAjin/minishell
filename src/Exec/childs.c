@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   childs.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 14:13:14 by inbennou          #+#    #+#             */
-/*   Updated: 2024/06/25 16:11:10 by cassassa         ###   ########.fr       */
+/*   Updated: 2024/06/25 16:46:34 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,12 @@ void	exec_here_doc(t_data *minishell, char **env)
 	}
 	else
 	{
+		ft_putstr_fd(minishell->token->str, minishell->pip[1]);
+		// write(min)
 		if (dup2(minishell->pip[0], STDIN_FILENO) < 0)
 			dup2_error(minishell, env);
 		// if (dup2(minishell->pip[1], STDOUT_FILENO) < 0)
 		// 	dup2_error(minishell, env);
-		ft_putstr_fd(minishell->token->str, minishell->pip[1]);
 		close_all(minishell);
 		if (is_builtin(minishell->cmd->cmd_param[0]))
 			exec_builtin(minishell, env);
