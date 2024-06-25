@@ -6,7 +6,7 @@
 /*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 15:57:20 by inbennou          #+#    #+#             */
-/*   Updated: 2024/06/24 18:33:33 by cassassa         ###   ########.fr       */
+/*   Updated: 2024/06/25 15:46:53 by cassassa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,10 @@ static bool	read_in_stdin(t_data *data, char *word)
         free(buf);
     }
     free(buf);
-    word = final_result;
-	printf("word :\n%s\n", word);
+    free(word);
+    word = ft_strdup(final_result);
+    free(final_result);
+	// printf("word :\n%s\n", word);
     return true;
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_child.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 15:34:23 by inbennou          #+#    #+#             */
-/*   Updated: 2024/06/20 17:15:21 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/25 15:03:45 by cassassa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ int	one_cmd(t_data *minishell, char **env)
 	if (is_parent_builtin(minishell->cmd->cmd_param[0]))
 		return (parent_builtin(minishell, env));
 	pid = fork();
+	g_signal_pid = pid;
 	if (pid < 0)
 	{
 		perror("fork error");
@@ -49,8 +50,12 @@ int	exec_first_child(t_data *minishell, char **env)
 	int	pid;
 
 	if (pipe(minishell->pip) < 0)
-		perror("pipe error");
+	{
+		perror("pipe error"); // quitter si pipe error ?
+		return (-1);
+	}
 	pid = fork();
+	g_signal_pid = pid;
 	if (pid < 0)
 	{
 		perror("fork error");
@@ -68,6 +73,7 @@ int	exec_middle_childs(t_data *minishell, char **env)
 	if (renew_pipe(minishell) < 0)
 		return (-1);
 	pid = fork();
+	g_signal_pid = pid;
 	if (pid < 0)
 	{
 		perror("fork error");
@@ -83,6 +89,7 @@ int	exec_last_child(t_data *minishell, char **env)
 	int	pid;
 
 	pid = fork();
+	g_signal_pid = pid;
 	if (pid < 0)
 	{
 		perror("fork error");

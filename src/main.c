@@ -6,7 +6,7 @@
 /*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 16:44:44 by cassassa          #+#    #+#             */
-/*   Updated: 2024/06/25 13:39:09 by cassassa         ###   ########.fr       */
+/*   Updated: 2024/06/25 15:51:43 by cassassa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ bool	parseline(t_data *data, char *line)
 		free_cmd(&data->cmd);
 		return (false);
 	}
-	print_cmd(data->cmd);
+	// print_cmd(data->cmd);
 	return (check_pipe(data));
 }
 
@@ -129,6 +129,12 @@ int	main(int argc, char **argv, char **env)
 		add_history(line);
 		if (!parseline(&data, line))
 			continue ;
+		// while (data.token->type != 0)
+		// {
+		// 	if (data.token->type == HEREDOC)
+		// 		here_doc(&data, data.token->next->str);
+		// 	data.token = data.token->next;
+		// }
 		exec(&data);
 		free_cmd(&data.cmd);
 		free_token(&data.token);

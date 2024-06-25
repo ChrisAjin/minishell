@@ -6,7 +6,7 @@
 /*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 14:01:42 by inbennou          #+#    #+#             */
-/*   Updated: 2024/06/24 18:39:03 by cassassa         ###   ########.fr       */
+/*   Updated: 2024/06/25 15:15:04 by cassassa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	find_and_exec(t_data *minishell, char **env)
 		if (!cur_path)
 		{
 			free(paths);
-			ft_putendl_fd(ERR_MALLOC, 2);
+			ft_putendl_fd("malloc error find and exec", 2);
 			return ;
 		}
 		if (access(cur_path, F_OK | X_OK) >= 0)
