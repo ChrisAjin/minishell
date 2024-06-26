@@ -6,7 +6,7 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 15:20:55 by inbennou          #+#    #+#             */
-/*   Updated: 2024/06/19 15:38:11 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/26 17:14:23 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,5 +43,15 @@ void	dup2_error(t_data *minishell, char **env)
 	free_all(minishell, NULL, -1);
 	if (env)
 		free(env);
+	exit(1);
+}
+
+void	pipe_error(t_data *minishell, char **env)
+{
+	perror("pipe error");
+	close_fds();
+	close_all(minishell);
+	free(env);
+	free_all(minishell, NULL, -1);
 	exit(1);
 }

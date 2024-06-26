@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 14:38:10 by inbennou          #+#    #+#             */
-/*   Updated: 2024/06/24 15:52:32 by cassassa         ###   ########.fr       */
+/*   Updated: 2024/06/26 17:08:36 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ char				*ft_itoa(int n);
 char				*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 void				ft_striteri(char *s, void (*f)(unsigned int, char *));
 void				ft_putchar_fd(char c, int fd);
-void				ft_putstr_fd(char *s, int fd);
+int				ft_putstr_fd(char *s, int fd);
 void				ft_putendl_fd(char *s, int fd);
 void				ft_putnbr_fd(int n, int fd);
 void				print_tab(char **tab);

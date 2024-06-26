@@ -6,7 +6,7 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 15:17:21 by inbennou          #+#    #+#             */
-/*   Updated: 2024/06/19 15:18:13 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/26 15:16:59 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,5 +36,11 @@ void	close_fds(void)
 {
 	close(0);
 	close(1);
-	close(2);
+}
+
+void	clean_exit(t_data *minishell, char **env, int ret)
+{
+	close_all(minishell);
+	close_fds();
+	free_and_exit(minishell, env, ret);
 }

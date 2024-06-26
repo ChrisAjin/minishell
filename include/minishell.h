@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 16:45:40 by cassassa          #+#    #+#             */
-/*   Updated: 2024/06/24 15:46:23 by cassassa         ###   ########.fr       */
+/*   Updated: 2024/06/26 17:21:31 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,7 +174,8 @@ void				no_such_file(t_data *minishell, char **env);
 // errors2.c
 int					child_fail(t_data *minishell, char **env);
 void					exec_fail(t_data *minishell, char **paths, char **env, char *cur_path);
-void				dup2_error(t_data *minishell, char **env);
+void					dup2_error(t_data *minishell, char **env);
+void					pipe_error(t_data *minishell, char **env);
 
 // exec_child.c
 int					exec_one_cmd(t_data *minishell, char **env);
@@ -182,6 +183,13 @@ int					one_cmd(t_data *minishell, char **env);
 int					exec_first_child(t_data *minishell, char **env);
 int					exec_middle_childs(t_data *minishell, char **env);
 int					exec_last_child(t_data *minishell, char **env);
+
+// exec_hd.c
+void					exec_last_hd(t_data *minishell, char **env);
+void					exec_hd(t_data *minishell, char **env);
+int					write_hd(t_data *minishell, int *new_pip);
+void					close_all_new(t_data *minishell, int *new_pip);
+void					do_exec(t_data *minishell, char **env);
 
 // exec_utils.c
 char				**split_path(char **envp);
@@ -194,6 +202,7 @@ void					skip(t_data **minishell);
 void					free_tab(char **tab);
 void					close_fds(void);
 void					init_fds(t_data *minishell);
+void				clean_exit(t_data *minishell, char **env, int ret);
 
 // open
 int					open_inf_outf(t_data *minishell);

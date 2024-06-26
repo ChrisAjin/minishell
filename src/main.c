@@ -6,7 +6,7 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 16:44:44 by cassassa          #+#    #+#             */
-/*   Updated: 2024/06/25 16:24:12 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/26 15:38:27 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	init_data(t_data *data, int argc, char **argv)
 	data->pip[1] = -1;
 	data->temp_fd = -1;
 	g_signal_pid = 0;
-	signals();
+	// signals();
 }
 bool	empty_line(char *line)
 {
@@ -103,7 +103,7 @@ bool	parseline(t_data *data, char *line)
 		free_cmd(&data->cmd);
 		return (false);
 	}
-	print_cmd(data->cmd);
+	// print_cmd(data->cmd);
 	return (check_pipe(data));
 }
 

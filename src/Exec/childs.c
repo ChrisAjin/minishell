@@ -6,62 +6,11 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 14:13:14 by inbennou          #+#    #+#             */
-/*   Updated: 2024/06/25 16:46:34 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/26 17:21:15 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	exec_here_doc(t_data *minishell, char **env)
-{
-	open_inf_outf(minishell);
-	if (minishell->cmd->cmd_param[0] == NULL)
-	{
-		close_all(minishell);
-		free(env);
-		free_all(minishell, NULL, -1);
-		exit(0);
-	}
-	if (pipe(minishell->pip) < 0)
-	{
-		perror("pipe error");
-		exit(1);
-	}
-	while (minishell->token->type != HEREDOC)
-		minishell->token = minishell->token->next;
-	minishell->token = minishell->token->next;
-	if (minishell->outfile > 0)
-	{
-		ft_putstr_fd(minishell->token->str, minishell->pip[1]);
-		if (dup2(minishell->pip[0], STDIN_FILENO) < 0)
-			dup2_error(minishell, env);
-		if (dup2(minishell->outfile, STDOUT_FILENO) < 0) // seule diff avec le else
-			dup2_error(minishell, env);
-		close_all(minishell);
-		if (is_builtin(minishell->cmd->cmd_param[0]))
-			exec_builtin(minishell, env);
-		if (ft_strchr(minishell->cmd->cmd_param[0], '/') != 0)
-			exec_path(minishell, env);
-		find_and_exec(minishell, env);
-	}
-	else
-	{
-		ft_putstr_fd(minishell->token->str, minishell->pip[1]);
-		// write(min)
-		if (dup2(minishell->pip[0], STDIN_FILENO) < 0)
-			dup2_error(minishell, env);
-		// if (dup2(minishell->pip[1], STDOUT_FILENO) < 0)
-		// 	dup2_error(minishell, env);
-		close_all(minishell);
-		if (is_builtin(minishell->cmd->cmd_param[0]))
-			exec_builtin(minishell, env);
-		if (ft_strchr(minishell->cmd->cmd_param[0], '/') != 0)
-			exec_path(minishell, env);
-		// dprintf(2, "oui\n");
-		find_and_exec(minishell, env);
-	}
-	exit(1);
-}
 
 // s'assurer qu'avec here doc l'infile sert a r
 // tester voir s'il n'y a pas de pb de pipe ou s'il faut renew_pipe
@@ -69,6 +18,7 @@ void	exec_here_doc(t_data *minishell, char **env)
 // {
 // 	// if (minishell->cmd->skip_cmd == true)
 // 	// {
+		// close_fds();
 // 	// 	free(env);
 // 	// 	free_all(minishell, NULL, -1);
 // 	// 	exit(0);
@@ -100,8 +50,8 @@ int	is_here_doc(t_data *minishell)
 {
 	t_token	*temp;
 
-	temp = minishell->token;
-	while (temp->type != PIPE || temp->type != 0)
+	temp = minishell->token->next;
+	while (temp->type != PIPE && temp->type != 0)
 	{
 		if (temp->type == HEREDOC)
 			return (1);
@@ -113,7 +63,7 @@ int	is_here_doc(t_data *minishell)
 void	only_child(t_data *minishell, char **env)
 {
 	if (is_here_doc(minishell))
-		exec_here_doc(minishell, env);
+		exec_last_hd(minishell, env);
 	open_inf_outf(minishell);
 	if (minishell->infile > 0)
 	{
@@ -126,12 +76,8 @@ void	only_child(t_data *minishell, char **env)
 			dup2_error(minishell, env);
 	}
 	close_all(minishell);
-	if (minishell->cmd->skip_cmd == true)
-	{
-		free(env);
-		free_all(minishell, NULL, -1);
-		exit(0);
-	}
+	if (minishell->cmd->cmd_param[0] == NULL)
+		clean_exit(minishell, env, 0);
 	if (is_builtin(minishell->cmd->cmd_param[0]) == 1)
 		exec_builtin(minishell, env);
 	if (ft_strchr(minishell->cmd->cmd_param[0], '/') != 0) // ou if access == 0
@@ -141,7 +87,8 @@ void	only_child(t_data *minishell, char **env)
 
 void	first_child(t_data *minishell, char **env)
 {
-	// if here_doc
+	if (is_here_doc(minishell))
+		exec_hd(minishell, env);
 	open_inf_outf(minishell);
 	if (minishell->infile > 0)
 	{
@@ -159,12 +106,8 @@ void	first_child(t_data *minishell, char **env)
 			dup2_error(minishell, env);
 	}
 	close_all(minishell);
-	if (minishell->cmd->skip_cmd == true)
-	{
-		free(env);
-		free_all(minishell, NULL, -1);
-		exit(0);
-	}
+	if (minishell->cmd->cmd_param[0] == NULL)
+		clean_exit(minishell, env, 0);
 	if (is_builtin(minishell->cmd->cmd_param[0]) == 1)
 		exec_builtin(minishell, env);
 	if (ft_strchr(minishell->cmd->cmd_param[0], '/') != 0) // ou if access == 0
@@ -172,10 +115,11 @@ void	first_child(t_data *minishell, char **env)
 	find_and_exec(minishell, env);
 }
 
-// middle child avec temp fd et child_nbr
+// middle child avec temp fd
 void	middle_child(t_data *minishell, char **env)
 {
-	// if here doc
+	if (is_here_doc(minishell))
+		exec_hd(minishell, env);
 	open_inf_outf(minishell);
 	if (minishell->infile > 0)
 	{
@@ -199,11 +143,7 @@ void	middle_child(t_data *minishell, char **env)
 	}
 	close_all(minishell);
 	if (minishell->cmd->skip_cmd == true)
-	{
-		free(env);
-		free_all(minishell, NULL, -1);
-		exit(0);
-	}
+		clean_exit(minishell, env, 0);
 	if (is_builtin(minishell->cmd->cmd_param[0]) == 1)
 		exec_builtin(minishell, env);
 	if (ft_strchr(minishell->cmd->cmd_param[0], '/') != 0) // ou if access == 0
@@ -213,7 +153,8 @@ void	middle_child(t_data *minishell, char **env)
 
 void	last_child(t_data *minishell, char **env)
 {
-	// if here_doc
+	if (is_here_doc(minishell))
+		exec_last_hd(minishell, env);
 	open_inf_outf(minishell);
 	if (minishell->infile > 0)
 	{
@@ -232,11 +173,7 @@ void	last_child(t_data *minishell, char **env)
 	}
 	close_all(minishell);
 	if (minishell->cmd->skip_cmd == true)
-	{
-		free(env);
-		free_all(minishell, NULL, -1);
-		exit(0);
-	}
+		clean_exit(minishell, env, 0);
 	if (is_builtin(minishell->cmd->cmd_param[0]) == 1)
 		exec_builtin(minishell, env);
 	if (ft_strchr(minishell->cmd->cmd_param[0], '/') != 0) // ou if access == 0
