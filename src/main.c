@@ -6,7 +6,7 @@
 /*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 16:44:44 by cassassa          #+#    #+#             */
-/*   Updated: 2024/06/27 11:55:15 by cassassa         ###   ########.fr       */
+/*   Updated: 2024/06/27 11:58:35 by cassassa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,7 @@ int	main(int argc, char **argv, char **env)
 		// 		here_doc(&data, data.token->next->str);
 		// 	data.token = data.token->next;
 		// }
-		exec(&data);
+		//exec(&data);
 		free_cmd(&data.cmd);
 		free_token(&data.token);
 	}
