@@ -6,7 +6,7 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 15:39:02 by inbennou          #+#    #+#             */
-/*   Updated: 2024/06/26 17:21:03 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/27 19:03:09 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,7 @@ void	exec_last_hd(t_data *minishell, char **env)
 	init_fds(minishell);
 	if (pipe(minishell->pip) < 0)
 		pipe_error(minishell, env);
-	while (minishell->token->type != HEREDOC)
-		minishell->token = minishell->token->next;
-	minishell->token = minishell->token->next;
-	ft_putstr_fd(minishell->token->str, minishell->pip[1]);
+	ft_putstr_fd(minishell->token->here_doc, minishell->pip[1]);
 	if (dup2(minishell->pip[0], STDIN_FILENO) < 0)
 		dup2_error(minishell, env);
 	if (minishell->outfile > 0)
@@ -66,10 +63,7 @@ void	exec_hd(t_data *minishell, char **env)
 
 int	write_hd(t_data *minishell, int *new_pip)
 {
-	while (minishell->token->type != HEREDOC)
-		minishell->token = minishell->token->next;
-	minishell->token = minishell->token->next;
-	if (ft_putstr_fd(minishell->token->str, new_pip[1]))
+	if (ft_putstr_fd(minishell->token->here_doc, new_pip[1]))
 		return (1);
 	return (0);
 }

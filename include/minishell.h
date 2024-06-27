@@ -6,7 +6,7 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 16:45:40 by cassassa          #+#    #+#             */
-/*   Updated: 2024/06/27 16:56:33 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/27 18:47:56 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ typedef struct s_cmd
 typedef struct s_token
 {
 	char			*str;
+	char			*here_doc;
 	int				type;
 	struct s_token	*prev;
 	struct s_token	*next;
@@ -177,6 +178,7 @@ int					child_fail(t_data *minishell, char **env);
 void					exec_fail(t_data *minishell, char **paths, char **env, char *cur_path);
 void					dup2_error(t_data *minishell, char **env);
 void					pipe_error(t_data *minishell, char **env);
+void	path_fail(t_data *minishell, char **env, char *cmd);
 
 // exec_child.c
 int					exec_one_cmd(t_data *minishell, char **env);

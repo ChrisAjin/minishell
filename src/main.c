@@ -6,7 +6,7 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 16:44:44 by cassassa          #+#    #+#             */
-/*   Updated: 2024/06/27 14:22:26 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/27 18:15:38 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,6 @@ bool	parseline(t_data *data, char *line)
 	// print_cmd(data->cmd);
 	return (check_pipe(data));
 }
-
 
 int	main(int argc, char **argv, char **env)
 {
