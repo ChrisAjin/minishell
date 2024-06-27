@@ -12,7 +12,7 @@ static bool	get_in(t_data *data, t_token *tmp, t_cmd *cmd)
 	{
 		if (tmp == tmp->next || tmp->next->type <= 5)
 			return (print_error_token(tmp, data));
-		here_doc(data, tmp->next->str);
+		here_doc(data, data->token->next->str);
 	}
 	return (true);
 }

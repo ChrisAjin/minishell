@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   errors2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 15:20:55 by inbennou          #+#    #+#             */
-/*   Updated: 2024/06/26 17:14:23 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/27 12:08:01 by cassassa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ void	dup2_error(t_data *minishell, char **env)
 
 void	pipe_error(t_data *minishell, char **env)
 {
+	(void)env;
 	perror("pipe error");
 	close_fds();
 	close_all(minishell);

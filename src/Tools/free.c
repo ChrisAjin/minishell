@@ -37,6 +37,8 @@ void	free_all(t_data *data, char *err, int ext)
 		free_cmd(&data->cmd);
 	if (data->token)
 		free_token(&data->token);
+	if(data->token->here_doc)
+		free_list(&data->token->here_doc);
 	if (data->env)
 		free_list(&data->env);
 	if (data->pip[0] && data->pip[0] != -1)

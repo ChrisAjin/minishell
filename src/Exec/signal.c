@@ -6,7 +6,7 @@
 /*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 18:03:01 by cassassa          #+#    #+#             */
-/*   Updated: 2024/06/27 11:33:15 by cassassa         ###   ########.fr       */
+/*   Updated: 2024/06/27 14:12:18 by cassassa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void sig_handler(int sig)
 {
 	if (sig == SIGINT)
 	{
-		printf("\n");
+		printf("ok\n");
 		rl_on_new_line();
 		rl_replace_line("",0);
 		rl_redisplay();

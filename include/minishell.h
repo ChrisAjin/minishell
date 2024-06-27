@@ -6,7 +6,7 @@
 /*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 16:45:40 by cassassa          #+#    #+#             */
-/*   Updated: 2024/06/27 11:33:49 by cassassa         ###   ########.fr       */
+/*   Updated: 2024/06/27 16:33:54 by cassassa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ typedef struct s_cmd
 typedef struct s_token
 {
 	char			*str;
+	struct s_list			*here_doc;
 	int				type;
 	struct s_token	*prev;
 	struct s_token	*next;

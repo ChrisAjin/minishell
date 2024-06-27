@@ -11,6 +11,7 @@ static int	token_new_elem(t_token **new, char *str, int type)
 		return (0);
 	}
 	(*new)->str = str;
+	(*new)->here_doc = NULL;
 	(*new)->type = type;
 	(*new)->next = NULL;
 	(*new)->prev = NULL;

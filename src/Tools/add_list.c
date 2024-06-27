@@ -1,7 +1,8 @@
 #include "../../include/minishell.h"
 t_list* new_list_elem(char *str) {
     t_list *new_node = (t_list *)malloc(sizeof(t_list));
-    if (!new_node) return NULL;
+    if (!new_node)
+        return NULL;
     new_node->str = ft_strdup(str); // Assurez-vous que 'str' est dupliqué ailleurs si nécessaire
     new_node->prev = new_node;
     new_node->next = new_node;
@@ -29,9 +30,9 @@ void append_list(t_list **list, char *str) {
     if (!(new_node = new_list_elem(str))) return;
     if (*list == NULL) {
         *list = new_node;
-    } else 
+    } else
     {
-	
+
         t_list *last = (*list)->prev;
         new_node->prev = last;
         new_node->next = *list;

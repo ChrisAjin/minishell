@@ -6,7 +6,7 @@
 /*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 16:44:44 by cassassa          #+#    #+#             */
-/*   Updated: 2024/06/27 11:58:35 by cassassa         ###   ########.fr       */
+/*   Updated: 2024/06/27 16:52:18 by cassassa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ void	init_data(t_data *data, int argc, char **argv)
 	signal(SIGINT, &sig_handler);
 	signal(SIGQUIT, &sig_handler);
 
+
 }
 bool	empty_line(char *line)
 {
@@ -73,6 +74,7 @@ bool	empty_line(char *line)
 
 bool	parseline(t_data *data, char *line)
 {
+
 	if (open_quote(data, line))
 	{
 		free(line);
@@ -99,13 +101,13 @@ bool	parseline(t_data *data, char *line)
 	 {
 		return (false);
 	 }
-
 	if (!data->token || !create_list_cmd(data))
 	{
 		free_token(&data->token);
 		free_cmd(&data->cmd);
 		return (false);
 	}
+
 	// print_cmd(data->cmd);
 	return (check_pipe(data));
 }
@@ -140,7 +142,8 @@ int	main(int argc, char **argv, char **env)
 		// 		here_doc(&data, data.token->next->str);
 		// 	data.token = data.token->next;
 		// }
-		//exec(&data);
+		exec(&data);
+
 		free_cmd(&data.cmd);
 		free_token(&data.token);
 	}

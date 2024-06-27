@@ -106,6 +106,7 @@ int	replace_dollar(char **line, t_data *data)
 		 	return (1);
 	}
 	free(*line);
+	*line  = NULL;
 	*line = str;
 	return (1);
 }

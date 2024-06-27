@@ -6,7 +6,7 @@
 /*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 15:57:20 by inbennou          #+#    #+#             */
-/*   Updated: 2024/06/27 11:55:21 by cassassa         ###   ########.fr       */
+/*   Updated: 2024/06/27 16:39:06 by cassassa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,14 +74,78 @@
 // }
 
 
+char	*ft_strnjoin(char  *s1, char  *s2)
+{
+	int		i;
+	int		j;
+	char	*str;
+
+	if (!s1 || !s2)
+		return (NULL);
+	str = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
+	if (!str)
+		return (NULL);
+	i = -1;
+	j = -1;
+	while (s1[++j])
+		str[++i] = s1[j];
+	j = -1;
+	while (s2[++j])
+		str[++i] = s2[j];
+	str[i + 1] = '\0';
+	//free((char *)s1);
+	return (str);
+}
+// static bool	read_in_stdin(t_data *data, char *word)
+// {
+//     char	*buf;
+
+//     // printf("HERE:%s\n", data->token->here_doc);
+//     // data->token->here_doc = NULL;
+
+//     while (1)
+//     {
+//         buf = readline("> ");
+//         if (!buf)
+//         {
+//             print_error("warning: here-document delimited by end-of-file ");
+//             print_error("(wanted '");
+//             print_error(word);
+//             print_error("')\n");
+//             break ;
+//         }
+//         if (!ft_strncmp(word, buf, INT_MAX))
+//         {
+//             break ;
+//         }
+//         // if (!replace_dollar(&buf, data))
+//         // {
+// 		// 	//free(data->token->here_doc);
+//         //     free_all(data, ERR_MALLOC, EXT_MALLOC);
+//         //     return false;
+//         // }
+
+//         if(data->token->here_doc == NULL)
+//         {
+//             data->token->here_doc = ft_strdup(buf);
+//             // if (!data->token->here_doc)
+//         }
+//         // else
+//         // {
+//         //     data->token->here_doc = ft_strjoin(data->token->here_doc, buf);
+//         //     free(buf);
+//         // }
+//     }
+//     free(buf);
+//     free(data->token->here_doc);
+//     return true;
+// }
 static bool	read_in_stdin(t_data *data, char *word)
 {
     char	*buf;
-    char	*temp;
-    char	*final_result = ft_strdup("ls");
 
-    if (!final_result)
-        return false;
+    // printf("HERE:%s\n", data->token->here_doc);
+    // data->token->here_doc = NULL;
 
     while (1)
     {
@@ -98,32 +162,16 @@ static bool	read_in_stdin(t_data *data, char *word)
         {
             break ;
         }
-        if (!replace_dollar(&buf, data))
-        {
-			free(final_result);
-            free_all(data, ERR_MALLOC, EXT_MALLOC);
-            return false;
-        }
-        temp = ft_strjoin(final_result, buf);
-        if (!temp)
-        {
-            free(buf);
-            return false;
-        }
-        final_result = ft_strjoin(temp, "\n");
-        free(temp);
-        if (!final_result)
-        {
-            free(buf);
-            return false;
-        }
+        // if (!replace_dollar(&buf, data))
+        // {
+		// 	//free(data->token->here_doc);
+        //     free_all(data, ERR_MALLOC, EXT_MALLOC);
+        //     return false;
+        // }
+        add_root_list(&data->token->here_doc, buf);
         free(buf);
     }
     free(buf);
-    free(word);
-    word = ft_strdup(final_result);
-    free(final_result);
-	// printf("word :\n%s\n", word);
     return true;
 }
 
