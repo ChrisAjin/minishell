@@ -6,7 +6,7 @@
 /*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 15:57:20 by inbennou          #+#    #+#             */
-/*   Updated: 2024/06/27 11:46:08 by cassassa         ###   ########.fr       */
+/*   Updated: 2024/06/27 11:55:21 by cassassa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ static bool	read_in_stdin(t_data *data, char *word)
 {
     char	*buf;
     char	*temp;
-    char	*final_result = ft_strdup(" ");
+    char	*final_result = ft_strdup("ls");
 
     if (!final_result)
         return false;
