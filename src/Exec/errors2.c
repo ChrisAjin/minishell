@@ -6,7 +6,7 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 15:20:55 by inbennou          #+#    #+#             */
-/*   Updated: 2024/06/26 17:14:23 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/27 15:12:01 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,13 @@ void	exec_fail(t_data *minishell, char **paths, char **env, char *cur_path)
 		free(env);
 	if (cur_path)
 		free(cur_path);
-	ft_putstr_fd("Could not exec command.\n", 2); // voir si modifier msg
+	ft_putstr_fd("Could not exec command.\n", 2);
 	close_fds();
 	exit(1);
 }
 
 void	dup2_error(t_data *minishell, char **env)
 {
-	perror("dup2 error"); // retirer msg ou pas
 	close_all(minishell);
 	close_fds();
 	free_all(minishell, NULL, -1);

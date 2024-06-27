@@ -6,7 +6,7 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 16:45:40 by cassassa          #+#    #+#             */
-/*   Updated: 2024/06/26 17:21:31 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/27 16:56:33 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ typedef struct s_data
 	t_token			*token;
 	t_cmd			*cmd;
 	int				exit_code;
+	int				pid;
 	int				pipes;
 	int				infile;
 	int				outfile;
@@ -203,6 +204,7 @@ void					free_tab(char **tab);
 void					close_fds(void);
 void					init_fds(t_data *minishell);
 void				clean_exit(t_data *minishell, char **env, int ret);
+void				middle_dup2(t_data *minishell, char **env);
 
 // open
 int					open_inf_outf(t_data *minishell);
@@ -224,6 +226,8 @@ int					ch_dir_home(t_list *env, char *old_pwd);
 int				add_pwd(char *cur_dir, t_data *minishell);
 int				add_old_pwd(char *old_pwd, t_data *minishell);
 char				*get_home(t_list *env);
+int				check_args(char	**cmd_param);
+int				update_pwd_old(t_data *minishell, char *old_pwd);
 
 // echo
 int				echo(t_data *minishell);
@@ -235,8 +239,9 @@ int				env_cmd(t_data *minishell);
 int				print_lst(t_list *lst);
 
 // exit
-void				exit_shell(t_data *minishell);
+int				exit_shell(t_data *minishell);
 int				only_digit(char *str);
+int				clear_and_exit(t_data *minishell);
 
 // parent_builtin
 int				is_parent_builtin(char *cmd);
@@ -256,6 +261,8 @@ int				has_space(char	*str);
 
 // unset
 int				unset(t_data *minishell);
+int				ft_is_there(const char *str, char c);
+int				unset_var(t_data *minishell, t_list *temp);
 
 //data_check.c
 int				check_pipe_red_herdoc(t_data *data);
