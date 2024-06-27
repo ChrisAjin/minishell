@@ -6,7 +6,7 @@
 /*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 16:45:40 by cassassa          #+#    #+#             */
-/*   Updated: 2024/06/27 09:22:10 by cassassa         ###   ########.fr       */
+/*   Updated: 2024/06/27 11:33:49 by cassassa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@
 # define ERR_MALLOC "error malloc\n"
 # define PATH_MAX        4096
 
-extern pid_t g_signal_pid;
+
 
 typedef struct s_cmd
 {
@@ -82,6 +82,8 @@ typedef struct s_data
 	bool			sq;
 
 }					t_data;
+
+extern t_data g_data;
 // main.c
 int					make_env(t_data *data, char **env);
 // Tools_list.c

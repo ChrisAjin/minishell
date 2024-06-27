@@ -8,11 +8,12 @@ int	is_reder(int var)
 }
 
 int check_reder_tkn(t_token *token) {
-    if (!token) return 0;
+     if (!token)
+        return 0;
 
     t_token *tmp = token;
 
-    do {
+    while (1) {
         if (is_reder(tmp->type) && !tmp->next) {
             ft_putstr_fd("Minishell: syntax error near unexpected token 'newline'\n", 2);
             return 1;
@@ -25,20 +26,24 @@ int check_reder_tkn(t_token *token) {
             return 1;
         }
         tmp = tmp->next;
-    } while (tmp != token);
+        if (tmp == token)
+            break; // Condition de sortie de la boucle
+    }
 
     return 0;
 }
 
 
-int check_pipe_tkn(t_token *token) {
-    if (!token) return 0;
+int check_pipe_tkn(t_token *token)
+{
+    if (!token)
+        return 0;
 
     t_token *ptr = token;
 
-    do {
+    while (1) {
         if (ptr->type == PIPE) {
-            if (!ptr->next || !ptr->prev) {
+            if (!ptr->next || !ptr->prev || strcmp(ptr->prev->str, "new_root") == 0) {
                 ft_putstr_fd("Minishell: syntax error near unexpected token '|'\n", 2);
                 return 1;
             } else if (ptr->next->type == PIPE) {
@@ -47,7 +52,10 @@ int check_pipe_tkn(t_token *token) {
             }
         }
         ptr = ptr->next;
-    } while (ptr != token);
+
+        if (ptr == token)
+            break;
+    }
 
     return 0;
 }

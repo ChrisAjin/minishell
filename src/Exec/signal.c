@@ -6,11 +6,10 @@
 /*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 18:03:01 by cassassa          #+#    #+#             */
-/*   Updated: 2024/06/27 09:02:50 by cassassa         ###   ########.fr       */
+/*   Updated: 2024/06/27 11:33:15 by cassassa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
 
 // void	handle_signal_ctrl_c(int sig, t_data *ptr)
 // {
@@ -47,6 +46,7 @@
 // 	signal(SIGQUIT, (void (*)(int))handle_signal_ctrl_c);
 // 	signal(SIGINT, (void (*)(int))handle_signal_ctrl_c);
 // }
+#include "../../include/minishell.h"
 
 void sig_handler(int sig)
 {
@@ -56,6 +56,10 @@ void sig_handler(int sig)
 		rl_on_new_line();
 		rl_replace_line("",0);
 		rl_redisplay();
-		g_signal_pid = 1;
+		g_data.exit_code = 1;
+	}
+	if (sig == SIGQUIT)
+	{
+		g_data.exit_code = 130;
 	}
 }

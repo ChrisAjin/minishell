@@ -6,14 +6,14 @@
 /*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 16:44:44 by cassassa          #+#    #+#             */
-/*   Updated: 2024/06/27 09:21:09 by cassassa         ###   ########.fr       */
+/*   Updated: 2024/06/27 11:47:51 by cassassa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "../include/minishell.h"
 
-pid_t g_signal_pid;
+t_data g_data;
 
 int	make_env(t_data *data, char **env)
 {
@@ -52,9 +52,8 @@ void	init_data(t_data *data, int argc, char **argv)
 	data-> pip[0]= -1;
 	data->pip[1] = -1;
 	data->temp_fd = -1;
-	g_signal_pid = 0;
 	signal(SIGINT, &sig_handler);
-	signal(SIGQUIT, SIG_IGN);
+	signal(SIGQUIT, &sig_handler);
 
 }
 bool	empty_line(char *line)
@@ -95,11 +94,12 @@ bool	parseline(t_data *data, char *line)
 		free_token(&data->token);
 		return (false);
 	}
+	add_root(&data->token, ft_strdup("new_root"), 0);
 	 if (check_pipe_red_herdoc(data))
 	 {
 		return (false);
 	 }
-	add_root(&data->token, ft_strdup("new_root"), 0);
+
 	if (!data->token || !create_list_cmd(data))
 	{
 		free_token(&data->token);
@@ -124,6 +124,8 @@ int	main(int argc, char **argv, char **env)
 	add_root_list(&data.env, "1NEW_ENV");
 	while (1)
 	{
+		if (g_data.exit_code == 130)
+			data.exit_code = g_data.exit_code;
 		line = readline("minishell> ");
 		if (!line)
 			free_all(&data, "exit\n", data.exit_code);
@@ -140,7 +142,7 @@ int	main(int argc, char **argv, char **env)
 		// }
 		exec(&data);
 		free_cmd(&data.cmd);
-		free_token(&data.token);
+		//free_token(&data.token);
 	}
 	rl_clear_history();
 	free_all(&data, NULL, -1);
