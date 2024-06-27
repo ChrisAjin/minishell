@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_child.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 15:34:23 by inbennou          #+#    #+#             */
-/*   Updated: 2024/06/20 17:15:21 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/27 09:13:45 by cassassa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,12 @@ int	one_cmd(t_data *minishell, char **env)
 		return (-1);
 	}
 	if (pid == 0)
+	{
+		signal(SIGINT,SIG_DFL);
+		signal(SIGQUIT, SIG_DFL);
 		only_child(minishell, env);
+	}
+
 	wait_and_error(minishell, pid);
 	close_all(minishell);
 	if (env)
@@ -57,7 +62,12 @@ int	exec_first_child(t_data *minishell, char **env)
 		return (-1);
 	}
 	if (pid == 0)
+	{
+		signal(SIGINT,SIG_DFL);
+		signal(SIGQUIT, SIG_DFL);
 		first_child(minishell, env);
+	}
+
 	return (0);
 }
 
@@ -74,7 +84,12 @@ int	exec_middle_childs(t_data *minishell, char **env)
 		return (-1);
 	}
 	if (pid == 0)
+	{
+		signal(SIGINT,SIG_DFL);
+		signal(SIGQUIT, SIG_DFL);
 		middle_child(minishell, env);
+	}
+
 	return (0);
 }
 
@@ -89,7 +104,12 @@ int	exec_last_child(t_data *minishell, char **env)
 		return (-1);
 	}
 	if (pid == 0)
+	{
+		signal(SIGINT,SIG_DFL);
+		signal(SIGQUIT, SIG_DFL);
 		last_child(minishell, env);
+	}
+
 	close_all(minishell);
 	wait_and_error(minishell, pid);
 	return (0);
