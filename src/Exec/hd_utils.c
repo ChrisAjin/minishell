@@ -1,30 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strncmpp.c                                      :+:      :+:    :+:   */
+/*   hd_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/27 14:40:59 by cassassa          #+#    #+#             */
-/*   Updated: 2024/06/28 19:19:45 by cassassa         ###   ########.fr       */
+/*   Created: 2024/06/28 18:52:31 by cassassa          #+#    #+#             */
+/*   Updated: 2024/06/28 19:10:06 by cassassa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../../include/minishell.h"
 
-int	ft_strncmpp(const char *s1, const char *s2, size_t n)
+void	signal_here_doc(void)
 {
-	unsigned int	i;
+	signal(SIGINT, &sig_handler_heredoc);
+	signal(SIGQUIT, SIG_IGN);
+}
 
-	if (n == 0)
-		return (-1);
-	i = 0;
-	while ((s1[i] && s2[i]) && i < n - 1)
-	{
-		if (s1[i] == s2[i])
-			i++;
-		else
-			break ;
-	}
-	return (s1[i] - s2[i]);
+void	print_error_hd(char *word)
+{
+	print_error("warning: here-document delimited by end-of-file ");
+	print_error("(wanted '");
+	print_error(word);
+	print_error("')\n");
 }

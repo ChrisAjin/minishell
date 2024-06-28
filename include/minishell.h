@@ -6,7 +6,7 @@
 /*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 16:45:40 by cassassa          #+#    #+#             */
-/*   Updated: 2024/06/28 16:02:19 by cassassa         ###   ########.fr       */
+/*   Updated: 2024/06/28 18:53:48 by cassassa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,6 +162,10 @@ int					pipe_count(t_data *minishell);
 
 //here_doc.c
 int		here_doc(t_data *data, char *word);
+
+// hd_utils.c
+void	print_error_hd(char *word);
+void	signal_here_doc(void);
 
 // childs.c
 void					only_child(t_data *minishell, char **env);

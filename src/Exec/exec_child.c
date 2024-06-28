@@ -6,7 +6,7 @@
 /*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 15:34:23 by inbennou          #+#    #+#             */
-/*   Updated: 2024/06/28 16:02:29 by cassassa         ###   ########.fr       */
+/*   Updated: 2024/06/28 19:15:57 by cassassa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,13 @@ int	one_cmd(t_data *minishell, char **env)
 {
 	if (is_parent_builtin(minishell->cmd->cmd_param[0]))
 		return (parent_builtin(minishell, env));
+	if (!minishell->cmd->cmd_param[0])
+	{
+		close_all(minishell);
+		if (env)
+			free(env);
+		return (0);
+	}
 	minishell->pid = fork();
 	if (minishell->pid < 0)
 	{
