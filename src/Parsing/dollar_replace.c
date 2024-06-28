@@ -6,7 +6,7 @@
 /*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 14:19:37 by cassassa          #+#    #+#             */
-/*   Updated: 2024/06/28 14:19:37 by cassassa         ###   ########.fr       */
+/*   Updated: 2024/06/28 14:26:23 by cassassa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,8 @@ static int	dollar_point_interrogation(t_data *data, char **str)
 
 int	add_dollar(char *line, int *index, char **str, t_data *data)
 {
-	int		ctrl;
-	int		n;
+	int	ctrl;
+	int	n;
 
 	n = *index;
 	ctrl = exist_in_env(line, index, data);
@@ -66,8 +66,8 @@ int	add_dollar(char *line, int *index, char **str, t_data *data)
 	else
 	{
 		++(*index);
-		while (line[*index] && \
-			(ft_isalnum(line[*index]) || line[*index] == '_'))
+		while (line[*index] && (ft_isalnum(line[*index])
+				|| line[*index] == '_'))
 			++(*index);
 		return (1);
 	}
@@ -106,16 +106,15 @@ int	replace_dollar(char **line, t_data *data)
 	while ((*line)[i])
 	{
 		quoting_choice(&dq, &data->sq, NULL, (*line)[i]);
-		if ((*line)[i] && (*line)[i + 1] && (*line)[i] == '$' && \
-			((*line)[i + 1] != '\'' && (*line)[i + 1] != '"') && \
-			(ft_isalpha((*line)[i + 1]) || (*line)[i + 1] == '?' || \
-			(*line)[i + 1] == '_') && !data->sq && \
-			!add_dollar((*line), &i, &str, data))
+		if ((*line)[i] && (*line)[i + 1] && (*line)[i] == '$' && ((*line)[i
+				+ 1] != '\'' && (*line)[i + 1] != '"') && (ft_isalpha((*line)[i
+				+ 1]) || (*line)[i + 1] == '?' || (*line)[i + 1] == '_')
+				&& !data->sq && !add_dollar((*line), &i, &str, data))
 			return (0);
 		if ((*line)[i] && !add_char(&(*line)[i], &str, data, &i))
 			return (0);
-		 if ((*line)[i] == '$' && (*line)[i + 1] == '$')
-		 	return (1);
+		if ((*line)[i] == '$' && (*line)[i + 1] == '$')
+			return (1);
 	}
 	free(*line);
 	*line = str;
