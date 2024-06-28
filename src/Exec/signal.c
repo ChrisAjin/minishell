@@ -6,7 +6,7 @@
 /*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 18:03:01 by cassassa          #+#    #+#             */
-/*   Updated: 2024/06/28 15:16:39 by cassassa         ###   ########.fr       */
+/*   Updated: 2024/06/28 17:44:16 by cassassa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,10 +59,20 @@ void sig_handler(int sig)
 		g_signal_pid = 1;
 	}
 }
-void sig_handler_heredoc(int sig)
+// void sig_handler_heredoc(int sig)
+// {
+// 	if (sig == SIGINT)
+// 	{
+// 		rl_on_new_line();
+// 		g_signal_pid = 1;
+// 	}
+// }
+
+
+void	sig_handler_heredoc(int sig)
 {
 	if (sig == SIGINT)
-	{
-		g_signal_pid = 1;
-	}
+		g_signal_pid = 0;
+	close(STDIN_FILENO);
+	printf("\n");
 }
