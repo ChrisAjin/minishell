@@ -6,7 +6,7 @@
 /*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 14:19:51 by cassassa          #+#    #+#             */
-/*   Updated: 2024/06/28 14:37:38 by cassassa         ###   ########.fr       */
+/*   Updated: 2024/06/28 16:07:12 by cassassa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	append_list(t_list **list, char *str)
 	t_list	*new_node;
 	t_list	*last;
 
-    new_node = NULL;
+	new_node = NULL;
 	if (!(new_node == new_list_elem(str)))
 		return ;
 	if (*list == NULL)
