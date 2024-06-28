@@ -6,14 +6,13 @@
 /*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 16:44:44 by cassassa          #+#    #+#             */
-/*   Updated: 2024/06/28 16:00:14 by cassassa         ###   ########.fr       */
+/*   Updated: 2024/06/28 16:02:43 by cassassa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "../include/minishell.h"
 
-pid_t g_signal_pid;
+pid_t	g_signal_pid;
 
 int	make_env(t_data *data, char **env)
 {
@@ -35,7 +34,6 @@ int	make_env(t_data *data, char **env)
 	}
 	data->env = list;
 	return (1);
-
 }
 
 void	init_data(t_data *data, int argc, char **argv)
@@ -50,7 +48,7 @@ void	init_data(t_data *data, int argc, char **argv)
 	data->pipes = 0;
 	data->infile = -1;
 	data->outfile = -1;
-	data-> pip[0]= -1;
+	data->pip[0] = -1;
 	data->pip[1] = -1;
 	data->temp_fd = -1;
 	g_signal_pid = 0;
@@ -79,26 +77,17 @@ bool	parseline(t_data *data, char *line)
 		free(line);
 		return (false);
 	}
-
 	if (!replace_dollar(&line, data) || !create_list_token(&data->token, line))
 	{
 		free(line);
 		free_all(data, ERR_MALLOC, EXT_MALLOC);
 	}
 	free(line);
-	//append_list(&data->env, ft_strdup("NEW_ENV"));
-	// print_list(data->env);
-	if (data->token && data->token->prev->type == PIPE)
+	if (check_pipe_red_herdoc(data))
 	{
-		write(2, "Error: Unclosed pipe\n", 21);
-		data->exit_code = 2;
 		free_token(&data->token);
 		return (false);
 	}
-	 if (check_pipe_red_herdoc(data))
-	 {
-		return (false);
-	 }
 	add_root(&data->token, ft_strdup("new_root"), 0);
 	if (!data->token || !create_list_cmd(data))
 	{
@@ -106,7 +95,6 @@ bool	parseline(t_data *data, char *line)
 		free_cmd(&data->cmd);
 		return (false);
 	}
-	// print_cmd(data->cmd);
 	return (check_pipe(data));
 }
 

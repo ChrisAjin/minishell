@@ -6,7 +6,7 @@
 /*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 15:34:23 by inbennou          #+#    #+#             */
-/*   Updated: 2024/06/28 16:00:31 by cassassa         ###   ########.fr       */
+/*   Updated: 2024/06/28 16:02:29 by cassassa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,6 @@ int	one_cmd(t_data *minishell, char **env)
 	}
 	if (minishell->pid == 0)
 	{
-		signal(SIGINT,SIG_DFL);
-		signal(SIGQUIT, SIG_DFL);
 		only_child(minishell, env);
 	}
 	wait_and_error(minishell, minishell->pid);
@@ -57,8 +55,6 @@ int	exec_first_child(t_data *minishell, char **env)
 	}
 	if (minishell->pid == 0)
 	{
-		signal(SIGINT,SIG_DFL);
-		signal(SIGQUIT, SIG_DFL);
 		first_child(minishell, env);
 	}
 
@@ -77,8 +73,6 @@ int	exec_middle_childs(t_data *minishell, char **env)
 	}
 	if (minishell->pid == 0)
 	{
-		signal(SIGINT,SIG_DFL);
-		signal(SIGQUIT, SIG_DFL);
 		middle_child(minishell, env);
 	}
 	return (0);
@@ -94,8 +88,6 @@ int	exec_last_child(t_data *minishell, char **env)
 	}
 	if (minishell->pid == 0)
 	{
-		signal(SIGINT,SIG_DFL);
-		signal(SIGQUIT, SIG_DFL);
 		last_child(minishell, env);
 	}
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 15:57:20 by inbennou          #+#    #+#             */
-/*   Updated: 2024/06/28 15:38:41 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/28 16:02:53 by cassassa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ static bool	read_in_stdin(t_data *data, char *word)
 
     while (1)
     {
+        signal(SIGINT, &sig_handler_heredoc);
+		signal(SIGQUIT, SIG_IGN);
         buf = readline("> ");
         if (!buf)
         {
@@ -29,6 +31,13 @@ static bool	read_in_stdin(t_data *data, char *word)
             print_error("')\n");
             break ;
         }
+        if (g_signal_pid == 1)
+        {
+            data->exit_code = 130;
+            g_signal_pid = 0;
+            break;
+        }
+
         if (!ft_strncmp(word, buf, ft_strlen(word) + 1))
             break ;
         if (!replace_dollar(&buf, data))

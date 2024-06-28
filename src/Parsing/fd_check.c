@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   fd_check.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/28 14:19:40 by cassassa          #+#    #+#             */
+/*   Updated: 2024/06/28 14:26:30 by cassassa         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../include/minishell.h"
 
 static bool	get_in(t_data *data, t_token *tmp, t_cmd *cmd)
@@ -20,6 +32,7 @@ static bool	get_in(t_data *data, t_token *tmp, t_cmd *cmd)
 bool	get_infile(t_data *data, t_token *token, t_cmd *cmd)
 {
 	t_token	*tmp;
+
 	tmp = token;
 	if (tmp->type != PIPE && !get_in(data, tmp, cmd))
 		return (false);
@@ -47,7 +60,6 @@ static bool	get_out(t_token *tmp, t_cmd *cmd, t_data *data)
 	{
 		if (tmp == tmp->next || tmp->next->type <= 5)
 			return (print_error_token(tmp, data));
-
 	}
 	return (true);
 }

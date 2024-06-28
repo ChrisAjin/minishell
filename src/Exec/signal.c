@@ -6,7 +6,7 @@
 /*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 18:03:01 by cassassa          #+#    #+#             */
-/*   Updated: 2024/06/27 09:02:50 by cassassa         ###   ########.fr       */
+/*   Updated: 2024/06/28 15:16:39 by cassassa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,13 @@ void sig_handler(int sig)
 		rl_on_new_line();
 		rl_replace_line("",0);
 		rl_redisplay();
+		g_signal_pid = 1;
+	}
+}
+void sig_handler_heredoc(int sig)
+{
+	if (sig == SIGINT)
+	{
 		g_signal_pid = 1;
 	}
 }

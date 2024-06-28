@@ -1,35 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   mini_utils.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/28 14:20:12 by cassassa          #+#    #+#             */
+/*   Updated: 2024/06/28 14:33:01 by cassassa         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../include/minishell.h"
-
-char	**list_to_arr(t_list *env)
-{
-	t_list	*lst;
-	char	**dest;
-	int		i;
-
-	dest = NULL;
-	i = 0;
-	lst = env;
-	dest = (char **)malloc(sizeof(char *) * (len_list(lst) + 1));
-	if (!dest)
-		return (NULL);
-	dest[i] = (lst->str);
-	lst = lst->next;
-	i++;
-	while (lst != env)
-	{
-		dest[i] = (lst->str);
-		lst = lst->next;
-		i++;
-	}
-	dest[i] = NULL;
-	return (dest);
-}
-
 
 bool	is_space(char c)
 {
-	if (c && (c == ' ' || c == '\n' || c == '\r' || c == '\f' || c == '\t' \
-	|| c == '\v'))
+	if (c && (c == ' ' || c == '\n' || c == '\r' || c == '\f' || c == '\t'
+			|| c == '\v'))
 		return (true);
 	return (false);
 }
@@ -72,9 +58,6 @@ bool	make_env2(t_data *data)
 	char	path[PATH_MAX];
 	char	*tmp;
 
-	// tmp = ft_strdup("OLDPWD");
-	// if (!tmp || !append(&(data->env), tmp) || getcwd(path, PATH_MAX) == NULL)
-	// 	free_all(data, ERR_MALLOC, EXT_MALLOC);
 	if (getcwd(path, PATH_MAX) == NULL)
 		free_all(data, ERR_MALLOC, EXT_MALLOC);
 	tmp = ft_strjoin("PWD=", path);

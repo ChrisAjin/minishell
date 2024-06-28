@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   array_utils.c                                      :+:      :+:    :+:   */
+/*   mini_utils2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/28 14:19:54 by cassassa          #+#    #+#             */
-/*   Updated: 2024/06/28 14:19:57 by cassassa         ###   ########.fr       */
+/*   Created: 2024/06/28 14:31:05 by cassassa          #+#    #+#             */
+/*   Updated: 2024/06/28 14:33:47 by cassassa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-char	**lst_to_arr(t_list *env)
+char	**list_to_arr(t_list *env)
 {
 	t_list	*lst;
 	char	**dest;
@@ -35,39 +35,4 @@ char	**lst_to_arr(t_list *env)
 	}
 	dest[i] = NULL;
 	return (dest);
-}
-
-//swap to elems in array
-static void	ft_swap_str_tab(int i, int j, char **tab)
-{
-	char	*temp;
-
-	temp = tab[i];
-	tab[i] = tab[j];
-	tab[j] = temp;
-}
-
-//sorts array
-void	sort_array(char **arr, int len)
-{
-	int	i;
-	int	j;
-	int	diff;
-
-	i = 0;
-	while (i < len)
-	{
-		j = i + 1;
-		while (j < len)
-		{
-			diff = ft_strncmpp(arr[i], arr[j], __INT_MAX__);
-			if (diff > 0)
-			{
-				ft_swap_str_tab(i, j, arr);
-				continue ;
-			}
-			j++;
-		}
-	i++;
-	}
 }
