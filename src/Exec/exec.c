@@ -6,7 +6,7 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 14:01:42 by inbennou          #+#    #+#             */
-/*   Updated: 2024/06/27 18:14:33 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/28 15:48:05 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void	exec_path(t_data *minishell, char **env)
 	if (access(minishell->cmd->cmd_param[0], F_OK | X_OK) == 0)
 		if (execve(minishell->cmd->cmd_param[0], minishell->cmd->cmd_param,
 				env) < 0)
-			exec_fail(minishell, NULL, env, NULL);
+			path_fail(minishell, env);
 	if (access(minishell->cmd->cmd_param[0], F_OK) < 0)
 		no_such_file(minishell, env);
 	permission_denied(minishell, env);

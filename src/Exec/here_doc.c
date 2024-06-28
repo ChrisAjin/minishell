@@ -6,7 +6,7 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 15:57:20 by inbennou          #+#    #+#             */
-/*   Updated: 2024/06/27 19:01:49 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/28 15:38:41 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static bool	read_in_stdin(t_data *data, char *word)
 {
     char	*buf;
-    char	*temp;
+    char	*temp = NULL;
     char	*final_result = NULL;
 
     while (1)
@@ -57,16 +57,11 @@ static bool	read_in_stdin(t_data *data, char *word)
         ft_free(buf);
     }
     ft_free(buf);
-    // word = ft_calloc(sizeof(char), ft_strlen(final_result));
-    // if (!word) {
-    //     ft_free(word);
-    //     ft_free(final_result);
-    //     return false;
-    // }
-    // ft_strlcpy(word, final_result, ft_strlen(final_result));
-    data->token->here_doc = ft_strdup(final_result);
+    if (final_result)
+        data->token->here_doc = ft_strdup(final_result);
     free(final_result);
-    // free(word);
+    if (!data->token->here_doc)
+        return false;
 	// printf("word :\n%s\n", data->token->here_doc);
     return true;
 }
