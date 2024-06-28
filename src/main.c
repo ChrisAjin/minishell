@@ -6,7 +6,7 @@
 /*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 16:44:44 by cassassa          #+#    #+#             */
-/*   Updated: 2024/06/28 14:16:41 by cassassa         ###   ########.fr       */
+/*   Updated: 2024/06/28 15:35:13 by cassassa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ void	init_data(t_data *data, int argc, char **argv)
 	g_signal_pid = 0;
 	signal(SIGINT, &sig_handler);
 	signal(SIGQUIT, SIG_IGN);
+
 }
 bool	empty_line(char *line)
 {
