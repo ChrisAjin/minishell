@@ -6,15 +6,12 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 16:22:27 by inbennou          #+#    #+#             */
-/*   Updated: 2024/06/20 18:26:01 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/27 14:34:07 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-// voir pourquoi env -i ./minishell on a quand mm pwd et old pwd
-// voir si quand plusieurs childs le texte s'ecrit quand mm dans le bon ordre
-// tester dans le bash pour confirmer les cas d'erreurs
 int	env_cmd(t_data *minishell)
 {
 	if (!minishell->cmd->cmd_param[1] || minishell->cmd->cmd_param[1] == NULL)

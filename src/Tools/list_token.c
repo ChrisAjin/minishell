@@ -11,6 +11,7 @@ static int	token_new_elem(t_token **new, char *str, int type)
 		return (0);
 	}
 	(*new)->str = str;
+	(*new)->here_doc = NULL;
 	(*new)->type = type;
 	(*new)->next = NULL;
 	(*new)->prev = NULL;
@@ -80,9 +81,11 @@ void	free_token(t_token **list)
 		tmp = current;
 		current = current->next;
 		free(tmp->str);
+		free(tmp->here_doc);
 		free(tmp);
 	}
 	free(current->str);
+	free(current->here_doc);
 	free(current);
 	*list = NULL;
 }

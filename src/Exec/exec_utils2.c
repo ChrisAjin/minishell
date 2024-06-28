@@ -6,7 +6,7 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 15:17:21 by inbennou          #+#    #+#             */
-/*   Updated: 2024/06/26 15:16:59 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/27 15:16:29 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,4 +43,28 @@ void	clean_exit(t_data *minishell, char **env, int ret)
 	close_all(minishell);
 	close_fds();
 	free_and_exit(minishell, env, ret);
+}
+
+void	middle_dup2(t_data *minishell, char **env)
+{
+	if (minishell->infile > 0)
+	{
+		if (dup2(minishell->infile, STDIN_FILENO) < 0)
+			dup2_error(minishell, env);
+	}
+	else
+	{
+		if (dup2(minishell->temp_fd, STDIN_FILENO) < 0)
+			dup2_error(minishell, env);
+	}
+	if (minishell->outfile > 0)
+	{
+		if (dup2(minishell->outfile, STDOUT_FILENO) < 0)
+			dup2_error(minishell, env);
+	}
+	else
+	{
+		if (dup2(minishell->pip[1], STDOUT_FILENO) < 0)
+			dup2_error(minishell, env);
+	}
 }

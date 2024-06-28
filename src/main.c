@@ -6,7 +6,7 @@
 /*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 16:44:44 by cassassa          #+#    #+#             */
-/*   Updated: 2024/06/27 09:21:09 by cassassa         ###   ########.fr       */
+/*   Updated: 2024/06/28 10:00:17 by cassassa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ void	init_data(t_data *data, int argc, char **argv)
 	data->token = NULL;
 	data->cmd = NULL;
 	data->exit_code = 0;
+	data->pid = -1;
 	data->pipes = 0;
 	data->infile = -1;
 	data->outfile = -1;
@@ -109,7 +110,6 @@ bool	parseline(t_data *data, char *line)
 	// print_cmd(data->cmd);
 	return (check_pipe(data));
 }
-
 
 int	main(int argc, char **argv, char **env)
 {

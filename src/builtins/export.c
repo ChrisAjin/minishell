@@ -6,7 +6,7 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 19:07:53 by inbennou          #+#    #+#             */
-/*   Updated: 2024/06/19 13:52:20 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/27 14:44:41 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,25 +31,11 @@ int	export(t_data *minishell)
 		if (ft_isdigit(minishell->cmd->cmd_param[1][0])
 			|| ft_strchr(minishell->cmd->cmd_param[1], '=') == 0
 			|| has_space(minishell->cmd->cmd_param[1]))
-			not_valid(minishell);
+			return (not_valid(minishell), 1);
 		if (is_var(cmd, minishell->env))
 			change_var(cmd, minishell->env);
 		else
 			append_list(&minishell->env, minishell->cmd->cmd_param[1]);
-	}
-	return (0);
-}
-
-int	has_space(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (is_space(str[i]) == true)
-			return (1);
-		i++;
 	}
 	return (0);
 }

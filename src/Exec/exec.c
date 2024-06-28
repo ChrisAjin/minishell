@@ -6,7 +6,7 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 14:01:42 by inbennou          #+#    #+#             */
-/*   Updated: 2024/06/26 16:13:14 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/27 18:14:33 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 int	exec(t_data *minishell)
 {
 	char	**env;
+
 	minishell->pipes = pipe_count(minishell);
 	env = list_to_arr(minishell->env);
 	if (minishell->pipes == 0)

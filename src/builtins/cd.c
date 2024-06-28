@@ -6,51 +6,25 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 21:55:35 by inbennou          #+#    #+#             */
-/*   Updated: 2024/06/20 18:53:46 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/06/27 15:54:48 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-// implementer $HOME et $OLDPWD
-// gerer le cas cd $HOME/Documents
-// quand on donne un chemin relatif, bash fouille dans la var d'env $CDPATH
-// msg d'erreur si:
-// le chemin n'existe pas
-// permission denied
-// cd $var qui n'existe pas
-
-int	check_args(char	**cmd_param)
-{
-	if (size_tab(cmd_param) > 2)
-	{
-		ft_putendl_fd("minishell: cd: too many arguments", 2);
-		return (1);
-	}
-	return (0);
-}
-
-// // pour la norme retirer char **env et adapter a une liste chainee
 int	cd(t_data *minishell)
 {
 	char	*old_pwd;
-	char	*cur_dir;
 
-	
 	if (check_args(minishell->cmd->cmd_param))
 		return (1);
 	old_pwd = get_pwd();
-	// if (!old_pwd)
-	// {
-	// 	ft_putendl_fd("minishell: cd: error retrieving current directory", 2);
-	// 	return (1);
-	// }
 	if (minishell->cmd->cmd_param[1] == NULL
 		|| ft_strncmp(minishell->cmd->cmd_param[1], "~", 2) == 0)
 	{
 		if (ch_dir_home(minishell->env, old_pwd) < 0)
 		{
-			ft_free(old_pwd);
+			free(old_pwd);
 			return (1);
 		}
 	}
@@ -59,68 +33,23 @@ int	cd(t_data *minishell)
 		if (chdir(minishell->cmd->cmd_param[1]))
 		{
 			perror(minishell->cmd->cmd_param[1]);
-			ft_free(old_pwd);
+			free(old_pwd);
 			return (1);
 		}
 	}
+	return (update_pwd_old(minishell, old_pwd));
+}
+
+int	update_pwd_old(t_data *minishell, char *old_pwd)
+{
+	char	*cur_dir;
+
 	cur_dir = get_pwd();
-	// if (add_pwd(cur_dir, minishell) > 0 || add_old_pwd(old_pwd, minishell) > 0)
-	// 	return (1);
 	add_pwd(cur_dir, minishell);
 	add_old_pwd(old_pwd, minishell);
+	free(old_pwd);
+	free(cur_dir);
 	return (0);
-}
-
-int	add_old_pwd(char *old_pwd, t_data *minishell)
-{
-	t_list	*temp;
-
-	if (!old_pwd)
-		return (1);
-	temp = minishell->env;
-	while (minishell->env->next != temp)
-	{
-		if (ft_strncmp("OLDPWD=", minishell->env->str, 7) == 0)
-		{
-			free(minishell->env->str);
-			minishell->env->str = ft_strjoin("OLDPWD=", old_pwd);
-			if (minishell->env->str == NULL)
-			{
-				ft_putstr_fd(ERR_MALLOC, 2);
-				return (1);
-			}
-			return (0);
-		}
-		minishell->env = minishell->env->next;
-	}
-	// ft_putendl_fd("Could not set OLDPWD.", 2);
-	return (1);
-}
-
-int	add_pwd(char *cur_dir, t_data *minishell)
-{
-	t_list	*temp;
-
-	if (!cur_dir)
-		return (1);
-	temp = minishell->env;
-	while (minishell->env->next != temp)
-	{
-		if (ft_strncmp("PWD=", minishell->env->str, 4) == 0)
-		{
-			free(minishell->env->str);
-			minishell->env->str = ft_strjoin("PWD=", cur_dir);
-			if (minishell->env->str == NULL)
-			{
-				ft_putstr_fd(ERR_MALLOC, 2);
-				return (1);
-			}
-			return (0);
-		}
-		minishell->env = minishell->env->next;
-	}
-	// ft_putendl_fd("Could not set PWD.", 2);
-	return (1);
 }
 
 int	ch_dir_home(t_list *env, char *old_pwd)
@@ -160,14 +89,4 @@ char	*get_home(t_list *env)
 	if (home == NULL)
 		ft_putendl_fd("HOME not set.", 2);
 	return (home);
-}
-
-int	size_tab(char **cmd_param)
-{
-	int	i;
-
-	i = 0;
-	while (cmd_param[i])
-		i++;
-	return (i);
 }
