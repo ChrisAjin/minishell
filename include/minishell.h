@@ -6,7 +6,7 @@
 /*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 16:45:40 by cassassa          #+#    #+#             */
-/*   Updated: 2024/06/28 16:02:19 by cassassa         ###   ########.fr       */
+/*   Updated: 2024/06/28 17:55:50 by cassassa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -242,13 +242,11 @@ int				env_cmd(t_data *minishell);
 int				print_lst(t_list *lst);
 
 // exit
-// void				exit_shell_c(t_data *minishell);
-// int				exit_shell_p(t_data *minishell);
 void				exit_shell(t_data *minishell);
 int				only_digit(char *str);
-// int				clear_and_exit(t_data *minishell, int exit_c, char *msg);
-// void				size_2_tab(t_data *minishell);
-// int			clear_no_exit(t_data *minishell, char *msg);
+void				clear_and_exit(t_data *minishell);
+void				size_2(t_data *minishell);
+void				too_many_args(t_data *minishell);
 
 // parent_builtin
 int				is_parent_builtin(char *cmd);
