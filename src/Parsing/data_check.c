@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   data_check.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/28 14:19:30 by cassassa          #+#    #+#             */
+/*   Updated: 2024/06/28 14:20:43 by cassassa         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../include/minishell.h"
 
 int	is_reder(int var)
@@ -9,7 +21,6 @@ int	is_reder(int var)
 
 int check_reder_tkn(t_token *token) {
     if (!token) return 0;
-
     t_token *tmp = token;
 
     do {
@@ -77,8 +88,15 @@ int	check_pipe_red_herdoc(t_data *data)
 {
 	if (check_herdoc_tkn(data->token))
 		return (1);
-	// if (check_reder_tkn(data->token))
-	// 	return (1);
+	if (check_reder_tkn(data->token))
+		return (1);
+    if (data->token && data->token->prev->type == PIPE)
+	{
+		write(2, "Error: Unclosed pipe\n", 21);
+		data->exit_code = 2;
+		//free_token(&data->token);
+		return (1);
+	}
 	if (check_pipe_tkn(data->token))
 		return (1);
 	return (0);

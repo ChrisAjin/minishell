@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   add_list.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/28 14:19:51 by cassassa          #+#    #+#             */
+/*   Updated: 2024/06/28 14:19:52 by cassassa         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../include/minishell.h"
 t_list* new_list_elem(char *str) {
     t_list *new_node = (t_list *)malloc(sizeof(t_list));
@@ -29,9 +41,9 @@ void append_list(t_list **list, char *str) {
     if (!(new_node = new_list_elem(str))) return;
     if (*list == NULL) {
         *list = new_node;
-    } else 
+    } else
     {
-	
+
         t_list *last = (*list)->prev;
         new_node->prev = last;
         new_node->next = *list;
