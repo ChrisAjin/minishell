@@ -6,7 +6,7 @@
 /*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 16:45:40 by cassassa          #+#    #+#             */
-/*   Updated: 2024/06/28 10:00:44 by cassassa         ###   ########.fr       */
+/*   Updated: 2024/06/28 16:00:44 by cassassa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,7 +178,7 @@ int					child_fail(t_data *minishell, char **env);
 void					exec_fail(t_data *minishell, char **paths, char **env, char *cur_path);
 void					dup2_error(t_data *minishell, char **env);
 void					pipe_error(t_data *minishell, char **env);
-void	path_fail(t_data *minishell, char **env, char *cmd);
+void					path_fail(t_data *minishell, char **env);
 
 // exec_child.c
 int					exec_one_cmd(t_data *minishell, char **env);
@@ -241,9 +241,13 @@ int				env_cmd(t_data *minishell);
 int				print_lst(t_list *lst);
 
 // exit
-int				exit_shell(t_data *minishell);
+// void				exit_shell_c(t_data *minishell);
+// int				exit_shell_p(t_data *minishell);
+void				exit_shell(t_data *minishell);
 int				only_digit(char *str);
-int				clear_and_exit(t_data *minishell);
+// int				clear_and_exit(t_data *minishell, int exit_c, char *msg);
+// void				size_2_tab(t_data *minishell);
+// int			clear_no_exit(t_data *minishell, char *msg);
 
 // parent_builtin
 int				is_parent_builtin(char *cmd);
