@@ -6,7 +6,7 @@
 /*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 15:34:23 by inbennou          #+#    #+#             */
-/*   Updated: 2024/06/28 19:15:57 by cassassa         ###   ########.fr       */
+/*   Updated: 2024/06/28 19:25:25 by cassassa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ int	exec_first_child(t_data *minishell, char **env)
 	{
 		first_child(minishell, env);
 	}
-
 	return (0);
 }
 
@@ -97,7 +96,6 @@ int	exec_last_child(t_data *minishell, char **env)
 	{
 		last_child(minishell, env);
 	}
-
 	close_all(minishell);
 	wait_and_error(minishell, minishell->pid);
 	return (0);

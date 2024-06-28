@@ -1,15 +1,15 @@
 NAME	=	minishell
 
 CC		=	cc
-FLAG	=	-Wall -Wextra -Werror -g
+FLAG	=	-Wall -Wextra -Werror
 
-DIRLIB	=	./libft-ines/
+DIRLIB	=	./libft/
 FILELIB	=	libft.a
 NAMELFT	=	$(addprefix $(DIRLIB), $(FILELIB))
 
 SRC_DIR	=	src/
 OBJ_DIR	=	obj/
-INCLUDE	=	-I ./include -I ./libft-ines
+INCLUDE	=	-I ./include -I ./libft
 HEADER 	=	include/minishell.h
 
 # Color

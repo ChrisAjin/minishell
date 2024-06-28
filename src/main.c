@@ -6,7 +6,7 @@
 /*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 16:44:44 by cassassa          #+#    #+#             */
-/*   Updated: 2024/06/28 19:10:47 by cassassa         ###   ########.fr       */
+/*   Updated: 2024/06/28 19:26:52 by cassassa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,10 @@ void	init_data(t_data *data, int argc, char **argv)
 	data->pip[1] = -1;
 	data->temp_fd = -1;
 	g_signal_pid = 0;
-	//signal(SIGINT, &sig_handler);
+	signal(SIGINT, &sig_handler);
 	signal(SIGQUIT, SIG_IGN);
 }
+
 bool	empty_line(char *line)
 {
 	int	i;
@@ -119,17 +120,10 @@ int	main(int argc, char **argv, char **env)
 		add_history(line);
 		if (!parseline(&data, line))
 			continue ;
-		// while (data.token->type != 0)
-		// {
-		// 	if (data.token->type == HEREDOC)
-		// 		here_doc(&data, data.token->next->str);
-		// 	data.token = data.token->next;
-		// }
 		exec(&data);
 		free_cmd(&data.cmd);
 		free_token(&data.token);
 	}
 	rl_clear_history();
-	free_all(&data, NULL, -1);
-	return (0);
+	return (free_all(&data, NULL, -1), 0);
 }
