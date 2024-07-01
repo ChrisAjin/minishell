@@ -6,7 +6,7 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 16:44:38 by inbennou          #+#    #+#             */
-/*   Updated: 2024/07/01 17:01:25 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/07/01 22:07:02 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	open_out(t_data *minishell, t_token *temp, int *outfiles)
 	int	fd_out;
 
 	fd_out = 0;
-	if (temp->type == TRUNC)
+	if (temp->prev->type == TRUNC)
 		fd_out = open(temp->str, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	else
 		fd_out = open(temp->str, O_CREAT | O_WRONLY | O_APPEND, 0644);

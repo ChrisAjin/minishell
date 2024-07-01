@@ -6,7 +6,7 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 16:44:44 by cassassa          #+#    #+#             */
-/*   Updated: 2024/07/01 18:11:18 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/07/01 19:11:57 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ int	main(int argc, char **argv, char **env)
 		add_history(line);
 		if (!parseline(&data, line))
 			continue ;
-		exec(&data);
+		exec_sig(&data);
 		free_cmd(&data.cmd);
 		free_token(&data.token);
 	}

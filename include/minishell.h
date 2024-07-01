@@ -6,7 +6,7 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 16:45:40 by cassassa          #+#    #+#             */
-/*   Updated: 2024/07/01 18:44:32 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/07/01 19:12:18 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,6 +164,7 @@ int					here_doc(t_data *data, char *word);
 // hd_utils.c
 void				print_error_hd(char *word);
 void				signal_here_doc(void);
+void				exec_sig(t_data *data);
 
 // childs.c
 void				only_child(t_data *minishell, char **env);
@@ -176,6 +177,7 @@ void				command_not_found(t_data *minishell, char **paths,
 						char **env);
 void				permission_denied(t_data *minishell, char **env);
 void				no_such_file(t_data *minishell, char **env);
+void				cur_error(char **paths);
 
 // errors2.c
 int					child_fail(t_data *minishell, char **env);

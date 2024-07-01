@@ -6,11 +6,18 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 18:52:31 by cassassa          #+#    #+#             */
-/*   Updated: 2024/07/01 18:18:23 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/07/01 19:13:27 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+void	exec_sig(t_data *data)
+{
+	exec(data);
+	signal(SIGINT, &sig_handler);
+	signal(SIGQUIT, SIG_IGN);
+}
 
 void	signal_here_doc(void)
 {
