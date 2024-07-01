@@ -6,7 +6,7 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 19:07:53 by inbennou          #+#    #+#             */
-/*   Updated: 2024/07/01 16:04:20 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/07/01 17:34:29 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	export(t_data *minishell)
 	}
 	else
 	{
-		if (is_export_valid(minishell->cmd->cmd_param[1])
+		if (!is_export_valid(minishell->cmd->cmd_param[1])
 			|| ft_strchr(minishell->cmd->cmd_param[1], '=') == 0
 			|| has_space(minishell->cmd->cmd_param[1]))
 			return (not_valid(minishell), 1);

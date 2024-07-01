@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 18:03:01 by cassassa          #+#    #+#             */
-/*   Updated: 2024/06/28 19:08:55 by cassassa         ###   ########.fr       */
+/*   Updated: 2024/07/01 18:40:22 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,4 +30,10 @@ void	sig_handler_heredoc(int sig)
 		g_signal_pid = 1;
 	printf("\n");
 	close(STDIN_FILENO);
+}
+
+void	signals(void)
+{
+	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 15:57:20 by inbennou          #+#    #+#             */
-/*   Updated: 2024/06/28 19:23:05 by cassassa         ###   ########.fr       */
+/*   Updated: 2024/07/01 18:40:28 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,10 @@ static bool	finish_hd(char *buf, t_data *data, char *final_result)
 {
 	ft_free(buf);
 	if (final_result)
+	{
+		ft_free(data->token->here_doc);
 		data->token->here_doc = ft_strdup(final_result);
+	}
 	free(final_result);
 	if (!data->token->here_doc)
 		return (false);
@@ -30,7 +33,6 @@ static int	signal_error(t_data *data, char *buf, char *final_result,
 	if (g_signal_pid == 1)
 	{
 		data->exit_code = 130;
-		g_signal_pid = 0;
 		return (finish_hd(buf, data, final_result));
 	}
 	print_error_hd(word);
@@ -90,6 +92,11 @@ int	here_doc(t_data *data, char *word)
 	close(stdin);
 	if (!heredoc)
 		return (-1);
+	if (g_signal_pid == 1)
+	{
+		g_signal_pid = 0;
+		return (-1);
+	}
 	data->exit_code = 0;
 	return (0);
 }

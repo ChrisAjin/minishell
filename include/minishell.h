@@ -6,7 +6,7 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 16:45:40 by cassassa          #+#    #+#             */
-/*   Updated: 2024/07/01 16:59:14 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/07/01 18:44:32 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,20 +145,18 @@ int					replace_dollar(char **line, t_data *data);
 // fd_check.c
 bool				get_outfile(t_token *token, t_cmd *cmd, t_data *data);
 bool				get_infile(t_data *data, t_token *token, t_cmd *cmd);
-// DEBUG.c
-void				print_token(t_token *token);
-void				print_cmd(t_cmd *cmd);
-void				print_tokens(t_token *head);
-void				print_list(t_list *head);
 
 // signal.c
 void				sig_handler(int sig);
 void				sig_handler_heredoc(int sig);
+void				signals(void);
+
 // exec.c
 int					exec(t_data *minishell);
 void				find_and_exec(t_data *minishell, char **env);
 void				exec_path(t_data *minishell, char **env);
 int					pipe_count(t_data *minishell);
+int					end_one_cmd(t_data *minishell, char **env);
 
 // here_doc.c
 int					here_doc(t_data *data, char *word);

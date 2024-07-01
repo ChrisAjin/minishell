@@ -6,7 +6,7 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 15:34:23 by inbennou          #+#    #+#             */
-/*   Updated: 2024/07/01 16:07:36 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/07/01 18:42:35 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ int	one_cmd(t_data *minishell, char **env)
 			free(env);
 		return (0);
 	}
+	signals();
 	minishell->pid = fork();
 	if (minishell->pid < 0)
 	{
@@ -38,12 +39,12 @@ int	one_cmd(t_data *minishell, char **env)
 		return (-1);
 	}
 	if (minishell->pid == 0)
+	{
+		signal(SIGINT, SIG_DFL);
+		signal(SIGQUIT, SIG_DFL);
 		only_child(minishell, env);
-	wait_and_error(minishell, minishell->pid);
-	close_all(minishell);
-	if (env)
-		free(env);
-	return (0);
+	}
+	return (end_one_cmd(minishell, env));
 }
 
 int	exec_first_child(t_data *minishell, char **env)
@@ -53,6 +54,7 @@ int	exec_first_child(t_data *minishell, char **env)
 		perror("pipe error");
 		return (-1);
 	}
+	signals();
 	minishell->pid = fork();
 	if (minishell->pid < 0)
 	{
@@ -60,7 +62,9 @@ int	exec_first_child(t_data *minishell, char **env)
 		return (-1);
 	}
 	if (minishell->pid == 0)
+	{
 		first_child(minishell, env);
+	}
 	return (0);
 }
 
@@ -68,6 +72,7 @@ int	exec_middle_childs(t_data *minishell, char **env)
 {
 	if (renew_pipe(minishell) < 0)
 		return (-1);
+	signals();
 	minishell->pid = fork();
 	if (minishell->pid < 0)
 	{
@@ -75,12 +80,15 @@ int	exec_middle_childs(t_data *minishell, char **env)
 		return (-1);
 	}
 	if (minishell->pid == 0)
+	{
 		middle_child(minishell, env);
+	}
 	return (0);
 }
 
 int	exec_last_child(t_data *minishell, char **env)
 {
+	signals();
 	minishell->pid = fork();
 	if (minishell->pid < 0)
 	{
@@ -88,7 +96,11 @@ int	exec_last_child(t_data *minishell, char **env)
 		return (-1);
 	}
 	if (minishell->pid == 0)
+	{
+		signal(SIGINT, SIG_DFL);
+		signal(SIGQUIT, SIG_DFL);
 		last_child(minishell, env);
+	}
 	close_all(minishell);
 	wait_and_error(minishell, minishell->pid);
 	return (0);

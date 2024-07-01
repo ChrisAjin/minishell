@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fd_check.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 14:19:40 by cassassa          #+#    #+#             */
-/*   Updated: 2024/06/28 19:07:19 by cassassa         ###   ########.fr       */
+/*   Updated: 2024/07/01 18:40:05 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ static bool	get_in(t_data *data, t_token *tmp, t_cmd *cmd)
 	{
 		if (tmp == tmp->next || tmp->next->type <= 5)
 			return (print_error_token(tmp, data));
-		here_doc(data, tmp->next->str);
+		if (here_doc(data, tmp->next->str) < 0)
+			return (false);
 	}
 	return (true);
 }
