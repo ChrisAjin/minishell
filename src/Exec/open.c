@@ -6,28 +6,66 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 16:44:38 by inbennou          #+#    #+#             */
-/*   Updated: 2024/06/19 15:01:34 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/07/01 21:44:37 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	open_inf_outf(t_data *minishell)
+void	open_files(t_data *minishell)
 {
-	open_infile(minishell, infile_count(minishell));
-	if (infile_count(minishell) != 0 && minishell->infile < 0)
+	t_token	*temp;
+	int		infiles;
+	int		outfiles;
+
+	temp = minishell->token->next;
+	infiles = 0;
+	outfiles = 0;
+	minishell->inf_c = infile_count(minishell);
+	minishell->outf_c = outfile_count(minishell);
+	while (temp->type != 0 && temp->type != PIPE)
 	{
-		minishell->outfile = -1;
-		free_all(minishell, NULL, -1);
-		exit(1);
+		if (temp->prev->type == INPUT)
+		{
+			minishell->infile = open_in(minishell, temp, &infiles);
+			if (minishell->infile < 0)
+				exit(1);
+		}
+		else if ((temp->prev->type == TRUNC || temp->prev->type == APPEND))
+			minishell->outfile = open_out(minishell, temp, &outfiles);
+		temp = temp->next;
 	}
+}
+
+int	open_out(t_data *minishell, t_token *temp, int *outfiles)
+{
+	int	fd_out;
+
+	fd_out = 0;
+	if (temp->prev->type == TRUNC)
+		fd_out = open(temp->str, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	else
-		open_outfile(minishell, outfile_count(minishell));
-	if (infile_count(minishell) > 0 && minishell->infile < 0)
-		exit(1);
-	if (outfile_count(minishell) > 0 && minishell->outfile < 0)
-		exit(1);
-	return (0);
+		fd_out = open(temp->str, O_CREAT | O_WRONLY | O_APPEND, 0644);
+	if (fd_out < 0)
+		perror(temp->str);
+	*outfiles += 1;
+	if (minishell->outf_c != *outfiles)
+		close(fd_out);
+	return (fd_out);
+}
+
+int	open_in(t_data *minishell, t_token *temp, int *infiles)
+{
+	int	fd_in;
+
+	fd_in = 0;
+	fd_in = open(temp->str, O_RDONLY, 0644);
+	if (fd_in < 0)
+		perror(temp->str);
+	*infiles += 1;
+	if (minishell->inf_c != *infiles)
+		close(fd_in);
+	return (fd_in);
 }
 
 int	infile_count(t_data *minishell)
@@ -66,58 +104,4 @@ int	outfile_count(t_data *minishell)
 		tmp = tmp->next;
 	}
 	return (redir);
-}
-
-void	open_infile(t_data *minishell, int inf_count)
-{
-	t_token	*tmp;
-	int		fd;
-	int		inf_nbr;
-
-	tmp = minishell->token->next;
-	fd = -1;
-	inf_nbr = 0;
-	while (tmp->type != 0 && tmp->type != PIPE)
-	{
-		if (tmp->prev->type == INPUT)
-		{
-			fd = open(tmp->str, O_RDONLY, 0644);
-			if (fd < 0)
-				perror(tmp->str);
-			inf_nbr++;
-			if (inf_nbr != inf_count)
-				close(fd);
-		}
-		if (tmp)
-			tmp = tmp->next;
-	}
-	minishell->infile = fd;
-}
-
-void	open_outfile(t_data *minishell, int outf_count)
-{
-	t_token	*tmp;
-	int		fd;
-	int		inf_nbr;
-
-	tmp = minishell->token->next;
-	fd = -1;
-	inf_nbr = 0;
-	while (tmp->type != 0 && tmp->type != PIPE)
-	{
-		if (tmp->prev->type == TRUNC || tmp->prev->type == APPEND)
-		{
-			if (tmp->prev->type == TRUNC)
-				fd = open(tmp->str, O_CREAT | O_WRONLY | O_TRUNC, 0644);
-			else
-				fd = open(tmp->str, O_CREAT | O_WRONLY | O_APPEND, 0644);
-			if (fd < 0)
-				perror(tmp->str);
-			inf_nbr++;
-			if (inf_nbr != outf_count)
-				close(fd);
-		}
-		tmp = tmp->next;
-	}
-	minishell->outfile = fd;
 }

@@ -1,7 +1,0 @@
-ft_strdup
-ft_strjoin
-ft_strncmp
-ft_strlen
-ft_putstr_fd
-ft_isalnum
-ft_itoa

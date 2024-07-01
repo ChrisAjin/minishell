@@ -6,7 +6,7 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 14:40:48 by inbennou          #+#    #+#             */
-/*   Updated: 2024/06/20 18:25:20 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/07/01 18:43:16 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,4 +48,10 @@ void	no_such_file(t_data *minishell, char **env)
 	if (env)
 		free(env);
 	exit(127);
+}
+
+void	cur_error(char **paths)
+{
+	free(paths);
+	ft_putendl_fd("malloc error find and exec", 2);
 }

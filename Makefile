@@ -1,15 +1,15 @@
 NAME	=	minishell
 
 CC		=	cc
-FLAG	=	-Wall -Wextra -Werror -g
+FLAG	=	-Wall -Wextra -Werror
 
-DIRLIB	=	./libft-ines/
+DIRLIB	=	./libft/
 FILELIB	=	libft.a
 NAMELFT	=	$(addprefix $(DIRLIB), $(FILELIB))
 
 SRC_DIR	=	src/
 OBJ_DIR	=	obj/
-INCLUDE	=	-I ./include -I ./libft-ines
+INCLUDE	=	-I ./include -I ./libft
 HEADER 	=	include/minishell.h
 
 # Color
@@ -27,12 +27,13 @@ WHITE		= \033[0;97m
 # Source
 FILES	=	main cmd_param create_cmd create_token \
 			data_check dollar_env dollar_replace quote \
-			array_utils debug free list_cmd list_token list_utils \
-			mini_utils add_list fd_check here_doc signal\
+			array_utils free list_cmd list_token list_utils \
+			mini_utils add_list fd_check here_doc signal \
+			mini_utils2 export_utils\
 			childs errors exec_child exec open exec_utils\
 			builtins_utils cd env exit export \
 			parent_builtin pwd echo \
-			exec_utils2 errors2 unset exec_hd cd_utils
+			exec_utils2 errors2 unset exec_hd cd_utils hd_utils
 
 
 SRCS	=	$(addprefix $(SRC_DIR), $(addsuffix .c, $(FILES)))

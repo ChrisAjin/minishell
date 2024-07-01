@@ -6,7 +6,7 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 15:39:02 by inbennou          #+#    #+#             */
-/*   Updated: 2024/06/27 19:03:09 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/07/01 16:19:53 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	exec_last_hd(t_data *minishell, char **env)
 {
-	open_inf_outf(minishell);
+	open_files(minishell);
 	if (minishell->cmd->cmd_param[0] == NULL)
 		clean_exit(minishell, env, 0);
 	init_fds(minishell);
@@ -38,7 +38,7 @@ void	exec_hd(t_data *minishell, char **env)
 {
 	int	new_pip[2];
 
-	open_inf_outf(minishell);
+	open_files(minishell);
 	if (minishell->cmd->cmd_param[0] == NULL)
 		clean_exit(minishell, env, 0);
 	if (pipe(new_pip) < 0)

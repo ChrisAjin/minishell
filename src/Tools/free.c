@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   free.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/28 14:20:03 by cassassa          #+#    #+#             */
+/*   Updated: 2024/06/28 14:33:59 by cassassa         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../include/minishell.h"
 
 void	free_array(char **arr)
@@ -45,8 +57,6 @@ void	free_all(t_data *data, char *err, int ext)
 		close(data->pip[1]);
 	if (err)
 		print_error(err);
-	// if (!access(".heredoc.tmp", F_OK))
-	// 	unlink(".heredoc.tmp");
 	if (ext != -1)
 		exit(ext);
 }
