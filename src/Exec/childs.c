@@ -6,7 +6,7 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 14:13:14 by inbennou          #+#    #+#             */
-/*   Updated: 2024/06/27 15:16:22 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/07/01 13:02:23 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	only_child(t_data *minishell, char **env)
 			dup2_error(minishell, env);
 	}
 	close_all(minishell);
-	if (minishell->cmd->cmd_param[0] == NULL)
+	if (!minishell->cmd->cmd_param[0])
 		clean_exit(minishell, env, 0);
 	do_exec(minishell, env);
 }

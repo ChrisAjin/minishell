@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   export.c                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/10 19:07:53 by inbennou          #+#    #+#             */
-/*   Updated: 2024/07/01 14:08:42 by inbennou         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../../include/minishell.h"
 
 int	export(t_data *minishell)
@@ -48,10 +36,20 @@ int	not_valid(t_data *minishell)
 	return (1);
 }
 
+// int	join_var(char *str, t_list *env)
+// {
+// 	t_list	*temp;
+
+// 	temp = env->next;
+// 	while (temp != env)
+// }
+
 int	change_var(char *str, t_list *env)
 {
 	t_list	*temp;
 
+	// if (ft_strchr(str, '+'))
+		// return (join_var);
 	temp = env->next;
 	while (temp != env)
 	{
@@ -106,3 +104,25 @@ int	export_print_lst(t_list *lst)
 	}
 	return (0);
 }
+
+// void	append_export(t_list **list, char *str)
+// {
+// 	t_list	*new_node;
+// 	t_list	*last;
+
+// 	new_node = NULL;
+// 	if (!(new_node == new_list_elem(str)))
+// 		return ;
+// 	if (*list == NULL)
+// 	{
+// 		*list = new_node;
+// 	}
+// 	else
+// 	{
+// 		last = (*list)->prev;
+// 		new_node->prev = last;
+// 		new_node->next = *list;
+// 		last->next = new_node;
+// 		(*list)->prev = new_node;
+// 	}
+// }

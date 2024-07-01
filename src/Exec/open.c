@@ -6,12 +6,27 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 16:44:38 by inbennou          #+#    #+#             */
-/*   Updated: 2024/06/19 15:01:34 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/07/01 13:56:19 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+// int	open_files(t_data *minishell)
+// {
+// 	t_token	*temp;
+
+// 	temp = minishell->token;
+// 	while (temp->next != minishell->token)
+// 	{
+// 		if (temp->type == INPUT || temp->type == APPEND || temp->type == TRUNC)
+// 		{
+			
+// 		}
+// 	}
+// }
+
+// ouvrir les fichiers dans l'ordre, si un infile s'ouvre pas stop
 int	open_inf_outf(t_data *minishell)
 {
 	open_infile(minishell, infile_count(minishell));
