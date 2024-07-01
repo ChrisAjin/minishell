@@ -6,7 +6,7 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 14:01:42 by inbennou          #+#    #+#             */
-/*   Updated: 2024/07/01 13:07:45 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/07/01 15:30:09 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,12 @@ int	exec(t_data *minishell)
 	return (0);
 }
 
+void	cur_error(char **paths)
+{
+	free(paths);
+	ft_putendl_fd("malloc error find and exec", 2);
+}
+
 void	find_and_exec(t_data *minishell, char **env)
 {
 	int		i;
@@ -50,15 +56,15 @@ void	find_and_exec(t_data *minishell, char **env)
 
 	i = 0;
 	paths = split_path(env);
-	while (paths != NULL && paths[i])
+	while (paths != NULL && paths[i]
+		&& ft_strlen(minishell->cmd->cmd_param[0]) > 0)
 	{
 		temp = ft_strjoin(paths[i], "/");
 		cur_path = ft_strjoin(temp, minishell->cmd->cmd_param[0]);
 		free(temp);
 		if (!cur_path)
 		{
-			free(paths);
-			ft_putendl_fd("malloc error find and exec", 2);
+			cur_error(paths);
 			return ;
 		}
 		if (access(cur_path, F_OK | X_OK) >= 0)

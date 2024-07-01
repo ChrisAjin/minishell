@@ -6,7 +6,7 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 14:13:14 by inbennou          #+#    #+#             */
-/*   Updated: 2024/07/01 13:02:23 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/07/01 17:01:42 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	only_child(t_data *minishell, char **env)
 {
 	if (is_here_doc(minishell))
 		exec_last_hd(minishell, env);
-	open_inf_outf(minishell);
+	open_files(minishell);
 	if (minishell->infile > 0)
 	{
 		if (dup2(minishell->infile, STDIN_FILENO) < 0)
@@ -42,7 +42,7 @@ void	only_child(t_data *minishell, char **env)
 			dup2_error(minishell, env);
 	}
 	close_all(minishell);
-	if (!minishell->cmd->cmd_param[0])
+	if (minishell->cmd->cmd_param[0] == NULL)
 		clean_exit(minishell, env, 0);
 	do_exec(minishell, env);
 }
@@ -51,7 +51,7 @@ void	first_child(t_data *minishell, char **env)
 {
 	if (is_here_doc(minishell))
 		exec_hd(minishell, env);
-	open_inf_outf(minishell);
+	open_files(minishell);
 	if (minishell->infile > 0)
 	{
 		if (dup2(minishell->infile, STDIN_FILENO) < 0)
@@ -77,7 +77,7 @@ void	middle_child(t_data *minishell, char **env)
 {
 	if (is_here_doc(minishell))
 		exec_hd(minishell, env);
-	open_inf_outf(minishell);
+	open_files(minishell);
 	middle_dup2(minishell, env);
 	close_all(minishell);
 	if (minishell->cmd->skip_cmd == true)
@@ -89,7 +89,7 @@ void	last_child(t_data *minishell, char **env)
 {
 	if (is_here_doc(minishell))
 		exec_last_hd(minishell, env);
-	open_inf_outf(minishell);
+	open_files(minishell);
 	if (minishell->infile > 0)
 	{
 		if (dup2(minishell->infile, STDIN_FILENO) < 0)

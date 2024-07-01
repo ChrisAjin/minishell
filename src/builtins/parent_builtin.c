@@ -6,7 +6,7 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 14:59:41 by inbennou          #+#    #+#             */
-/*   Updated: 2024/07/01 14:05:07 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/07/01 16:17:50 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,21 +48,7 @@ int	parent_builtin(t_data *minishell, char **env)
 {
 	if (env)
 		free(env);
-	open_infile(minishell, infile_count(minishell));
-	if (infile_count(minishell) != 0 && minishell->infile < 0)
-		minishell->outfile = -1;
-	else
-		open_outfile(minishell, outfile_count(minishell));
-	if (infile_count(minishell) > 0 && minishell->infile < 0)
-	{
-		minishell->exit_code = 1;
-		return (1);
-	}
-	if (outfile_count(minishell) > 0 && minishell->outfile < 0)
-	{
-		minishell->exit_code = 1;
-		return (1);
-	}
+	open_files(minishell);
 	which_builtin(minishell);
 	if (minishell->infile > 0)
 		close(minishell->infile);

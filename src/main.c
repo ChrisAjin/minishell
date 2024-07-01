@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 16:44:44 by cassassa          #+#    #+#             */
-/*   Updated: 2024/06/28 19:26:52 by cassassa         ###   ########.fr       */
+/*   Updated: 2024/07/01 16:06:13 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ void	init_data(t_data *data, int argc, char **argv)
 	data->exit_code = 0;
 	data->pid = -1;
 	data->pipes = 0;
+	data->inf_c = 0;
+	data->outf_c = 0;
 	data->infile = -1;
 	data->outfile = -1;
 	data->pip[0] = -1;

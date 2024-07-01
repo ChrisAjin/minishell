@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 16:45:40 by cassassa          #+#    #+#             */
-/*   Updated: 2024/06/28 19:27:45 by cassassa         ###   ########.fr       */
+/*   Updated: 2024/07/01 16:59:14 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,8 @@ typedef struct s_data
 	int				exit_code;
 	int				pid;
 	int				pipes;
+	int				inf_c;
+	int				outf_c;
 	int				infile;
 	int				outfile;
 	int				pip[2];
@@ -214,11 +216,11 @@ void				clean_exit(t_data *minishell, char **env, int ret);
 void				middle_dup2(t_data *minishell, char **env);
 
 // open
-int					open_inf_outf(t_data *minishell);
 int					infile_count(t_data *minishell);
 int					outfile_count(t_data *minishell);
-void				open_infile(t_data *minishell, int inf_count);
-void				open_outfile(t_data *minishell, int outf_count);
+void				open_files(t_data *minishell);
+int					open_in(t_data *minishell, t_token *temp, int *infiles);
+int					open_out(t_data *minishell, t_token *temp, int *outfiles);
 
 // builtins_utils
 void				exec_builtin(t_data *minishell, char **env);
@@ -267,6 +269,7 @@ int					is_var(char *str, t_list *env);
 int					change_var(char *str, t_list *env);
 int					not_valid(t_data *minishell);
 int					has_space(char *str);
+int					is_export_valid(char *str);
 
 // unset
 int					unset(t_data *minishell);
