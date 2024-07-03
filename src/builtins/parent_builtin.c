@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parent_builtin.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 14:59:41 by inbennou          #+#    #+#             */
-/*   Updated: 2024/07/01 16:17:50 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/07/03 22:14:10 by cassassa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	which_builtin(t_data *minishell)
 	if (ft_strncmp(minishell->cmd->cmd_param[0], "export", 7) == 0)
 		minishell->exit_code = export(minishell);
 	if (ft_strncmp(minishell->cmd->cmd_param[0], "unset", 6) == 0)
-		minishell->exit_code = unset(minishell);
+		minishell->exit_code = unset(minishell->cmd->cmd_param, &minishell->env);
 	if (ft_strncmp(minishell->cmd->cmd_param[0], "exit", 5) == 0)
 		exit_shell(minishell);
 	return (0);

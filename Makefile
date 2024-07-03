@@ -1,7 +1,7 @@
 NAME	=	minishell
 
 CC		=	cc
-FLAG	=	-Wall -Wextra -Werror
+FLAG	=	-Wall -Wextra -Werror -g
 
 DIRLIB	=	./libft/
 FILELIB	=	libft.a

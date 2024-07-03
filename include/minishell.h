@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 16:45:40 by cassassa          #+#    #+#             */
-/*   Updated: 2024/07/01 19:12:18 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/07/03 22:15:09 by cassassa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -272,7 +272,7 @@ int					has_space(char *str);
 int					is_export_valid(char *str);
 
 // unset
-int					unset(t_data *minishell);
+int					unset(char **str, t_list **env);
 int					ft_is_there(const char *str, char c);
 int					unset_var(t_data *minishell, t_list *temp);
 
