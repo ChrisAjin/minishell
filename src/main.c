@@ -6,7 +6,7 @@
 /*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 16:44:44 by cassassa          #+#    #+#             */
-/*   Updated: 2024/07/04 16:06:51 by cassassa         ###   ########.fr       */
+/*   Updated: 2024/07/04 16:18:40 by cassassa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,11 +118,11 @@ int	main(int argc, char **argv, char **env)
 		if (empty_line(line))
 			continue ;
 		add_history(line);
-		parseline(&data, line);
+		if (!parseline(&data, line))
+			continue ;
 		exec(&data);
 		free_cmd(&data.cmd);
 		free_token(&data.token);
 	}
-	rl_clear_history();
-	return (free_all(&data, NULL, -1), 0);
+	return (rl_clear_history(), free_all(&data, NULL, -1), 0);
 }
