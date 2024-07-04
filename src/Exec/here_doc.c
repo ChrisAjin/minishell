@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 15:57:20 by inbennou          #+#    #+#             */
-/*   Updated: 2024/07/04 13:54:25 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/07/04 16:07:22 by cassassa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static bool	finish_hd(char *buf, t_data *data, char *final_result)
 static int	signal_error(t_data *data, char *buf, char *final_result,
 		char *word)
 {
-	if (g_signal_pid == 1)
+	if (g_signal_pid == 130)
 	{
 		data->exit_code = 130;
 		return (finish_hd(buf, data, final_result));
@@ -86,17 +86,16 @@ int	here_doc(t_data *data, char *word)
 
 	stdin = dup(STDIN_FILENO);
 	heredoc = read_in_stdin(data, word);
-	signal(SIGINT, &sig_handler);
+	init_sig();
 	if (dup2(stdin, STDIN_FILENO) < 0)
 		return (-1);
 	close(stdin);
 	if (!heredoc)
 		return (-1);
-	if (g_signal_pid == 1)
+	if (g_signal_pid == 130)
 	{
 		g_signal_pid = 0;
 		data->exit_code = 130;
-		printf("%d", data->exit_code);
 		return (-1);
 	}
 	data->exit_code = 0;

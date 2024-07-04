@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 16:45:40 by cassassa          #+#    #+#             */
-/*   Updated: 2024/07/04 15:59:19 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/07/04 16:07:31 by cassassa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,9 +147,10 @@ bool				get_outfile(t_token *token, t_cmd *cmd, t_data *data);
 bool				get_infile(t_data *data, t_token *token, t_cmd *cmd);
 
 // signal.c
-void				sig_handler(int sig);
 void				sig_handler_heredoc(int sig);
 void				signals(void);
+void				init_sig(void);
+void				react_sig(t_data *data);
 
 // exec.c
 int					exec(t_data *minishell);
@@ -164,7 +165,6 @@ int					here_doc(t_data *data, char *word);
 // hd_utils.c
 void				print_error_hd(char *word);
 void				signal_here_doc(void);
-void				exec_sig(t_data *data);
 
 // childs.c
 void				only_child(t_data *minishell, char **env);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 16:44:44 by cassassa          #+#    #+#             */
-/*   Updated: 2024/07/04 13:45:15 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/07/04 16:06:51 by cassassa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,6 @@ void	init_data(t_data *data, int argc, char **argv)
 	data->pip[1] = -1;
 	data->temp_fd = -1;
 	g_signal_pid = 0;
-	signal(SIGINT, &sig_handler);
-	signal(SIGQUIT, SIG_IGN);
 }
 
 bool	empty_line(char *line)
@@ -75,11 +73,10 @@ bool	empty_line(char *line)
 
 bool	parseline(t_data *data, char *line)
 {
+	if (g_signal_pid == 130)
+		react_sig(data);
 	if (open_quote(data, line))
-	{
-		free(line);
-		return (false);
-	}
+		return (free(line), false);
 	if (!replace_dollar(&line, data) || !create_list_token(&data->token, line))
 	{
 		free(line);
@@ -114,15 +111,15 @@ int	main(int argc, char **argv, char **env)
 	add_root_list(&data.env, "1NEW_ENV");
 	while (1)
 	{
+		init_sig();
 		line = readline("minishell> ");
 		if (!line)
 			free_all(&data, "exit\n", data.exit_code);
 		if (empty_line(line))
 			continue ;
 		add_history(line);
-		if (!parseline(&data, line))
-			continue ;
-		exec_sig(&data);
+		parseline(&data, line);
+		exec(&data);
 		free_cmd(&data.cmd);
 		free_token(&data.token);
 	}
