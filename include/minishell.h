@@ -6,7 +6,7 @@
 /*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 16:45:40 by cassassa          #+#    #+#             */
-/*   Updated: 2024/07/03 22:15:09 by cassassa         ###   ########.fr       */
+/*   Updated: 2024/07/04 14:47:51 by cassassa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,9 +147,12 @@ bool				get_outfile(t_token *token, t_cmd *cmd, t_data *data);
 bool				get_infile(t_data *data, t_token *token, t_cmd *cmd);
 
 // signal.c
-void				sig_handler(int sig);
 void				sig_handler_heredoc(int sig);
 void				signals(void);
+void				init_sig(void);
+void				react_sig(t_data *core);
+
+
 
 // exec.c
 int					exec(t_data *minishell);
