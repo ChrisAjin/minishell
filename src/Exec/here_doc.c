@@ -6,7 +6,7 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 15:57:20 by inbennou          #+#    #+#             */
-/*   Updated: 2024/07/01 19:21:34 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/07/04 13:54:25 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,8 @@ int	here_doc(t_data *data, char *word)
 	if (g_signal_pid == 1)
 	{
 		g_signal_pid = 0;
+		data->exit_code = 130;
+		printf("%d", data->exit_code);
 		return (-1);
 	}
 	data->exit_code = 0;

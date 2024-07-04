@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 15:31:03 by inbennou          #+#    #+#             */
-/*   Updated: 2024/07/03 22:14:01 by cassassa         ###   ########.fr       */
+/*   Updated: 2024/07/04 16:00:12 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	exec_builtin(t_data *minishell, char **env)
 	if (ft_strncmp(minishell->cmd->cmd_param[0], "export", 7) == 0)
 		free_and_exit(minishell, env, export(minishell));
 	if (ft_strncmp(minishell->cmd->cmd_param[0], "unset", 6) == 0)
-		free_and_exit(minishell, env, unset(minishell->cmd->cmd_param, &minishell->env));
+		free_and_exit(minishell, env, unset(minishell));
 	if (ft_strncmp(minishell->cmd->cmd_param[0], "exit", 5) == 0)
 		exit_shell(minishell);
 }

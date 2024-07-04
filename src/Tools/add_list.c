@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   add_list.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 14:19:51 by cassassa          #+#    #+#             */
-/*   Updated: 2024/06/28 16:07:12 by cassassa         ###   ########.fr       */
+/*   Updated: 2024/07/04 12:12:37 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,12 +54,11 @@ void	append_list(t_list **list, char *str)
 	t_list	*last;
 
 	new_node = NULL;
-	if (!(new_node == new_list_elem(str)))
+	new_node = new_list_elem(str);
+	if (!new_node)
 		return ;
 	if (*list == NULL)
-	{
 		*list = new_node;
-	}
 	else
 	{
 		last = (*list)->prev;

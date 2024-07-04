@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 19:58:42 by inbennou          #+#    #+#             */
-/*   Updated: 2024/06/28 19:13:30 by cassassa         ###   ########.fr       */
+/*   Updated: 2024/07/04 15:08:16 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ void	wait_and_error(t_data *minishell, int pid_lastchild)
 		{
 			if (WIFEXITED(status))
 				error = WEXITSTATUS(status);
+			if (WIFSIGNALED(status))
+				error = WTERMSIG(status) + 128;
 		}
 		if (current_pid < 0)
 			break ;

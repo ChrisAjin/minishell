@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 16:45:40 by cassassa          #+#    #+#             */
-/*   Updated: 2024/07/03 22:15:09 by cassassa         ###   ########.fr       */
+/*   Updated: 2024/07/04 15:59:19 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -267,14 +267,17 @@ int					export(t_data *minishell);
 int					export_print_lst(t_list *lst);
 int					is_var(char *str, t_list *env);
 int					change_var(char *str, t_list *env);
-int					not_valid(t_data *minishell);
+int					not_valid(t_data *minishell, int i);
 int					has_space(char *str);
 int					is_export_valid(char *str);
+int					export_inv_opt(char *cmd_param);
 
 // unset
-int					unset(char **str, t_list **env);
+int					unset(t_data *minishell);
 int					ft_is_there(const char *str, char c);
-int					unset_var(t_data *minishell, t_list *temp);
+int					unset_var(t_data *minishell, t_list **temp);
+int					unset_inv_opt(char *cmd_param);
+int					unset_valid(char *cmd_param, char *temp_str);
 
 // data_check.c
 int					check_pipe_red_herdoc(t_data *data);

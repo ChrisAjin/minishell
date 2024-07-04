@@ -6,7 +6,7 @@
 /*   By: inbennou <inbennou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 19:07:53 by inbennou          #+#    #+#             */
-/*   Updated: 2024/07/01 17:34:29 by inbennou         ###   ########.fr       */
+/*   Updated: 2024/07/04 15:21:57 by inbennou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,28 +14,29 @@
 
 int	export(t_data *minishell)
 {
-	char	*cmd;
+	int	i;
 
-	cmd = minishell->cmd->cmd_param[1];
+	i = 0;
 	if (minishell->cmd->cmd_param[1] == NULL)
 		return (export_print_lst(minishell->env));
 	if (minishell->cmd->cmd_param[1][0] == '-')
-	{
-		ft_putstr_fd("export: ", 2);
-		ft_putstr_fd(minishell->cmd->cmd_param[1], 2);
-		ft_putendl_fd(": invalid option", 2);
-		return (2);
-	}
+		return (export_inv_opt(minishell->cmd->cmd_param[1]));
 	else
 	{
-		if (!is_export_valid(minishell->cmd->cmd_param[1])
-			|| ft_strchr(minishell->cmd->cmd_param[1], '=') == 0
-			|| has_space(minishell->cmd->cmd_param[1]))
-			return (not_valid(minishell), 1);
-		if (is_var(cmd, minishell->env))
-			change_var(cmd, minishell->env);
-		else
-			add_root_list(&minishell->env, minishell->cmd->cmd_param[1]);
+		while (minishell->cmd->cmd_param[++i])
+		{
+			if (!is_export_valid(minishell->cmd->cmd_param[i])
+				|| ft_strchr(minishell->cmd->cmd_param[i], '=') == 0
+				|| has_space(minishell->cmd->cmd_param[i]))
+				not_valid(minishell, i);
+			else
+			{
+				if (is_var(minishell->cmd->cmd_param[i], minishell->env))
+					change_var(minishell->cmd->cmd_param[i], minishell->env);
+				else
+					append_list(&minishell->env, minishell->cmd->cmd_param[i]);
+			}
+		}
 	}
 	return (0);
 }
