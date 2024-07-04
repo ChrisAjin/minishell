@@ -6,7 +6,7 @@
 /*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 16:44:44 by cassassa          #+#    #+#             */
-/*   Updated: 2024/07/04 14:51:51 by cassassa         ###   ########.fr       */
+/*   Updated: 2024/07/04 15:54:11 by cassassa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ bool	parseline(t_data *data, char *line)
 	if (g_signal_pid == 130)
 		react_sig(data);
 	if (open_quote(data, line))
-		return (free(line),false);
+		return (free(line), false);
 	if (!replace_dollar(&line, data) || !create_list_token(&data->token, line))
 	{
 		free(line);

@@ -6,7 +6,7 @@
 /*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 16:45:40 by cassassa          #+#    #+#             */
-/*   Updated: 2024/07/04 14:47:51 by cassassa         ###   ########.fr       */
+/*   Updated: 2024/07/04 15:54:26 by cassassa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,9 +150,7 @@ bool				get_infile(t_data *data, t_token *token, t_cmd *cmd);
 void				sig_handler_heredoc(int sig);
 void				signals(void);
 void				init_sig(void);
-void				react_sig(t_data *core);
-
-
+void				react_sig(t_data *data);
 
 // exec.c
 int					exec(t_data *minishell);
